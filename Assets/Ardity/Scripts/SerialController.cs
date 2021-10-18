@@ -26,7 +26,7 @@ using System.Threading;
 public class SerialController : MonoBehaviour
 {
     [Tooltip("Port name with which the SerialPort object will be created.")]
-    public string portName = "COM3";
+    public string portName = "COM5";
 
     [Tooltip("Baud rate that the serial device is using to transmit data.")]
     public int baudRate = 9600;
@@ -62,8 +62,8 @@ public class SerialController : MonoBehaviour
     // ------------------------------------------------------------------------
     void OnEnable()
     {
-        serialThread = new SerialThreadLines(portName, 
-                                             baudRate, 
+        serialThread = new SerialThreadLines(portName,
+                                             baudRate,
                                              reconnectionDelay,
                                              maxUnreadMessages);
         thread = new Thread(new ThreadStart(serialThread.RunForever));
@@ -125,8 +125,6 @@ public class SerialController : MonoBehaviour
             messageListener.SendMessage("OnMessageArrived", message);
     }
 
-    
-
     // ------------------------------------------------------------------------
     // Returns a new unread message from the serial device. You only need to
     // call this if you don't provide a message listener.
@@ -156,5 +154,4 @@ public class SerialController : MonoBehaviour
     {
         this.userDefinedTearDownFunction = userFunction;
     }
-
 }
