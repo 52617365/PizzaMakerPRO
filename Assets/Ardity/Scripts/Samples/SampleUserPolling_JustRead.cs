@@ -20,14 +20,14 @@ public class SampleUserPolling_JustRead : MonoBehaviour
     void Start()
     {
         serialController = GameObject.Find("SerialController").GetComponent<SerialController>();
-	}
+    }
 
     // Executed each frame
     void Update()
     {
-        string message = serialController.ReadSerialMessage();
+        int message = serialController.ReadSerialMessage();
 
-        if (message == null)
+        if (message == 0)
             return;
 
         // Check if the message is plain data or a connect/disconnect event.
