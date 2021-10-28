@@ -117,7 +117,8 @@ public class SerialControllerCustomDelimiter : MonoBehaviour
     public byte[] ReadSerialMessage()
     {
         // Read the next message from the queue
-        return (byte[]) serialThread.ReadMessage();
+        byte[] message = (byte[])serialThread.ReadMessage();
+        return message;
     }
 
     // ------------------------------------------------------------------------

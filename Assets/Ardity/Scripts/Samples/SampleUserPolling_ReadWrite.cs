@@ -50,9 +50,9 @@ public class SampleUserPolling_ReadWrite : MonoBehaviour
         // Receive data
         //---------------------------------------------------------------------
 
-        string message = serialController.ReadSerialMessage();
+        int message = serialController.ReadSerialMessage();
 
-        if (message == null)
+        if (message == 0)
             return;
 
         // Check if the message is plain data or a connect/disconnect event.
