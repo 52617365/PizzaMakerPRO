@@ -6528,3 +6528,68 @@ Received Import Request.
 Start importing Assets/Scripts/Orders/OrderSO2.asset using Guid(4a1ddc2180000e14db38ca5233fe1002) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '667a0d3b557594d92f60290d2e7104e2') in 0.005638 seconds 
   Import took 0.009406 seconds .
 
+========================================================================
+Received Import Request.
+  Time since last request: 118.073446 seconds.
+  path: Assets/Prefabs/MessageListener.prefab
+  artifactKey: Guid(ec319340db7e5e8449e9cc1fb81fc57b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/MessageListener.prefab using Guid(ec319340db7e5e8449e9cc1fb81fc57b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '11c4b13548c4d43440c8697b19c91087') in 0.019369 seconds 
+  Import took 0.022414 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000342 seconds.
+  path: Assets/Prefabs/pizzabox2.prefab
+  artifactKey: Guid(a26e23a07651eb840867e1cf77f354a1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/pizzabox2.prefab using Guid(a26e23a07651eb840867e1cf77f354a1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '19cfe0c64b4c0941baebe7911e4bbdfa') in 0.055806 seconds 
+  Import took 0.059226 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000221 seconds.
+  path: Assets/Prefabs/PizzaOven (1).prefab
+  artifactKey: Guid(45332f7f50d335341b35a5ea4fe26790) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/PizzaOven (1).prefab using Guid(45332f7f50d335341b35a5ea4fe26790) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '71dd183396d7957d57039b0b1b2a8cc1') in 0.014641 seconds 
+  Import took 0.018390 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000286 seconds.
+  path: Assets/Prefabs/Player1.prefab
+  artifactKey: Guid(39caf36f4022e42489601ed5a3dcaa18) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Player1.prefab using Guid(39caf36f4022e42489601ed5a3dcaa18) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'dc414da373695d29760261eb311e879a') in 0.057171 seconds 
+  Import took 0.060840 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000280 seconds.
+  path: Assets/Prefabs/PizzaOven.prefab
+  artifactKey: Guid(646f811754273ee4596ccff6fcc9bb3a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/PizzaOven.prefab using Guid(646f811754273ee4596ccff6fcc9bb3a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '471ba5df7ef6956cfa22ac478ac5c865') in 0.014071 seconds 
+  Import took 0.017177 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000211 seconds.
+  path: Assets/Prefabs/Player2.prefab
+  artifactKey: Guid(fde31fad7415d404697849fe3756bfe3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Player2.prefab using Guid(fde31fad7415d404697849fe3756bfe3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a444caa011b0311d92c65ea75eb18b46') in 0.025111 seconds 
+  Import took 0.028432 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000215 seconds.
+  path: Assets/Prefabs/Player_OLD.prefab
+  artifactKey: Guid(6782c7cfbcb05494698c8e359ed7dc5a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Player_OLD.prefab using Guid(6782c7cfbcb05494698c8e359ed7dc5a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2d04a8f139fa3749cd0d89cce73adfba') in 0.012648 seconds 
+  Import took 0.016390 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000260 seconds.
+  path: Assets/Prefabs/pizzabox.prefab
+  artifactKey: Guid(d8c16e2d003ed6f41b6170b49e6c07e2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/pizzabox.prefab using Guid(d8c16e2d003ed6f41b6170b49e6c07e2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b1c3d94e292636681c2da002b13dc9b8') in 0.023889 seconds 
+  Import took 0.027014 seconds .
+
+AssetImportWorkerClient::OnTransportError - code=2 error=End of file
