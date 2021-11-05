@@ -75,7 +75,6 @@ public class Pizza : MonoBehaviour
     {
         if (!ingredients.Contains(ingredientSO))
         {
-            Debug.Log("Added " + ingredientSO);
             ingredients.Add(ingredientSO);
 
             // Instantiates icon prefab that displays icon of what ingredient

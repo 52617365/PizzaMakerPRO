@@ -1619,7 +1619,7 @@ MonoBehaviour:
     m_Bits: 8
   stopNaNPropagation: 1
   finalBlitToCameraTarget: 0
-  antialiasingMode: 0
+  antialiasingMode: 1
   temporalAntialiasing:
     jitterSpread: 0.75
     sharpness: 0.25
@@ -2502,8 +2502,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sharedProfile: {fileID: 11400000, guid: 118e32c4ef1831e4180795792690cd68, type: 2}
-  isGlobal: 0
-  blendDistance: 20
+  isGlobal: 1
+  blendDistance: 0
   weight: 1
   priority: 0
 --- !u!65 &656359425

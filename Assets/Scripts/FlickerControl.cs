@@ -8,12 +8,8 @@ public class FlickerControl : MonoBehaviour
     private bool isFlickering = false;
     [SerializeField]
     private float timeDelay;
-    private Renderer renderer;
 
-    private void Awake()
-    {
-        renderer = GetComponent<Renderer>();
-    }
+
     private void Update()
     {
         if (isFlickering == false)
@@ -23,7 +19,7 @@ public class FlickerControl : MonoBehaviour
     private IEnumerator FlickeringLight()
     {
         isFlickering = true;
-        Material material = renderer.materials[0];
+        Material material = GetComponent<Renderer>().materials[0];
         while (isFlickering)
         {
             material.SetColor("_EmissionColor", Color.black);

@@ -17,7 +17,7 @@ public static class DefaultValues
     /// <summary>
     /// Duration of the game.
     /// </summary>
-    public static float gameDuration = 600;
+    public static float gameDuration = 10;
     /// <summary>
     /// Value that lerpTime will be increased each time.
     /// </summary>
@@ -35,4 +35,5 @@ public static class DefaultValues
     /// Amount of bonus points that are awarded on fast delivery.
     /// </summary>
     public static int fastDeliveryBonus = 10;
+    public static int defaultMovementSpeed = 4;
 }

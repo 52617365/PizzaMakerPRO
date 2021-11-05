@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Manages state of the game
@@ -46,12 +47,31 @@ public class GameManager : MonoBehaviour
     /// </summary>
     [SerializeField]
     private GameObject ingredientIconPrefab;
+    /// <summary>
+    /// Prefab of pizza box
+    /// </summary>
+    [SerializeField]
+    private GameObject pizzaBoxPrefab;
+    [SerializeField]
+
+    private TextMeshProUGUI scoreText;
+    [SerializeField]
+    private TextMeshProUGUI gameDurationText;
 
     [SerializeField]
-    private TextMeshProUGUI scoreText;
+    private GameObject countdownContainer;
+    [SerializeField]
+    private List<GameObject> countdownObjects;
 
+    [SerializeField]
+    private GameObject gameEndScreen;
+    [SerializeField]
+    private GameObject leftButtonContainer;
+    [SerializeField]
+    private GameObject rightButtonContainer;
+        
     public GameObject IngredientIconPrefab { get { return ingredientIconPrefab; } }
-
+    public GameObject PizzaBoxPrefab { get { return pizzaBoxPrefab; } }
     /// <summary>
     /// Amount of points that player has earned during gameplay.
     /// </summary>
@@ -62,6 +82,7 @@ public class GameManager : MonoBehaviour
     public float GameDurationLeft { get; set; }
     public bool IsPaused { get; set; }
     public bool GameOver { get; set; }
+    public bool GameStarted { get; set; }
     public List<OrderSO> CurrentOrders
     {
         get { return currentOrders; }
@@ -86,18 +107,26 @@ public class GameManager : MonoBehaviour
 
         GameDurationLeft = DefaultValues.gameDuration;
         scoreText.text = playerScore.ToString();
-        InvokeRepeating("NewOrder", 0, 10f);
+        StartCoroutine("Countdown");
     }
 
     private void Update()
     {
+        if (!GameStarted)
+            return;
+
         if (Input.GetKeyDown(KeyCode.Q))
             NewOrder();
 
         if (!GameOver)
         {
             if (!IsPaused)
+            {
                 GameDurationLeft -= Time.deltaTime;
+                float minutes = Mathf.FloorToInt(GameDurationLeft / 60);
+                float seconds = Mathf.FloorToInt(GameDurationLeft % 60);
+                gameDurationText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+            }
 
             if (GameDurationLeft <= 0)
                 EndGame();
@@ -111,6 +140,9 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void NewOrder()
     {
+        if (GameOver)
+            return;
+
         if (currentOrders.Count == orderScriptableObjects.Count)
         {
             Debug.Log("At maximum amount of orders");
@@ -119,8 +151,9 @@ public class GameManager : MonoBehaviour
 
         int randomValue = Random.Range(1, 6);
         Debug.Log(randomValue);
-        if (randomValue >= 4)
+        if (randomValue >= 4 || currentOrders.Count == 0)
         {
+            GetComponent<AudioSource>().Play();
             PizzaSO randomPizza = pizzaDatabase.pizzas[Random.Range(0, pizzaDatabase.pizzas.Count())];
 
             float timeToBakePizza = Random.Range(DefaultValues.minTimerValue, DefaultValues.maxTimerValue);
@@ -148,7 +181,26 @@ public class GameManager : MonoBehaviour
     private void EndGame()
     {
         GameOver = true;
+        CancelInvoke();
+        gameEndScreen.SetActive(true);
         // TODO: Implement something that indicates that game is over.
+    }
+
+    private IEnumerator Countdown()
+    {
+        yield return new WaitForSeconds(2);
+
+        foreach (var go in countdownObjects)
+        {
+            go.SetActive(true);
+            go.GetComponent<AudioSource>().Play();
+            if (go == countdownObjects[countdownObjects.Count - 1])
+                GameStarted = true;
+            yield return new WaitForSeconds(1);
+            go.SetActive(false);
+        }
+        InvokeRepeating("NewOrder", 0, 10f);
+        gameDurationText.gameObject.SetActive(true);
     }
     #endregion
 
@@ -173,6 +225,25 @@ public class GameManager : MonoBehaviour
 
         order.isInUse = false;
         order.UIElement = null;
+    }
+
+    public void MainMenu()
+    {
+        leftButtonContainer.GetComponent<Image>().enabled = true;
+        float wait = 1f;
+        while (wait > 0)
+            wait -= Time.deltaTime;
+
+    }
+
+    public void Restart()
+    {
+        rightButtonContainer.GetComponent<Image>().enabled = true;
+        float wait = 1f;
+        while (wait > 0)
+            wait -= Time.deltaTime;
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     #endregion
 

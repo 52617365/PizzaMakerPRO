@@ -67,6 +67,8 @@ public class PizzaUI : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.Instance.GameOver)
+            return;
 
         remainingTime -= Time.deltaTime;
         float percent = remainingTime / maxTime;
