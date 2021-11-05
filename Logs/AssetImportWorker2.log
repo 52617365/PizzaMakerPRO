@@ -6424,3 +6424,107 @@ Received Import Request.
 Start importing Assets/Scenes/MainMenu.unity using Guid(fb82c27e88d5c504a9aa615cffbf1de1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3cf9a09ddbaadf050fa5ec790e5cfef2') in 0.003730 seconds 
   Import took 0.008000 seconds .
 
+========================================================================
+Received Import Request.
+  Time since last request: 112.506788 seconds.
+  path: Assets/Shaders
+  artifactKey: Guid(2bb0f41d3dcef2244af1bff4e109076b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Shaders using Guid(2bb0f41d3dcef2244af1bff4e109076b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'aac4e851f001fd2aebae4a22e9b3cb59') in 0.003818 seconds 
+  Import took 0.007128 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.938290 seconds.
+  path: Assets/Sounds
+  artifactKey: Guid(84403b6c4e7a62645a4c8aedec2840ac) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sounds using Guid(84403b6c4e7a62645a4c8aedec2840ac) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f0dbe077911b9711f639748537aadc09') in 0.002112 seconds 
+  Import took 0.005170 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 6.019219 seconds.
+  path: Assets/Scripts/Player/PlayerController.cs
+  artifactKey: Guid(f7ed8886ae4941f4bb7eb1ed65f25d15) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/Player/PlayerController.cs using Guid(f7ed8886ae4941f4bb7eb1ed65f25d15) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5a6a50e0d93a912405315478abeb51d3') in 0.002367 seconds 
+  Import took 0.005894 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 9.240487 seconds.
+  path: Assets/Scripts/FlickerControl.cs
+  artifactKey: Guid(b2962e8c739675243a538ad5a2555bfd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/FlickerControl.cs using Guid(b2962e8c739675243a538ad5a2555bfd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '54539ada776ca0ce7277c4ba42e84670') in 0.002808 seconds 
+  Import took 0.005926 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.315572 seconds.
+  path: Assets/Scripts/DeliveryPoint.cs
+  artifactKey: Guid(3a0841532ee119c4e962c64ed1bab9fe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/DeliveryPoint.cs using Guid(3a0841532ee119c4e962c64ed1bab9fe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd0fcdd78c7cd713f3d8ba1f25026b494') in 0.006505 seconds 
+  Import took 0.011161 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.332752 seconds.
+  path: Assets/Scripts/DefaultValues.cs
+  artifactKey: Guid(dd15476746ba542418c2f4692f3ce836) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/DefaultValues.cs using Guid(dd15476746ba542418c2f4692f3ce836) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '839caa22690078d8575337ab72a8bd86') in 0.003561 seconds 
+  Import took 0.007994 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.733425 seconds.
+  path: Assets/Scripts/MaterialTest.cs
+  artifactKey: Guid(89bfafe71bf8a3a489a732a626f1d49b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/MaterialTest.cs using Guid(89bfafe71bf8a3a489a732a626f1d49b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6f1022258786e5ad7ee1ba303a917f95') in 0.008866 seconds 
+  Import took 0.015904 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.264199 seconds.
+  path: Assets/Scripts/MainMenuController.cs
+  artifactKey: Guid(95815a3a61d3281409962ecd7da7bd21) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/MainMenuController.cs using Guid(95815a3a61d3281409962ecd7da7bd21) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '582f6be7056e4eaa2a8a4525edbfcf9c') in 0.011357 seconds 
+  Import took 0.016569 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 38.479050 seconds.
+  path: Assets/Scripts/Orders/OrderSO1.asset
+  artifactKey: Guid(21341afa9167eb24abeb359341bbec58) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/Orders/OrderSO1.asset using Guid(21341afa9167eb24abeb359341bbec58) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e0bf65d6c7dc2db7598c79ba25db13f4') in 0.003782 seconds 
+  Import took 0.013317 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000334 seconds.
+  path: Assets/Scripts/Orders/OrderSO5.asset
+  artifactKey: Guid(577c32666bab6cd439a324589e54d9c4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/Orders/OrderSO5.asset using Guid(577c32666bab6cd439a324589e54d9c4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7db5e708944139feafef1efaefb12c1f') in 0.003712 seconds 
+  Import took 0.007755 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000374 seconds.
+  path: Assets/Scripts/Orders/OrderSO3.asset
+  artifactKey: Guid(7bf513693f183684495cab52a3b24e7b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/Orders/OrderSO3.asset using Guid(7bf513693f183684495cab52a3b24e7b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fe2e2a0534e0d213cc7af89e2a999c46') in 0.003218 seconds 
+  Import took 0.007185 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000491 seconds.
+  path: Assets/Scripts/Orders/OrderSO4.asset
+  artifactKey: Guid(14cd7aed9e1545143ac25ae4368eedc5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/Orders/OrderSO4.asset using Guid(14cd7aed9e1545143ac25ae4368eedc5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '80bbb12a5c143c2bd7af19065c112dc8') in 0.004305 seconds 
+  Import took 0.009584 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000272 seconds.
+  path: Assets/Scripts/Orders/OrderSO2.asset
+  artifactKey: Guid(4a1ddc2180000e14db38ca5233fe1002) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/Orders/OrderSO2.asset using Guid(4a1ddc2180000e14db38ca5233fe1002) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '667a0d3b557594d92f60290d2e7104e2') in 0.005638 seconds 
+  Import took 0.009406 seconds .
+
