@@ -6408,3 +6408,19 @@ AssetImportParameters requested are different than current active one (requested
   custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
   custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
   custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 4345.695828 seconds.
+  path: Assets/Scenes/SampleScene.unity
+  artifactKey: Guid(9fc0d4010bbf28b4594072e72b8655ab) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scenes/SampleScene.unity using Guid(9fc0d4010bbf28b4594072e72b8655ab) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e02ae2ee23b65f22ead7c2a60170acdb') in 0.525034 seconds 
+  Import took 0.528756 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.281971 seconds.
+  path: Assets/Scenes/MainMenu.unity
+  artifactKey: Guid(fb82c27e88d5c504a9aa615cffbf1de1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scenes/MainMenu.unity using Guid(fb82c27e88d5c504a9aa615cffbf1de1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3cf9a09ddbaadf050fa5ec790e5cfef2') in 0.003730 seconds 
+  Import took 0.008000 seconds .
+
