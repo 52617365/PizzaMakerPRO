@@ -8,8 +8,11 @@ using UnityEngine.UI;
 /// </summary>
 public class Ingredient : MonoBehaviour
 {
-    [HideInInspector]
-    public Outline outline;
+    [SerializeField]
+    private Texture defaultTexture;
+    [SerializeField]
+    private Texture highlightTexture;
+    private Material highlightMaterial;
     /// <summary>
     /// Ingredient scriptable object
     /// </summary>
@@ -22,6 +25,9 @@ public class Ingredient : MonoBehaviour
     [SerializeField]
     private Image icon;
 
+    public Texture HighLightTexture { get { return highlightTexture; } }
+    public Texture DefaultTexture { get { return defaultTexture; } }
+    public Material HighLightMaterial { get { return highlightMaterial; } }
     public IngredientSO IngredientScriptableObject
     {
         get { return ingredientScriptableObject; }
@@ -29,7 +35,17 @@ public class Ingredient : MonoBehaviour
 
     private void Awake()
     {
-        outline = GetComponent<Outline>();
+        Renderer renderer = GetComponent<Renderer>();
+
+        foreach (var material in renderer.materials)
+        {
+            if (material.name == "CheeseMaterial (Instance)" || material.name == "HamMaterial (Instance)"
+                || material.name == "KebabMaterial (Instance)" || material.name == "PepperoniMaterial (Instance)"
+                || material.name == "PineappleMaterial (Instance)" || material.name == "SalamiMaterial (Instance)"
+                || material.name == "ShrimpMaterial (Instance)" || material.name == "TomatoMaterial (Instance)" 
+                || material.name == "TunaMaterial (Instance)" || material.name == "Blue-CheeseMaterial (Instance)")
+                highlightMaterial = material;
+        }
         // Sets the icon to be the icon that is specified
         // in ingredientScriptableObject.
         if(icon != null && ingredientScriptableObject.icon != null)
@@ -41,7 +57,6 @@ public class Ingredient : MonoBehaviour
     /// </summary>
     public void TakeIngredient(IngredientSO ingredientSO, Player player)
     {
-        Debug.Log("Picked up " + ingredientSO);
         player.HeldIngredient = ingredientSO;
         player.IngredientIcon.sprite = ingredientSO.icon;
     }

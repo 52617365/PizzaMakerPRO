@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0150b727ae189614b9a722892ded9fc2, type: 3}
+  m_Script: {fileID: 11500000, guid: 399bf0b63f00e574097c4a86182310be, type: 3}
   m_Name: OrderSO1
   m_EditorClassIdentifier: 
   isInUse: 0
   UIElement: {fileID: 0}
-  orderedIngredients: []

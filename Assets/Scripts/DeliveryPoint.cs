@@ -50,6 +50,9 @@ public class DeliveryPoint : MonoBehaviour
                     player.HeldPizza.ingredients.Clear();
                     player.HeldPizza.cookState = HeldPizzaSO.CookState.Uncooked;
                     player.HeldPizza = null;
+                    Destroy(player.instantiatedGameObject);
+                    player.instantiatedGameObject = null;
+                    player.GetComponent<Animator>().SetFloat("Holding", 0);
                     pizzaDelivered = true;
                     break;
                 }
@@ -61,6 +64,7 @@ public class DeliveryPoint : MonoBehaviour
             return;
 
         // TODO: Add score for delivering correct pizza within time limit.
+        GetComponent<AudioSource>().Play();
         GameManager.UpdateScore(pointPercentage);
         pizzaDelivered = false;
     }

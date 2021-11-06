@@ -5,13 +5,14 @@ using UnityEngine.UI;
 
 public class PizzaOven : MonoBehaviour
 {
-    [HideInInspector]
-    public Outline outline;
-
+    public Material highlightMaterial { get; private set; } 
+    public Material lightMaterial { get; private set; }
     [SerializeField]
     private Image progressBar;
     [SerializeField]
     private Color[] progressBarColor;
+    [SerializeField]
+    private Color[] defaultColors;
     [SerializeField]
     private GameObject UI;
 
@@ -40,11 +41,21 @@ public class PizzaOven : MonoBehaviour
     {
         get { return pizzaIsReady; }
     }
+    public Color[] TopMaterialColor { get { return defaultColors; } }
     #endregion
 
     private void Awake()
     {
-        outline = GetComponent<Outline>();
+        Renderer renderer = GetComponent<Renderer>();
+        foreach (var material in renderer.materials)
+        {
+            if (material.name == "Top (Instance)")
+                highlightMaterial = material;
+            if (material.name == "Light (Instance)")
+                lightMaterial = material;
+        }
+        lightMaterial.EnableKeyword("_EMISSION");
+
         // Checks if ui is active and disables if it is.
         if (UI.activeSelf == true)
             UI.SetActive(false);
@@ -62,6 +73,7 @@ public class PizzaOven : MonoBehaviour
                 progressBar.fillAmount = Mathf.Lerp(0, 1, percent);
                 if (remainingTime <= 0)
                 {
+                    GetComponent<AudioSource>().Play();
                     pizzaIsReady = true;
                     remainingTime = 0;
                 }
@@ -89,6 +101,9 @@ public class PizzaOven : MonoBehaviour
 
         ingredients.Clear();
 
+        lightMaterial.color = defaultColors[3];
+        lightMaterial.SetColor("_EmissionColor", Color.red);
+
         maxTime = Random.Range(10, 16);
         remainingTime = maxTime;
         progressBar.fillAmount = 0;
@@ -112,6 +127,9 @@ public class PizzaOven : MonoBehaviour
         pizza.ingredients.Clear();
 
         player.ClearActiveIcons();
+        Destroy(player.instantiatedGameObject);
+        player.instantiatedGameObject = null;
+        player.GetComponent<Animator>().SetFloat("Holding", 0);
 
         pizzaInOven = true;
         progressBar.color = progressBarColor[0];
@@ -121,6 +139,8 @@ public class PizzaOven : MonoBehaviour
     public void TakePizza(Player player)
     {
         pizzaInOven = false;
+        lightMaterial.color = defaultColors[2];
+        lightMaterial.SetColor("_EmissionColor", Color.green);
         foreach (var icon in activeIcons)
         {
             icon.transform.SetParent(player.transform.Find("Canvas").Find("IconContainer"), false);
@@ -140,7 +160,9 @@ public class PizzaOven : MonoBehaviour
                 player.HeldPizza.cookState = HeldPizzaSO.CookState.Burnt;
             pizzaIsReady = false;
         }
-
+        player.instantiatedGameObject = Instantiate(GameManager.Instance.PizzaBoxPrefab);
+        player.instantiatedGameObject.transform.SetParent(player.PizzaBoxContainer.transform, false);
+        player.GetComponent<Animator>().SetFloat("Holding", 1);
         ingredients.Clear();
         activeIcons.Clear();
         UI.SetActive(false);
