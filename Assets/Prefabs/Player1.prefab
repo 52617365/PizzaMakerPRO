@@ -1504,12 +1504,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   portName: COM3
   baudRate: 9600
-  messageListener: {fileID: 6616691092259646897, guid: ec319340db7e5e8449e9cc1fb81fc57b, type: 3}
+  messageListener: {fileID: 0}
   reconnectionDelay: 1000
   maxUnreadMessages: 1
   keyboardMovement: 1
   rotationSpeed: 10
   movementSpeed: 6
+  gravity: 150
 --- !u!114 &5678416602166415020
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1527,9 +1528,8 @@ MonoBehaviour:
   heldPizzaSO: {fileID: 11400000, guid: 0bdf0595125eedd4584f16ae38322a49, type: 2}
   detectionRange: 1.5
   ingredientIcon: {fileID: 4759354836412468582}
-  playerNumberIcon: {fileID: 1021778274}
-  pizzaBoxContainer: {fileID: 4999563028307249039}
   activeIcons: []
+  pizzaBoxContainer: {fileID: 4999563028307249039}
 --- !u!1 &5807903294977278993
 GameObject:
   m_ObjectHideFlags: 0

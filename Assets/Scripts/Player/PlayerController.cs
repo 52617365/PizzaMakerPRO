@@ -18,6 +18,8 @@ public class PlayerController : SerialController
     [SerializeField]
     [Range(1, 10)]
     private float movementSpeed;
+    [SerializeField]
+    private float gravity;
 
     private Quaternion canvasRotation;
 
@@ -105,6 +107,16 @@ public class PlayerController : SerialController
                 case "-4":
                     vertical = 0;
                     break;
+                // Button inputs.
+                case "5":
+                    ButtonOne();
+                    break;
+                case "6":
+                    ButtonTwo();
+                    break;
+                case "7":
+                    ButtonThree();
+                    break;
                 default:
                     break;
             }
@@ -113,12 +125,17 @@ public class PlayerController : SerialController
         if (GameManager.Instance.GameOver)
             return;
 
+        Debug.Log(controller.isGrounded);
         Vector3 newPos = new Vector3(transform.position.x + horizontal, transform.position.y, transform.position.z + vertical);
         Vector3 direction = new Vector3(horizontal, 0, vertical).normalized;
         Vector3 dir = newPos - transform.position;
 
         if (direction.magnitude >= 0.1f)
         {
+            // Add gravity
+            if (!controller.isGrounded)
+                direction.y -= gravity * Time.deltaTime;
+
             if (animator.speed != movementSpeed / DefaultValues.defaultMovementSpeed)
                 animator.speed = movementSpeed / DefaultValues.defaultMovementSpeed;
 
@@ -138,8 +155,6 @@ public class PlayerController : SerialController
 
             animator.SetFloat("MoveSpeed", animator.GetFloat("MoveSpeed") - 0.08f);
         }
-
-
 
         // Passes incoming messages from controller to SampleMessageListener, which then logs the message
         if (message != null)
@@ -216,5 +231,11 @@ public class PlayerController : SerialController
     {
         if (GameManager.Instance.GameOver)
             GameManager.Instance.Restart();
+    }
+
+    // Pause button
+    private void ButtonThree()
+    {
+
     }
 }
