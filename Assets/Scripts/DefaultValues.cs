@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 /// <summary>
 /// Contains all default values used throughout the game
@@ -17,7 +18,7 @@ public static class DefaultValues
     /// <summary>
     /// Duration of the game.
     /// </summary>
-    public static float gameDuration = 10;
+    public static float gameDuration = 420;
     /// <summary>
     /// Value that lerpTime will be increased each time.
     /// </summary>
@@ -35,5 +36,16 @@ public static class DefaultValues
     /// Amount of bonus points that are awarded on fast delivery.
     /// </summary>
     public static int fastDeliveryBonus = 10;
+    /// <summary>
+    /// Default player movement speed.
+    /// </summary>
     public static int defaultMovementSpeed = 4;
+    /// <summary>
+    /// Default scale of non selected ui buttons.
+    /// </summary>
+    public static Vector3 defaultButtonScale = new Vector3(1, 1, 1);
+    /// <summary>
+    /// Scale value of selected ui buttons.
+    /// </summary>
+    public static Vector3 selectedButtonScale = new Vector3(1.1f, 1.1f, 1.1f);
 }
