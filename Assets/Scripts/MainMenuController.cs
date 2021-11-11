@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class MainMenuController : SerialController
 {
@@ -15,9 +16,7 @@ public class MainMenuController : SerialController
     [SerializeField]
     private GameObject optionsMenu;
     [SerializeField]
-    private GameObject videoMenu;
-    [SerializeField]
-    private GameObject soundMenu;
+    private GameObject levelMenu;
 
     private AudioSource audioSource;
     [Space(10)]
@@ -31,7 +30,9 @@ public class MainMenuController : SerialController
     [SerializeField]
     private List<GameObject> optionsMenuButtons;
     [SerializeField]
-    private List<GameObject> soundMenuButtons;
+    private List<GameObject> levelMenuButtons;
+    [SerializeField]
+    private Toggle verticalSyncToggle;
 
     // UI Text references
     [SerializeField]
@@ -45,8 +46,12 @@ public class MainMenuController : SerialController
     private int menuIndex = 0;
     private float buttonCooldown;
 
+    private bool dropDownShown = false;
+
     private void Awake()
     {
+        LoadVerticalSync();
+
         if (audioSource == null)
             audioSource = GetComponent<AudioSource>();
 
@@ -68,14 +73,6 @@ public class MainMenuController : SerialController
     // Update is called once per frame
     void Update()
     {
-        /*
-        if (EventSystem.current.currentSelectedGameObject.transform.localScale != DefaultValues.selectedButtonScale)
-        {
-            if (EventSystem.current.currentSelectedGameObject == mainMenuButtons[0] || EventSystem.current.currentSelectedGameObject == optionsMenuButtons[0])
-                EventSystem.current.currentSelectedGameObject.transform.localScale = DefaultValues.selectedButtonScale;
-        }
-        */
-
         string message = (string)serialThread.ReadMessage();
 
         if (buttonCooldown > 0)
@@ -102,11 +99,11 @@ public class MainMenuController : SerialController
                 SelectLeftRightButton(true);
                 break;
             case "5":   // Button 1
-                SelectButton(true);
+                //SelectButton(true);
+                Click();
                 break;
             case "6":   // Button 2
-                Button button = EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
-                button.onClick.Invoke();
+                //Click();
                 break;
             case "7":   // Button 3
                 break;
@@ -132,6 +129,93 @@ public class MainMenuController : SerialController
         audioSource.clip = audioClips[0];
         audioSource.Play();
 
+        if (optionsMenu.activeSelf == true)
+        {
+            if (downwards)
+            {
+                if (menuIndex != 3)
+                    menuIndex++;
+                else
+                    menuIndex = 0;
+            }
+            else
+            {
+                if (menuIndex != 0)
+                    menuIndex--;
+                else
+                    menuIndex = 3;
+            }
+            EventSystem.current.SetSelectedGameObject(optionsMenuButtons[menuIndex]);
+            EventSystem.current.currentSelectedGameObject.transform.localScale = DefaultValues.selectedButtonScale;
+            return;
+        }
+
+        if (levelMenu.activeSelf == true)
+        {
+            if (downwards)
+            {
+                switch (menuIndex)
+                {
+                    case 6:
+                        menuIndex = 0;
+                        break;
+                    case 5:
+                        menuIndex = 6;
+                        break;
+                    case 4:
+                        menuIndex = 6;
+                        break;
+                    case 3:
+                        menuIndex = 6;
+                        break;
+                    case 2:
+                        menuIndex = 5;
+                        break;
+                    case 1:
+                        menuIndex = 4;
+                        break;
+                    case 0:
+                        menuIndex = 3;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                switch (menuIndex)
+                {
+                    case 6:
+                        menuIndex = 3;
+                        break;
+                    case 5:
+                        menuIndex = 2;
+                        break;
+                    case 4:
+                        menuIndex = 1;
+                        break;
+                    case 3:
+                        menuIndex = 0;
+                        break;
+                    case 2:
+                        menuIndex = 5;
+                        break;
+                    case 1:
+                        menuIndex = 4;
+                        break;
+                    case 0:
+                        menuIndex = 6;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            
+            EventSystem.current.SetSelectedGameObject(levelMenuButtons[menuIndex]);
+            EventSystem.current.currentSelectedGameObject.transform.localScale = DefaultValues.selectedButtonScale;
+            return;
+        }
+
         if (mainMenu.activeSelf == true)
         {
             if (downwards)
@@ -152,84 +236,130 @@ public class MainMenuController : SerialController
             EventSystem.current.currentSelectedGameObject.transform.localScale = DefaultValues.selectedButtonScale;
             return;
         }
-
-        if (soundMenu.activeSelf == true)
-        {
-            if (downwards)
-            {
-                if (menuIndex != 2)
-                    menuIndex++;
-                else
-                    menuIndex = 0;
-            }
-            else
-            {
-                if (menuIndex != 0)
-                    menuIndex--;
-                else
-                    menuIndex = 2;
-            }
-            EventSystem.current.SetSelectedGameObject(soundMenuButtons[menuIndex]);
-            EventSystem.current.currentSelectedGameObject.transform.localScale = DefaultValues.selectedButtonScale;
-            return;
-        }
-
-        if (optionsMenu.activeSelf == true)
-        {
-            if (downwards)
-            {
-                if (menuIndex != optionsMenuButtons.Count - 1)
-                    menuIndex++;
-                else
-                    menuIndex = 0;
-            }
-            else
-            {
-                if (menuIndex != 0)
-                    menuIndex--;
-                else
-                    menuIndex = optionsMenuButtons.Count - 1;
-            }
-            EventSystem.current.SetSelectedGameObject(optionsMenuButtons[menuIndex]);
-            EventSystem.current.currentSelectedGameObject.transform.localScale = DefaultValues.selectedButtonScale;
-            return;
-        }
-
-
-        Debug.Log(menuIndex);
     }
 
     private void SelectLeftRightButton(bool right)
     {
         buttonCooldown = 0.25f;
-        if (soundMenu.activeSelf == true)
+        if (optionsMenu.activeSelf == true)
         {
             if (EventSystem.current.currentSelectedGameObject != null)
                 EventSystem.current.currentSelectedGameObject.transform.localScale = DefaultValues.defaultButtonScale;
 
             if (right)
             {
-                if (EventSystem.current.currentSelectedGameObject == soundMenuButtons[0])
-                    EventSystem.current.SetSelectedGameObject(soundMenuButtons[3]);
-                if (EventSystem.current.currentSelectedGameObject == soundMenuButtons[1])
-                    EventSystem.current.SetSelectedGameObject(soundMenuButtons[4]);
+                if (EventSystem.current.currentSelectedGameObject == optionsMenuButtons[0])
+                    EventSystem.current.SetSelectedGameObject(optionsMenuButtons[4]);
+                if (EventSystem.current.currentSelectedGameObject == optionsMenuButtons[1])
+                    EventSystem.current.SetSelectedGameObject(optionsMenuButtons[5]);
             }
             else
             {
-                if (EventSystem.current.currentSelectedGameObject == soundMenuButtons[3])
-                    EventSystem.current.SetSelectedGameObject(soundMenuButtons[0]);
-                if (EventSystem.current.currentSelectedGameObject == soundMenuButtons[4])
-                    EventSystem.current.SetSelectedGameObject(soundMenuButtons[1]);
+                if (EventSystem.current.currentSelectedGameObject == optionsMenuButtons[4])
+                    EventSystem.current.SetSelectedGameObject(optionsMenuButtons[0]);
+                if (EventSystem.current.currentSelectedGameObject == optionsMenuButtons[5])
+                    EventSystem.current.SetSelectedGameObject(optionsMenuButtons[1]);
             }
-
+            audioSource.clip = audioClips[0];
+            audioSource.Play();
             EventSystem.current.currentSelectedGameObject.transform.localScale = DefaultValues.selectedButtonScale;
+            return;
+        }
+
+        if (levelMenu.activeSelf == true)
+        {
+            if (EventSystem.current.currentSelectedGameObject != null)
+                EventSystem.current.currentSelectedGameObject.transform.localScale = DefaultValues.defaultButtonScale;
+
+            if (right)
+            {
+                switch (menuIndex)
+                {
+                    case 6:
+                        menuIndex = 0;
+                        break;
+                    case 5:
+                        menuIndex = 6;
+                        break;
+                    case 4:
+                        menuIndex = 5;
+                        break;
+                    case 3:
+                        menuIndex = 4;
+                        break;
+                    case 2:
+                        menuIndex = 3;
+                        break;
+                    case 1:
+                        menuIndex = 2;
+                        break;
+                    case 0:
+                        menuIndex = 1;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                switch (menuIndex)
+                {
+                    case 6:
+                        menuIndex = 5;
+                        break;
+                    case 5:
+                        menuIndex = 4;
+                        break;
+                    case 4:
+                        menuIndex = 3;
+                        break;
+                    case 3:
+                        menuIndex = 2;
+                        break;
+                    case 2:
+                        menuIndex = 1;
+                        break;
+                    case 1:
+                        menuIndex = 0;
+                        break;
+                    case 0:
+                        menuIndex = 6;
+                        break;
+                    default:
+                        break;
+                }
+
+            }
+            EventSystem.current.SetSelectedGameObject(levelMenuButtons[menuIndex]);
+            EventSystem.current.currentSelectedGameObject.transform.localScale = DefaultValues.selectedButtonScale;
+            return;
         }
     }
 
+    private void Click()
+    {
+        // Checks if it was button that was clicked.
+        if (EventSystem.current.currentSelectedGameObject.GetComponent<Button>() != null)
+        {
+            EventSystem.current.currentSelectedGameObject.GetComponent<Button>().onClick.Invoke();
+            Debug.Log(EventSystem.current.currentSelectedGameObject.name);
+            return;
+        }
+
+        // Checks if it was toggle that was clicked.
+        if (EventSystem.current.currentSelectedGameObject.GetComponent<Toggle>() != null)
+        {
+            Toggle toggle = EventSystem.current.currentSelectedGameObject.GetComponent<Toggle>();
+            toggle.isOn = !toggle.isOn;
+            return;
+        }
+    }
+
+    #region Sound settings & Vertical sync
     public void DecreaseMusicVolume()
     {
         if (musicValue > 0)
-            musicValue -= .05f;
+            musicValue -= .1f;
         if (musicValue <= 0)
             musicValue = 0.0001f;
         Debug.Log(Mathf.Log10(musicValue) * 20);
@@ -240,7 +370,7 @@ public class MainMenuController : SerialController
     public void IncreaseMusicVolume()
     {
         if (musicValue < 1)
-            musicValue += .05f;
+            musicValue += .1f;
         if (musicValue > 1)
             musicValue = 1;
         Debug.Log(Mathf.Log10(musicValue) * 20);
@@ -267,12 +397,62 @@ public class MainMenuController : SerialController
         AudioManager.Instance.SetSoundValues(Mathf.Log10(soundValue) * 20);
         soundVolumeText.text = (soundValue * 100).ToString("F0");
     }
+    #endregion
+
+    #region Vertical sync
+    public void ChangeVerticalSync(int value)
+    {
+        switch (value)
+        {
+            case 1:
+                // vsync on
+                QualitySettings.vSyncCount = 1;
+                PlayerPrefs.SetInt("VerticalSync", 1);
+                break;
+            case 0:
+                // vsync off
+                QualitySettings.vSyncCount = 0;
+                PlayerPrefs.SetInt("VerticalSync", 0);
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void VerticalSyncListener(Toggle toggle)
+    {
+        int value;
+        if (toggle.isOn)
+            value = 1;
+        else
+            value = 0;
+        ChangeVerticalSync(value);
+    }
+    public void LoadVerticalSync()
+    {
+        if (PlayerPrefs.HasKey("VerticalSync"))
+        {
+            int vsyncValue = PlayerPrefs.GetInt("VerticalSync");
+            if (vsyncValue == 0)
+                verticalSyncToggle.isOn = false;
+            QualitySettings.vSyncCount = vsyncValue;
+        }
+    }
+
+    #endregion
+
+    public void LoadLevel(int levelIndex)
+    {
+        SceneManager.LoadScene(levelIndex);
+    }
 
     public void SetButtonScale() => EventSystem.current.currentSelectedGameObject.transform.localScale = DefaultValues.selectedButtonScale;
 
     public void ResetButtonScale() => EventSystem.current.currentSelectedGameObject.transform.localScale = DefaultValues.defaultButtonScale;
 
     public void SaveAudioSettings() => AudioManager.Instance.SaveAudioSettings(musicValue, soundValue);
+
+    public void Quit() => Application.Quit();
 
     public void ResetMenuIndex() => menuIndex = 0;
 }

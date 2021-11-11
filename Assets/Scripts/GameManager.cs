@@ -69,7 +69,10 @@ public class GameManager : MonoBehaviour
     private GameObject leftButtonContainer;
     [SerializeField]
     private GameObject rightButtonContainer;
-        
+
+    [SerializeField]
+    private GameObject pauseMenu;
+
     public GameObject IngredientIconPrefab { get { return ingredientIconPrefab; } }
     public GameObject PizzaBoxPrefab { get { return pizzaBoxPrefab; } }
     /// <summary>
@@ -112,7 +115,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (!GameStarted)
+        if (!GameStarted || IsPaused)
             return;
 
         if (Input.GetKeyDown(KeyCode.Q))
@@ -227,13 +230,34 @@ public class GameManager : MonoBehaviour
         order.UIElement = null;
     }
 
+    public void Pause()
+    {
+        Time.timeScale = 0;
+        IsPaused = true;
+        pauseMenu.SetActive(true);
+        PauseMenu.Instance.Show();
+    }
+
+    public void Unpause()
+    {
+        pauseMenu.SetActive(false);
+        IsPaused = false;
+        Time.timeScale = 1;
+    }
+
     public void MainMenu()
     {
-        leftButtonContainer.GetComponent<Image>().enabled = true;
-        float wait = 1f;
-        while (wait > 0)
-            wait -= Time.deltaTime;
+        Time.timeScale = 1;
 
+        if (gameEndScreen.activeSelf == true)
+        {
+            leftButtonContainer.GetComponent<Image>().enabled = true;
+            float wait = 1f;
+            while (wait > 0)
+                wait -= Time.deltaTime;
+        }
+
+        SceneManager.LoadScene(0);
     }
 
     public void Restart()
@@ -249,14 +273,15 @@ public class GameManager : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        if (PlayerPrefs.HasKey("HighScore"))
+        string levelName = "HighScore Level" + SceneManager.GetActiveScene().buildIndex;
+        if (PlayerPrefs.HasKey(levelName))
         {
-            if (PlayerPrefs.GetInt("HighScore") < playerScore)
-                PlayerPrefs.SetInt("HighScore", playerScore);
+            if (PlayerPrefs.GetInt(levelName) < playerScore)
+                PlayerPrefs.SetInt(levelName, playerScore);
         }
         else
         {
-            PlayerPrefs.SetInt("HighScore", playerScore);
+            PlayerPrefs.SetInt(levelName, playerScore);
         }
 
         foreach (var order in orderScriptableObjects)

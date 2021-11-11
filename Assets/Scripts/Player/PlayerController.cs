@@ -74,6 +74,8 @@ public class PlayerController : SerialController
                 ButtonOne();
             if (Input.GetKeyDown(KeyCode.F))
                 ButtonTwo();
+            if (Input.GetKeyDown(KeyCode.Escape))
+                ButtonThree();
 
             horizontal = Input.GetAxisRaw("Horizontal");
             vertical = Input.GetAxisRaw("Vertical");
@@ -83,28 +85,34 @@ public class PlayerController : SerialController
         {
             switch (message)
             {
-                case "1":
+                case "1":   // LEFT
                     horizontal = -1;
                     break;
-                case "2":
+                case "2":   // STOPLEFT
                     horizontal = 0;
                     break;
-                case "3":
+                case "3":   // RIGHT
                     horizontal = 1;
                     break;
-                case "4":
+                case "4":   // STOPRIGHT
                     horizontal = 0;
                     break;
-                case "-1":
-                    vertical = -1;
+                case "-1":  // DOWN
+                    if (GameManager.Instance.IsPaused)
+                        PauseMenu.Instance.SelectButton();
+                    else
+                        vertical = -1;
                     break;
-                case "-2":
+                case "-2":  // STOPDOWN
                     vertical = 0;
                     break;
-                case "-3":
-                    vertical = 1;
+                case "-3":  // UP
+                    if (GameManager.Instance.IsPaused)
+                        PauseMenu.Instance.SelectButton();
+                    else
+                        vertical = 1;
                     break;
-                case "-4":
+                case "-4":  // STOPUP
                     vertical = 0;
                     break;
                 // Button inputs.
@@ -122,10 +130,9 @@ public class PlayerController : SerialController
             }
         }
 
-        if (GameManager.Instance.GameOver)
+        if (GameManager.Instance.GameOver || GameManager.Instance.IsPaused)
             return;
 
-        Debug.Log(controller.isGrounded);
         Vector3 newPos = new Vector3(transform.position.x + horizontal, transform.position.y, transform.position.z + vertical);
         Vector3 direction = new Vector3(horizontal, 0, vertical).normalized;
         Vector3 dir = newPos - transform.position;
@@ -170,7 +177,7 @@ public class PlayerController : SerialController
 
     private void ButtonOne()
     {
-        if (!GameManager.Instance.GameOver)
+        if (!GameManager.Instance.GameOver && !GameManager.Instance.IsPaused)
         {
             if (player.CloseIngredient != null)
             {
@@ -224,7 +231,10 @@ public class PlayerController : SerialController
         {
             GameManager.Instance.MainMenu();
         }
-            
+        else if (GameManager.Instance.IsPaused)
+        {
+            PauseMenu.Instance.Click();
+        }
     }
 
     private void ButtonTwo()
@@ -236,6 +246,9 @@ public class PlayerController : SerialController
     // Pause button
     private void ButtonThree()
     {
-
+        if (!GameManager.Instance.IsPaused)
+            GameManager.Instance.Pause();
+        else
+            GameManager.Instance.Unpause();
     }
 }

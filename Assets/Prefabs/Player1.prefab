@@ -1506,8 +1506,8 @@ MonoBehaviour:
   baudRate: 9600
   messageListener: {fileID: 0}
   reconnectionDelay: 1000
-  maxUnreadMessages: 1
-  keyboardMovement: 1
+  maxUnreadMessages: 2
+  keyboardMovement: 0
   rotationSpeed: 10
   movementSpeed: 6
   gravity: 150
