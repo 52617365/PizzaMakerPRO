@@ -330,6 +330,8 @@ public class MainMenuController : SerialController
                 }
 
             }
+            audioSource.clip = audioClips[0];
+            audioSource.Play();
             EventSystem.current.SetSelectedGameObject(levelMenuButtons[menuIndex]);
             EventSystem.current.currentSelectedGameObject.transform.localScale = DefaultValues.selectedButtonScale;
             return;

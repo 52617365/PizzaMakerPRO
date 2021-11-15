@@ -8,13 +8,28 @@ using UnityEngine;
 /// </summary>
 public class DeliveryPoint : MonoBehaviour
 {
+    [SerializeField]
+    private Color[] defaultColors;
+
     [HideInInspector]
     public Outline outline;
     private bool pizzaDelivered;
 
+    public Material highlightMaterial { get; private set; }
+
+    public Color[] TopMaterialColor { get { return defaultColors; } }
+
     private void Awake()
     {
-        outline = GetComponent<Outline>();
+        Renderer renderer = GetComponent<Renderer>();
+        foreach (var material in renderer.materials)
+        {
+            if (material.name == "highlight (Instance)")
+            {
+                highlightMaterial = material;
+                break;
+            }
+        }
     }
 
     public void DeliverPizza(HeldPizzaSO pizza, Player player)

@@ -18,7 +18,6 @@ public class LevelMenu : MonoBehaviour
             if (sceneIndex <= SceneManager.sceneCountInBuildSettings - 1)
             {
                 string query = "HighScore Level" + sceneIndex;
-                Debug.Log(query);
                 if (PlayerPrefs.HasKey(query))
                     text.text = "Highscore : " + PlayerPrefs.GetInt(query).ToString();
                 else

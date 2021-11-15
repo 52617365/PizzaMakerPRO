@@ -52,11 +52,13 @@ public class GameManager : MonoBehaviour
     /// </summary>
     [SerializeField]
     private GameObject pizzaBoxPrefab;
-    [SerializeField]
 
+    [SerializeField]
     private TextMeshProUGUI scoreText;
     [SerializeField]
     private TextMeshProUGUI gameDurationText;
+    [SerializeField]
+    private TextMeshProUGUI gameEndPointsText;
 
     [SerializeField]
     private GameObject countdownContainer;
@@ -185,6 +187,7 @@ public class GameManager : MonoBehaviour
     {
         GameOver = true;
         CancelInvoke();
+        gameEndPointsText.text = playerScore.ToString();
         gameEndScreen.SetActive(true);
         // TODO: Implement something that indicates that game is over.
     }

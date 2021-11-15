@@ -14,7 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pizzaName: Hawaii Pizza
   ingredients:
-  - {fileID: 11400000, guid: 996a95406270ec94ba2a19031f7a7689, type: 2}
-  - {fileID: 11400000, guid: 826339bb70365444d83603c7bbc02342, type: 2}
   - {fileID: 11400000, guid: 017f918a686dff340b143b995f897971, type: 2}
   - {fileID: 11400000, guid: c376844b84b0690479668727c303f2df, type: 2}

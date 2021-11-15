@@ -13,6 +13,7 @@ public class PauseMenu : MonoBehaviour
     private List<GameObject> pauseMenuButtons;
 
     private int buttonIndex;
+    private float buttonCooldown;
 
     private void Awake()
     {
@@ -24,6 +25,12 @@ public class PauseMenu : MonoBehaviour
             _instance = this;
     }
 
+    private void Update()
+    {
+        if (buttonCooldown > 0f)
+            buttonCooldown -= 0.01f;
+    }
+
     public void Show()
     {
         EventSystem.current.SetSelectedGameObject(pauseMenuButtons[0]);
@@ -33,21 +40,27 @@ public class PauseMenu : MonoBehaviour
 
     public void SelectButton()
     {
-        switch (buttonIndex)
+        if (buttonCooldown <= 0)
         {
-            case 1:
-                buttonIndex = 0;
-                break;
-            case 0:
-                buttonIndex = 1;
-                break;
-            default:
-                break;
-        }
+            buttonCooldown = 0.25f;
+            switch (buttonIndex)
+            {
+                case 1:
+                    buttonIndex = 0;
+                    break;
+                case 0:
+                    buttonIndex = 1;
+                    break;
+                default:
+                    break;
+            }
 
-        EventSystem.current.currentSelectedGameObject.transform.localScale = DefaultValues.defaultButtonScale;
-        EventSystem.current.SetSelectedGameObject(pauseMenuButtons[buttonIndex]);
-        EventSystem.current.currentSelectedGameObject.transform.localScale = DefaultValues.selectedButtonScale;
+            EventSystem.current.currentSelectedGameObject.transform.localScale = DefaultValues.defaultButtonScale;
+            EventSystem.current.SetSelectedGameObject(pauseMenuButtons[buttonIndex]);
+            EventSystem.current.currentSelectedGameObject.transform.localScale = DefaultValues.selectedButtonScale;
+        }
+        else
+            return;
     }
 
     public void Click()

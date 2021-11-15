@@ -14,7 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pizzaName: Opera
   ingredients:
-  - {fileID: 11400000, guid: 996a95406270ec94ba2a19031f7a7689, type: 2}
-  - {fileID: 11400000, guid: 826339bb70365444d83603c7bbc02342, type: 2}
   - {fileID: 11400000, guid: b63ca1a2a1e1fbb4cb12b13b394d5f98, type: 2}
   - {fileID: 11400000, guid: 017f918a686dff340b143b995f897971, type: 2}

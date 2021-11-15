@@ -69,7 +69,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private List<GameObject> activeIcons;
 
-    private GameObject closeTrashBin;
+    private GameObject closeDonationBox;
     [SerializeField]
     private GameObject pizzaBoxContainer;
     public GameObject instantiatedGameObject { get; set; }
@@ -131,7 +131,7 @@ public class Player : MonoBehaviour
 
     public GameObject CloseTrashBin
     {
-        get { return closeTrashBin; }
+        get { return closeDonationBox; }
     }
     public GameObject PizzaBoxContainer { get { return pizzaBoxContainer; } }
     #endregion
@@ -215,20 +215,20 @@ public class Player : MonoBehaviour
                         DeliveryPoint detectedDeliveryPoint = hit.transform.GetComponent<DeliveryPoint>();
                         if (closeDeliveryPoint != detectedDeliveryPoint)
                         {
-                            if (closeDeliveryPoint != null && closeDeliveryPoint.outline.enabled)
-                                closeDeliveryPoint.outline.enabled = false;
+                            if (closeDeliveryPoint != null && closeDeliveryPoint.highlightMaterial.GetColor("_Color") != closeDeliveryPoint.TopMaterialColor[0])
+                                closeDeliveryPoint.highlightMaterial.SetColor("_Color", closeDeliveryPoint.TopMaterialColor[0]);
                             closeDeliveryPoint = detectedDeliveryPoint;
-                            closeDeliveryPoint.outline.enabled = true;
+                            closeDeliveryPoint.highlightMaterial.SetColor("_Color", closeDeliveryPoint.TopMaterialColor[1]);
                         }
                         break;
-                    case "TrashBin":
-                        GameObject detectedTrashBin = hit.transform.gameObject;
-                        if (closeTrashBin != detectedTrashBin)
+                    case "DonationBox":
+                        GameObject detectedDonationBox = hit.transform.gameObject;
+                        if (closeDonationBox != detectedDonationBox)
                         {
-                            if (closeTrashBin != null && closeTrashBin.GetComponent<Outline>().enabled)
-                                closeTrashBin.GetComponent<Outline>().enabled = false;
-                            closeTrashBin = detectedTrashBin;
-                            closeTrashBin.GetComponent<Outline>().enabled = true;
+                            if (closeDonationBox != null && closeDonationBox.GetComponent<Outline>().enabled)
+                                closeDonationBox.GetComponent<Outline>().enabled = false;
+                            closeDonationBox = detectedDonationBox;
+                            closeDonationBox.GetComponent<Outline>().enabled = true;
                         }
                         break;
                     default:
@@ -260,14 +260,13 @@ public class Player : MonoBehaviour
 
                 if (closeDeliveryPoint != null)
                 {
-                    closeDeliveryPoint.outline.enabled = false;
+                    closeDeliveryPoint.highlightMaterial.SetColor("_Color", closeDeliveryPoint.TopMaterialColor[0]);
                     closeDeliveryPoint = null;
                 }
 
-                if (closeTrashBin != null)
+                if (closeDonationBox != null)
                 {
-                    closeTrashBin.GetComponent<Outline>().enabled = false;
-                    closeTrashBin = null;
+                    closeDonationBox = null;
                 }
             }
         }
@@ -360,14 +359,4 @@ public class Player : MonoBehaviour
     // so I had to add this method.
     public void AddToActiveIcons(GameObject icon) => activeIcons.Add(icon);
 
-    #region OnDrawGizmos
-    /// <summary>
-    /// Visualizes Detection range in UnityEditor
-    /// </summary>
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, detectionRange);
-    }
-    #endregion
 }
