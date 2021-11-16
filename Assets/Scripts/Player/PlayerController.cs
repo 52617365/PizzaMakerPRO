@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 public class PlayerController : SerialController
 {
@@ -18,6 +19,7 @@ public class PlayerController : SerialController
     [SerializeField]
     [Range(1, 10)]
     private float movementSpeed;
+    private float dashCooldown = 0;
     [SerializeField]
     private float gravity;
 
@@ -34,6 +36,8 @@ public class PlayerController : SerialController
 
     private void Awake()
     {
+        if (messageListener == null)
+            messageListener = GameObject.Find("MessageListener");
         if (controller == null)
             controller = gameObject.GetComponent<CharacterController>();
         if (player == null)
@@ -64,6 +68,9 @@ public class PlayerController : SerialController
     {
         if (!GameManager.Instance.GameStarted)
             return;
+
+        if (dashCooldown > 0)
+            dashCooldown -= Time.deltaTime;
 
         string message = (string)serialThread.ReadMessage();
 
@@ -239,6 +246,9 @@ public class PlayerController : SerialController
 
     private void ButtonTwo()
     {
+        if (!GameManager.Instance.GameOver && !GameManager.Instance.IsPaused && dashCooldown <= 0)
+            StartCoroutine("Dash");
+
         if (GameManager.Instance.GameOver)
             GameManager.Instance.Restart();
     }
@@ -250,5 +260,23 @@ public class PlayerController : SerialController
             GameManager.Instance.Pause();
         else
             GameManager.Instance.Unpause();
+    }
+
+    private IEnumerator Dash()
+    {
+        Debug.Log("DASH");
+        float timer = 2;
+        float wait = 0.1f;
+
+        dashCooldown = DefaultValues.dashCooldownLength;
+        movementSpeed += 2;
+
+        while (timer > 0)
+        {
+            timer -= wait;
+            yield return new WaitForSeconds(wait);
+        }
+
+        movementSpeed = DefaultValues.defaultMovementSpeed;
     }
 }

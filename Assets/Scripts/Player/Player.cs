@@ -185,10 +185,10 @@ public class Player : MonoBehaviour
                         Pizza detectedPizza = hit.transform.GetComponent<Pizza>();
                         if (closePizza != detectedPizza)
                         {
-                            if (closePizza != null && closePizza.outline.enabled)
-                                closePizza.outline.enabled = false;
+                            if (closePizza != null && closePizza.highlightMaterial.GetColor("_Color") != closePizza.TopMaterialColor[0])
+                                closePizza.highlightMaterial.SetColor("_Color", closePizza.TopMaterialColor[0]);
                             closePizza = detectedPizza;
-                            closePizza.outline.enabled = true;
+                            closePizza.highlightMaterial.SetColor("_Color", closePizza.TopMaterialColor[1]);
                         }
                         break;
                     case "Ingredient":
@@ -248,7 +248,7 @@ public class Player : MonoBehaviour
 
                 if (closePizza != null)
                 {
-                    closePizza.outline.enabled = false;
+                    closePizza.highlightMaterial.SetColor("_Color", closePizza.TopMaterialColor[0]);
                     closePizza = null;
                 }
 

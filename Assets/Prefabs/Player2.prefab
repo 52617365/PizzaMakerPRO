@@ -1525,7 +1525,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerNumber: 1
   heldIngredient: {fileID: 0}
-  heldPizzaSO: {fileID: 11400000, guid: 0bdf0595125eedd4584f16ae38322a49, type: 2}
+  heldPizzaSO: {fileID: 11400000, guid: 45a8687d33c695f44909951ae8f8e7be, type: 2}
   detectionRange: 1.5
   ingredientIcon: {fileID: 4858541249263867323}
   activeIcons: []

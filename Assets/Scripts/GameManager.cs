@@ -37,8 +37,15 @@ public class GameManager : MonoBehaviour
     private GameObject container;
 
     /// <summary>
+    /// Location that player 2 will be spawned on.
+    /// </summary>
+    [SerializeField]
+    private GameObject playerSpawnPoint;
+    /// <summary>
     /// Prefab of order UI Element.
     /// </summary>
+    [Header("Prefabs")]
+    [Space(5)]
     [SerializeField]
     private GameObject orderPrefab;
 
@@ -52,7 +59,15 @@ public class GameManager : MonoBehaviour
     /// </summary>
     [SerializeField]
     private GameObject pizzaBoxPrefab;
+    /// <summary>
+    /// Prefab of player 2.
+    /// </summary>
+    [SerializeField]
+    private GameObject playerTwoPrefab;
 
+    // Text references
+    [Header("Text references")]
+    [Space(5)]
     [SerializeField]
     private TextMeshProUGUI scoreText;
     [SerializeField]
@@ -60,6 +75,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI gameEndPointsText;
 
+    [Space(10)]
     [SerializeField]
     private GameObject countdownContainer;
     [SerializeField]
@@ -104,6 +120,17 @@ public class GameManager : MonoBehaviour
         else
             _instance = this;
 
+        try
+        {
+            if (LevelChanger.Instance.PlayerCount == 2)
+                AddPlayerTwo();
+        }
+        catch (System.Exception)
+        {
+            // Do nothing.
+        }
+        
+
         foreach (var order in orderScriptableObjects)
         {
             order.isInUse = false;
@@ -123,6 +150,9 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q))
             NewOrder();
 
+        if (Input.GetKeyDown(KeyCode.Z))
+            AddPlayerTwo();
+
         if (!GameOver)
         {
             if (!IsPaused)
@@ -139,6 +169,11 @@ public class GameManager : MonoBehaviour
     }
 
     #region Private methods
+    private void AddPlayerTwo()
+    {
+        GameObject go = Instantiate(playerTwoPrefab, playerSpawnPoint.transform.position, playerTwoPrefab.transform.rotation);
+    }
+
     /// <summary>
     /// Generates new order and instantiates UI Element that
     /// displays required ingredients and time to bake pizza within.
@@ -251,16 +286,14 @@ public class GameManager : MonoBehaviour
     public void MainMenu()
     {
         Time.timeScale = 1;
-
-        if (gameEndScreen.activeSelf == true)
+        try
         {
-            leftButtonContainer.GetComponent<Image>().enabled = true;
-            float wait = 1f;
-            while (wait > 0)
-                wait -= Time.deltaTime;
+            LevelChanger.Instance.FadeToLevel(0);
         }
-
-        SceneManager.LoadScene(0);
+        catch (System.Exception)
+        {
+            SceneManager.LoadScene(0);
+        }
     }
 
     public void Restart()
