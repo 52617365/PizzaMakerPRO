@@ -55,6 +55,7 @@ OneButton button3 = OneButton(
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
+  SerialBT.begin("ESP32");
 
   upButton.attachClick(UpButtonClick);
   upButton.attachLongPressStop(UpButtonClick);
@@ -121,28 +122,28 @@ void loop() {
   if(digitalRead(LEFT_BUTTON) == LOW){
     // Lähetettävän arvon tulisi olla Horizontal -1
     Serial.println("1");
-    // SerialBT.println("1");
+    SerialBT.println("1");
   }
 
 
   if (digitalRead(RIGHT_BUTTON) == LOW){
     // Lähetettävän arvon tulisi olla Horizontal 1
     Serial.println("3");
-    // SerialBT.println("3");
+    SerialBT.println("3");
   }
 
 
   if (digitalRead(UP_BUTTON) == LOW){
     // Lähetettävän arvon tulisi olla Vertical 1
     Serial.println("-3");
-    // SerialBT.println("-3");
+    SerialBT.println("-3");
   }
 
 
   if (digitalRead(DOWN_BUTTON) == LOW){
     // Lähetettävän arvon tulisi olla Vertical -1
     Serial.println("-1");
-    // SerialBT.println("-1");
+    SerialBT.println("-1");
   }
 
 }
@@ -151,38 +152,38 @@ void loop() {
 static void UpButtonClick(){
   // Lähetettävän arvon tulisi olla Vertical 0
   Serial.println("-4");
-  // SerialBT.println("-4");
+  SerialBT.println("-4");
 }
 
 static void DownButtonClick(){
   // Lähetettävän arvon tulisi olla Vertical 0
   Serial.println("-2");
-  // SerialBT.println("-2");
+  SerialBT.println("-2");
 }
 
 static void LeftButtonClick(){
   // Lähetettävän arvon tulisi olla Horizontal 0
   Serial.println("2");  
-  // SerialBT.println("2");  
+  SerialBT.println("2");  
 }
 
 static void RightButtonClick(){
   // Lähetettävän arvon tulisi olla Horizontal 0
   Serial.println("4");
-  // SerialBT.println("4");
+  SerialBT.println("4");
 }
 
 static void ButtonOneClick(){
   Serial.println("5");
-  // SerialBT.println("5");
+  SerialBT.println("5");
 }
 
 static void ButtonTwoClick(){
   Serial.println("6");
-  // SerialBT.println("6");
+  SerialBT.println("6");
 }
 
 static void ButtonThreeClick(){
   Serial.println("7");
-  // SerialBT.println("7");
+  SerialBT.println("7");
 }
