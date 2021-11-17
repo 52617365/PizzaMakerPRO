@@ -225,10 +225,7 @@ public class Player : MonoBehaviour
                         GameObject detectedDonationBox = hit.transform.gameObject;
                         if (closeDonationBox != detectedDonationBox)
                         {
-                            if (closeDonationBox != null && closeDonationBox.GetComponent<Outline>().enabled)
-                                closeDonationBox.GetComponent<Outline>().enabled = false;
                             closeDonationBox = detectedDonationBox;
-                            closeDonationBox.GetComponent<Outline>().enabled = true;
                         }
                         break;
                     default:

@@ -412,7 +412,7 @@ public class MainMenuController : SerialController
     public void DecreaseSoundVolume()
     {
         if (soundValue > 0)
-            soundValue -= .05f;
+            soundValue -= .1f;
         if (soundValue <= 0)
             soundValue = 0.0001f;
         AudioManager.Instance.SetSoundValues(Mathf.Log10(soundValue) * 20);
@@ -422,7 +422,7 @@ public class MainMenuController : SerialController
     public void IncreaseSoundVolume()
     {
         if (soundValue < 1)
-            soundValue += .05f;
+            soundValue += .1f;
         if (soundValue > 1)
             soundValue = 1;
         AudioManager.Instance.SetSoundValues(Mathf.Log10(soundValue) * 20);
