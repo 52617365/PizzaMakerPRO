@@ -119,7 +119,10 @@ public class MainMenuController : SerialController
         if (ReferenceEquals(message, SERIAL_DEVICE_CONNECTED))
             messageListener.SendMessage("OnConnectionEvent", true);
         else if (ReferenceEquals(message, SERIAL_DEVICE_DISCONNECTED))
+        {
             messageListener.SendMessage("OnConnectionEvent", false);
+            
+        }
         else
             messageListener.SendMessage("OnMessageArrived", message);
     }

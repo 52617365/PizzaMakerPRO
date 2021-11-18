@@ -172,6 +172,7 @@ public class GameManager : MonoBehaviour
     private void AddPlayerTwo()
     {
         GameObject go = Instantiate(playerTwoPrefab, playerSpawnPoint.transform.position, playerTwoPrefab.transform.rotation);
+        go.name = "Player2";
     }
 
     /// <summary>

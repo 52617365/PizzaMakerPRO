@@ -1509,7 +1509,7 @@ MonoBehaviour:
   maxUnreadMessages: 2
   keyboardMovement: 0
   rotationSpeed: 10
-  movementSpeed: 6
+  movementSpeed: 4
   gravity: 150
 --- !u!114 &5741078351391282801
 MonoBehaviour:

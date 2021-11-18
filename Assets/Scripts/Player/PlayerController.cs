@@ -72,6 +72,11 @@ public class PlayerController : SerialController
         if (dashCooldown > 0)
             dashCooldown -= Time.deltaTime;
 
+        // Allows Player1 to pause by pressing escape on keyboard
+        // even if keyboardMovement is set to false.
+        if (Input.GetKeyDown(KeyCode.Escape) && player.GetPlayerNumber == 0)
+            ButtonThree();
+
         string message = (string)serialThread.ReadMessage();
 
         // If keyboard is in use then calculates horizontal and vertical inputs from keyboard.
@@ -81,8 +86,6 @@ public class PlayerController : SerialController
                 ButtonOne();
             if (Input.GetKeyDown(KeyCode.F))
                 ButtonTwo();
-            if (Input.GetKeyDown(KeyCode.Escape))
-                ButtonThree();
 
             horizontal = Input.GetAxisRaw("Horizontal");
             vertical = Input.GetAxisRaw("Vertical");
@@ -176,7 +179,9 @@ public class PlayerController : SerialController
             if (ReferenceEquals(message, SERIAL_DEVICE_CONNECTED))
                 messageListener.SendMessage("OnConnectionEvent", true);
             else if (ReferenceEquals(message, SERIAL_DEVICE_DISCONNECTED))
+            {
                 messageListener.SendMessage("OnConnectionEvent", false);
+            }
             else
                 messageListener.SendMessage("OnMessageArrived", message);
         }
