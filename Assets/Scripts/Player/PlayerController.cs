@@ -9,6 +9,8 @@ public class PlayerController : SerialController
     [Header("PlayerController specific variables")]
     [Space(15)]
     [SerializeField]
+    private GameObject dashEffect;
+    [SerializeField]
     private bool keyboardMovement; // Allows keyboard to be used for movement
 
     [Space(10)]
@@ -216,7 +218,7 @@ public class PlayerController : SerialController
             }
 
             // Checks that player is close pizza oven, player is holding pizza and pizza cookState is not either cooked or burnt.
-            if (player.ClosePizzaOven != null && player.HeldPizza != null && player.HeldPizza.cookState != HeldPizzaSO.CookState.Cooked && player.HeldPizza.cookState != HeldPizzaSO.CookState.Burnt)
+            if (player.ClosePizzaOven != null && !player.ClosePizzaOven.PizzaInOven && player.HeldPizza != null && player.HeldPizza.cookState != HeldPizzaSO.CookState.Cooked && player.HeldPizza.cookState != HeldPizzaSO.CookState.Burnt)
             {
                 player.ClosePizzaOven.AddPizzaToOven(player.HeldPizza, player);
                 return;
@@ -273,6 +275,11 @@ public class PlayerController : SerialController
         float timer = 2;
         float wait = 0.1f;
 
+        Quaternion rotation = new Quaternion(-90, 0, 0, 0);
+        GameObject go = Instantiate(dashEffect);
+        go.transform.position = transform.position;
+        ParticleSystem particle = go.GetComponent<ParticleSystem>();
+        particle.Play();
         dashCooldown = DefaultValues.dashCooldownLength;
         movementSpeed += 2;
 
@@ -282,6 +289,8 @@ public class PlayerController : SerialController
             yield return new WaitForSeconds(wait);
         }
 
+        particle.Stop();
+        Destroy(go);
         movementSpeed = DefaultValues.defaultMovementSpeed;
     }
 }

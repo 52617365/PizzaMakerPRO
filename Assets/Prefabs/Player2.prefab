@@ -1507,6 +1507,7 @@ MonoBehaviour:
   messageListener: {fileID: 0}
   reconnectionDelay: 1000
   maxUnreadMessages: 2
+  dashEffect: {fileID: 6986833356639852630, guid: b1817f6f06485b54b8159e290e47896a, type: 3}
   keyboardMovement: 0
   rotationSpeed: 10
   movementSpeed: 4

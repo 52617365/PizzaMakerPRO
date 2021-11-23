@@ -15,6 +15,8 @@ public class PizzaOven : MonoBehaviour
     private Color[] defaultColors;
     [SerializeField]
     private GameObject UI;
+    [SerializeField]
+    private ParticleSystem smokeEffect;
 
     private float remainingTime;
     private float maxTime;
@@ -84,13 +86,21 @@ public class PizzaOven : MonoBehaviour
                 if (progressBar.color != progressBarColor[1])
                     progressBar.color = progressBarColor[1];
 
+
                 remainingTime += Time.deltaTime;
                 float percent = remainingTime / maxTime;
                 progressBar.fillAmount = Mathf.Lerp(0, 1, percent);
             }
 
             if (!pizzaIsBurnt && pizzaIsReady && remainingTime >= maxTime)
+            {
                 pizzaIsBurnt = true;
+                if (smokeEffect.gameObject.activeSelf == false)
+                {
+                    smokeEffect.gameObject.SetActive(true);
+                    smokeEffect.Play();
+                }
+            }
         }
     }
 
@@ -157,7 +167,11 @@ public class PizzaOven : MonoBehaviour
             if (!pizzaIsBurnt)
                 player.HeldPizza.cookState = HeldPizzaSO.CookState.Cooked;
             else
+            {
                 player.HeldPizza.cookState = HeldPizzaSO.CookState.Burnt;
+                smokeEffect.Stop();
+                smokeEffect.gameObject.SetActive(false);
+            }
             pizzaIsReady = false;
         }
         player.instantiatedGameObject = Instantiate(GameManager.Instance.PizzaBoxPrefab);
