@@ -12,6 +12,10 @@ public class ComPortChanger : MonoBehaviour
     // Player 1 & Player 2 references.
     private GameObject player1;
     private GameObject player2;
+    [SerializeField]
+    private GameObject player1Prefab;
+    [SerializeField]
+    private GameObject player2Prefab;
     // MainMenuController reference.
     private GameObject mainMenuController;
 
@@ -51,6 +55,7 @@ public class ComPortChanger : MonoBehaviour
             try
             {
                 mainMenuController = GameObject.Find("MainMenuController");
+                mainMenuController.GetComponent<MainMenuController>().portName = player1Prefab.GetComponent<PlayerController>().portName;
                 switch (mainMenuController.GetComponent<MainMenuController>().portName)
                 {
                     case "COM12":
@@ -264,15 +269,22 @@ public class ComPortChanger : MonoBehaviour
                 pController.enabled = true;
             }
         }
+
+        // Changes port name on prefab to newPort.
+        PlayerController prefabController = player1Prefab.GetComponent<PlayerController>();
+        prefabController.portName = newPort;
     }
 
     public void ChangePlayer2Port()
     {
         string newPort = "COM" + (player2Ports.value + 1).ToString();
         PlayerController pController = player2.GetComponent<PlayerController>();
+        PlayerController prefabController = player1Prefab.GetComponent<PlayerController>();
+
         if (pController.portName != newPort)
         {
             pController.portName = newPort;
+            prefabController.portName = newPort;
 
             // Turns the component off and on to destroy serial thread and open new thread with new port number
             pController.enabled = false;

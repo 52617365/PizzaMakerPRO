@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1021778275}
   - component: {fileID: 1021778274}
   m_Layer: 0
-  m_Name: PlayerNumberIcon
+  m_Name: Player1NumberIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1507,7 +1507,7 @@ MonoBehaviour:
   messageListener: {fileID: 0}
   reconnectionDelay: 1000
   maxUnreadMessages: 2
-  dashEffect: {fileID: 0}
+  dashEffect: {fileID: 6986833356639852630, guid: b1817f6f06485b54b8159e290e47896a, type: 3}
   keyboardMovement: 1
   rotationSpeed: 10
   movementSpeed: 4
@@ -1531,6 +1531,7 @@ MonoBehaviour:
   ingredientIcon: {fileID: 4759354836412468582}
   activeIcons: []
   pizzaBoxContainer: {fileID: 4999563028307249039}
+  playerNumberIcon: {fileID: 1021778272}
 --- !u!1 &5807903294977278993
 GameObject:
   m_ObjectHideFlags: 0

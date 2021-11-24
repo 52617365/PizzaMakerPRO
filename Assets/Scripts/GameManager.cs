@@ -37,10 +37,15 @@ public class GameManager : MonoBehaviour
     private GameObject container;
 
     /// <summary>
-    /// Location that player 2 will be spawned on.
+    /// Location that Player 1 will be spawned on.
     /// </summary>
     [SerializeField]
-    private GameObject playerSpawnPoint;
+    private GameObject playerOneSpawnPoint;
+    /// <summary>
+    /// Location that Player 2 will be spawned on.
+    /// </summary>
+    [SerializeField]
+    private GameObject playerTwoSpawnPoint;
     /// <summary>
     /// Prefab of order UI Element.
     /// </summary>
@@ -54,13 +59,21 @@ public class GameManager : MonoBehaviour
     /// </summary>
     [SerializeField]
     private GameObject ingredientIconPrefab;
+
     /// <summary>
     /// Prefab of pizza box
     /// </summary>
     [SerializeField]
     private GameObject pizzaBoxPrefab;
+
     /// <summary>
-    /// Prefab of player 2.
+    /// Prefab of Player 1.
+    /// </summary>
+    [SerializeField]
+    private GameObject playerOnePrefab;
+
+    /// <summary>
+    /// Prefab of Player 2.
     /// </summary>
     [SerializeField]
     private GameObject playerTwoPrefab;
@@ -71,10 +84,17 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI scoreText;
     [SerializeField]
+    private TextMeshProUGUI player1ScoreText;
+    [SerializeField]
+    private TextMeshProUGUI player2ScoreText;
+    [SerializeField]
     private TextMeshProUGUI gameDurationText;
     [SerializeField]
     private TextMeshProUGUI gameEndPointsText;
+    [SerializeField]
+    private TextMeshProUGUI newHighScoreText;
 
+    [Header("UI references")]
     [Space(10)]
     [SerializeField]
     private GameObject countdownContainer;
@@ -87,10 +107,19 @@ public class GameManager : MonoBehaviour
     private GameObject leftButtonContainer;
     [SerializeField]
     private GameObject rightButtonContainer;
-
     [SerializeField]
     private GameObject pauseMenu;
+    [SerializeField]
+    private GameObject playerTwoDashContainer;
+    [SerializeField]
+    private Image p1DashProgressBar;
+    [SerializeField]
+    private Image p2DashProgressBar;
+    [SerializeField]
+    private GameObject playerTwoPointsContainer;
 
+    public Image P1DashProgressBar { get { return p1DashProgressBar; } }
+    public Image P2DashProgressBar { get { return p2DashProgressBar; } }
     public GameObject IngredientIconPrefab { get { return ingredientIconPrefab; } }
     public GameObject PizzaBoxPrefab { get { return pizzaBoxPrefab; } }
     /// <summary>
@@ -119,6 +148,10 @@ public class GameManager : MonoBehaviour
             Destroy(this.gameObject);
         else
             _instance = this;
+
+        GameObject go = Instantiate(playerOnePrefab, playerOneSpawnPoint.transform.position, playerOnePrefab.transform.rotation);
+        go.name = "Player1";
+        player1ScoreText.text = go.GetComponent<Player>().PlayerScore.ToString("F0");
 
         try
         {
@@ -171,8 +204,11 @@ public class GameManager : MonoBehaviour
     #region Private methods
     private void AddPlayerTwo()
     {
-        GameObject go = Instantiate(playerTwoPrefab, playerSpawnPoint.transform.position, playerTwoPrefab.transform.rotation);
+        GameObject go = Instantiate(playerTwoPrefab, playerTwoSpawnPoint.transform.position, playerTwoPrefab.transform.rotation);
         go.name = "Player2";
+        player2ScoreText.text = go.GetComponent<Player>().PlayerScore.ToString("F0");
+        playerTwoDashContainer.SetActive(true);
+        playerTwoPointsContainer.SetActive(true);
     }
 
     /// <summary>
@@ -191,8 +227,31 @@ public class GameManager : MonoBehaviour
         }
 
         int randomValue = Random.Range(1, 6);
-        Debug.Log(randomValue);
-        if (randomValue >= 4 || currentOrders.Count == 0)
+        int threshold = 6;
+
+        switch (CurrentOrders.Count)
+        {
+            case 4:
+                threshold = 3;
+                break;
+            case 3:
+                threshold = 3;
+                break;
+            case 2:
+                threshold = 3;
+                break;
+            case 1:
+                threshold = 2;
+                break;
+            case 0:
+                threshold = 1;
+                break;
+            default:
+                break;
+        }
+
+        Debug.Log("Random value: " + randomValue + ", Threshold:" + threshold);
+        if (randomValue >= threshold)
         {
             GetComponent<AudioSource>().Play();
             PizzaSO randomPizza = pizzaDatabase.pizzas[Random.Range(0, pizzaDatabase.pizzas.Count())];
@@ -224,8 +283,20 @@ public class GameManager : MonoBehaviour
         GameOver = true;
         CancelInvoke();
         gameEndPointsText.text = playerScore.ToString();
+        string levelName = "HighScore Level" + SceneManager.GetActiveScene().buildIndex;
+        if (PlayerPrefs.HasKey(levelName))
+        {
+            if (PlayerPrefs.GetInt(levelName) < playerScore)
+            {
+                newHighScoreText.gameObject.SetActive(true);
+            }
+        }
+        else
+        {
+            newHighScoreText.gameObject.SetActive(true);
+        }
         gameEndScreen.SetActive(true);
-        // TODO: Implement something that indicates that game is over.
+        SaveScore();
     }
 
     private IEnumerator Countdown()
@@ -241,7 +312,17 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(1);
             go.SetActive(false);
         }
-        InvokeRepeating("NewOrder", 0, 10f);
+        float repeatTime = 10f;
+        try
+        {
+            if (LevelChanger.Instance.PlayerCount == 2)
+                repeatTime = 7f;
+        }
+        catch (System.Exception)
+        {
+            // Do nothing.
+        }
+        InvokeRepeating("NewOrder", 0, repeatTime);
         gameDurationText.gameObject.SetActive(true);
     }
     #endregion
@@ -259,6 +340,21 @@ public class GameManager : MonoBehaviour
 
         _instance.playerScore += (int)amount;
         _instance.scoreText.text = _instance.playerScore.ToString("F0");
+    }
+
+    public void UpdatePlayerScoreText(int playerNumber, int scoreAmount)
+    {
+        switch (playerNumber)
+        {
+            case 1: // Player 2
+                player2ScoreText.text = scoreAmount.ToString("F0");
+                break;
+            case 0: // Player 1
+                player1ScoreText.text = scoreAmount.ToString("F0");
+                break;
+            default:
+                break;
+        }
     }
 
     public void ClearOrder(OrderSO order)
@@ -308,7 +404,7 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-    private void OnApplicationQuit()
+    public void SaveScore()
     {
         string levelName = "HighScore Level" + SceneManager.GetActiveScene().buildIndex;
         if (PlayerPrefs.HasKey(levelName))
@@ -320,7 +416,11 @@ public class GameManager : MonoBehaviour
         {
             PlayerPrefs.SetInt(levelName, playerScore);
         }
+    }
 
+    private void OnApplicationQuit()
+    {
+        SaveScore();
         foreach (var order in orderScriptableObjects)
         {
 

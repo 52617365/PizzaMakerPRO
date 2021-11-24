@@ -43,12 +43,12 @@ GameObject:
   - component: {fileID: 99538270193746366}
   - component: {fileID: 99538270193746367}
   m_Layer: 0
-  m_Name: PlayerNumberIcon
+  m_Name: Player2NumberIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &99538270193746364
 RectTransform:
   m_ObjectHideFlags: 0
@@ -96,7 +96,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0dc7d93d03a4db24d9de2c02c2b93a89, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 86ad21e910503014893de755c6e44f8f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1531,6 +1531,7 @@ MonoBehaviour:
   ingredientIcon: {fileID: 4858541249263867323}
   activeIcons: []
   pizzaBoxContainer: {fileID: 4900942867720937298}
+  playerNumberIcon: {fileID: 99538270193746365}
 --- !u!1 &5906594888922864844
 GameObject:
   m_ObjectHideFlags: 0

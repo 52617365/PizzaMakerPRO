@@ -1,5 +1,7 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
+
 public class PlayerController : SerialController
 {
     private Animator animator;
@@ -25,6 +27,11 @@ public class PlayerController : SerialController
     [SerializeField]
     private float gravity;
 
+    // Used to display dash cooldown and duration on UI.
+    private Image dashProgressBar;
+    private bool cooldown;
+
+    // Used to keep attached canvas to face towards camera all the time.
     private Quaternion canvasRotation;
 
     /// <summary>
@@ -46,7 +53,24 @@ public class PlayerController : SerialController
             player = gameObject.GetComponent<Player>();
         if (animator == null)
             animator = GetComponent<Animator>();
+
+        // Finds dash progress bars from scene gameobjects if it is null.
+        if (dashProgressBar == null)
+        {
+            switch (player.GetPlayerNumber)
+            {
+                case Player.PlayerNumber.Player1:
+                    dashProgressBar = GameManager.Instance.P1DashProgressBar;
+                    break;
+                case Player.PlayerNumber.Player2:
+                    dashProgressBar = GameManager.Instance.P2DashProgressBar;
+                    break;
+                default:
+                    break;
+            }
+        }
         canvasRotation = gameObject.transform.Find("Canvas").GetComponent<RectTransform>().rotation;
+        dashCooldown = DefaultValues.dashCooldownLength;
     }
 
     private enum MOVE
@@ -71,8 +95,12 @@ public class PlayerController : SerialController
         if (!GameManager.Instance.GameStarted)
             return;
 
-        if (dashCooldown > 0)
-            dashCooldown -= Time.deltaTime;
+        if (dashCooldown < DefaultValues.dashCooldownLength && cooldown)
+        {
+            dashCooldown += Time.deltaTime;
+            float percent = dashCooldown / DefaultValues.dashCooldownLength;
+            dashProgressBar.fillAmount = Mathf.Lerp(0, 1, percent);
+        }
 
         // Allows Player1 to pause by pressing escape on keyboard
         // even if keyboardMovement is set to false.
@@ -253,7 +281,7 @@ public class PlayerController : SerialController
 
     private void ButtonTwo()
     {
-        if (!GameManager.Instance.GameOver && !GameManager.Instance.IsPaused && dashCooldown <= 0)
+        if (!GameManager.Instance.GameOver && !GameManager.Instance.IsPaused && dashCooldown >= DefaultValues.dashCooldownLength)
             StartCoroutine("Dash");
 
         if (GameManager.Instance.GameOver)
@@ -271,24 +299,28 @@ public class PlayerController : SerialController
 
     private IEnumerator Dash()
     {
-        Debug.Log("DASH");
+        cooldown = false;
         float timer = 2;
-        float wait = 0.1f;
+        float maxTime = timer;
 
         Quaternion rotation = new Quaternion(-90, 0, 0, 0);
         GameObject go = Instantiate(dashEffect);
         go.transform.position = transform.position;
         ParticleSystem particle = go.GetComponent<ParticleSystem>();
         particle.Play();
-        dashCooldown = DefaultValues.dashCooldownLength;
+        // Cooldown counts from 0 to value of DefaultValues.dashCooldownLength.
+        dashCooldown = 0;
         movementSpeed += 2;
 
         while (timer > 0)
         {
-            timer -= wait;
-            yield return new WaitForSeconds(wait);
+            timer -= Time.deltaTime;
+            float percent = timer / maxTime;
+            dashProgressBar.fillAmount = Mathf.Lerp(0, 1, percent);
+            yield return new WaitForEndOfFrame();
         }
 
+        cooldown = true;
         particle.Stop();
         Destroy(go);
         movementSpeed = DefaultValues.defaultMovementSpeed;
