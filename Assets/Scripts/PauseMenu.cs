@@ -28,7 +28,7 @@ public class PauseMenu : MonoBehaviour
     private void Update()
     {
         if (buttonCooldown > 0f)
-            buttonCooldown -= 0.01f;
+            buttonCooldown -= 0.005f;
     }
 
     public void Show()

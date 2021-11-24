@@ -84,11 +84,12 @@ public class PizzaUI : MonoBehaviour
 
         if (remainingTime <= 0)
         {
-            // TODO: Deduct playerScore for not finishing pizza in time
             foreach (var order in GameManager.Instance.CurrentOrders)
             {
                 if (order.UIElement == this)
                 {
+                    order.isInUse = false;
+                    order.UIElement = null;
                     GameManager.Instance.CurrentOrders.Remove(order);
                     break;
                 }

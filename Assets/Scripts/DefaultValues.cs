@@ -41,6 +41,10 @@ public static class DefaultValues
     /// </summary>
     public static int defaultMovementSpeed = 4;
     /// <summary>
+    /// Default cooldown length of dash.
+    /// </summary>
+    public static float dashCooldownLength = 6;
+    /// <summary>
     /// Default scale of non selected ui buttons.
     /// </summary>
     public static Vector3 defaultButtonScale = new Vector3(1, 1, 1);

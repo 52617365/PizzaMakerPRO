@@ -11,13 +11,16 @@ public class DeliveryPoint : MonoBehaviour
     [SerializeField]
     private Color[] defaultColors;
 
-    [HideInInspector]
-    public Outline outline;
     private bool pizzaDelivered;
+
+    public GameObject errorIcon;
+    public GameObject[] errorMessages; // 0 = Burnt pizza, 1 = Pizza not cooked, 2 = Ingredient mismatch.
 
     public Material highlightMaterial { get; private set; }
 
     public Color[] TopMaterialColor { get { return defaultColors; } }
+
+    private Coroutine errorCoroutine;
 
     private void Awake()
     {
@@ -76,11 +79,66 @@ public class DeliveryPoint : MonoBehaviour
                 break;
         }
         if (!pizzaDelivered)
+        {
+            if (errorCoroutine != null)
+            {
+                StopCoroutine(errorCoroutine);
+                foreach (var go in errorMessages)
+                {
+                    if (go.activeSelf == true)
+                        go.SetActive(false);
+                }
+                errorIcon.SetActive(false);
+            }
+            errorCoroutine = StartCoroutine(ShowDeliveryError(2));
             return;
+        }
 
         // TODO: Add score for delivering correct pizza within time limit.
         GetComponent<AudioSource>().Play();
         GameManager.UpdateScore(pointPercentage);
+        player.UpdateScore(pointPercentage);
         pizzaDelivered = false;
     }
+
+    public void ShowBurntPizzaError()
+    {
+        if (errorCoroutine != null)
+        {
+            StopCoroutine(errorCoroutine);
+            foreach (var go in errorMessages)
+            {
+                if (go.activeSelf == true)
+                    go.SetActive(false);
+            }
+            errorIcon.SetActive(false);
+        }
+        errorCoroutine = StartCoroutine(ShowDeliveryError(0));
+    }
+
+    public void ShowNotCookedError()
+    {
+        if (errorCoroutine != null)
+        {
+            StopCoroutine(errorCoroutine);
+            foreach (var go in errorMessages)
+            {
+                if (go.activeSelf == true)
+                    go.SetActive(false);
+            }
+            errorIcon.SetActive(false);
+        }
+        errorCoroutine = StartCoroutine(ShowDeliveryError(1));
+    }
+
+    private IEnumerator ShowDeliveryError(int index)
+    {
+        errorMessages[index].SetActive(true);
+        errorIcon.SetActive(true);
+        yield return new WaitForSeconds(2f);
+        errorMessages[index].SetActive(false);
+        errorIcon.SetActive(false);
+        errorCoroutine = null;
+    }
+
 }

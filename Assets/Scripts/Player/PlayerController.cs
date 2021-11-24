@@ -1,4 +1,7 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
+
 public class PlayerController : SerialController
 {
     private Animator animator;
@@ -7,6 +10,8 @@ public class PlayerController : SerialController
 
     [Header("PlayerController specific variables")]
     [Space(15)]
+    [SerializeField]
+    private GameObject dashEffect;
     [SerializeField]
     private bool keyboardMovement; // Allows keyboard to be used for movement
 
@@ -18,9 +23,15 @@ public class PlayerController : SerialController
     [SerializeField]
     [Range(1, 10)]
     private float movementSpeed;
+    private float dashCooldown = 0;
     [SerializeField]
     private float gravity;
 
+    // Used to display dash cooldown and duration on UI.
+    private Image dashProgressBar;
+    private bool cooldown;
+
+    // Used to keep attached canvas to face towards camera all the time.
     private Quaternion canvasRotation;
 
     /// <summary>
@@ -34,13 +45,32 @@ public class PlayerController : SerialController
 
     private void Awake()
     {
+        if (messageListener == null)
+            messageListener = GameObject.Find("MessageListener");
         if (controller == null)
             controller = gameObject.GetComponent<CharacterController>();
         if (player == null)
             player = gameObject.GetComponent<Player>();
         if (animator == null)
             animator = GetComponent<Animator>();
+
+        // Finds dash progress bars from scene gameobjects if it is null.
+        if (dashProgressBar == null)
+        {
+            switch (player.GetPlayerNumber)
+            {
+                case Player.PlayerNumber.Player1:
+                    dashProgressBar = GameManager.Instance.P1DashProgressBar;
+                    break;
+                case Player.PlayerNumber.Player2:
+                    dashProgressBar = GameManager.Instance.P2DashProgressBar;
+                    break;
+                default:
+                    break;
+            }
+        }
         canvasRotation = gameObject.transform.Find("Canvas").GetComponent<RectTransform>().rotation;
+        dashCooldown = DefaultValues.dashCooldownLength;
     }
 
     private enum MOVE
@@ -65,6 +95,18 @@ public class PlayerController : SerialController
         if (!GameManager.Instance.GameStarted)
             return;
 
+        if (dashCooldown < DefaultValues.dashCooldownLength && cooldown)
+        {
+            dashCooldown += Time.deltaTime;
+            float percent = dashCooldown / DefaultValues.dashCooldownLength;
+            dashProgressBar.fillAmount = Mathf.Lerp(0, 1, percent);
+        }
+
+        // Allows Player1 to pause by pressing escape on keyboard
+        // even if keyboardMovement is set to false.
+        if (Input.GetKeyDown(KeyCode.Escape) && player.GetPlayerNumber == 0)
+            ButtonThree();
+
         string message = (string)serialThread.ReadMessage();
 
         // If keyboard is in use then calculates horizontal and vertical inputs from keyboard.
@@ -74,8 +116,6 @@ public class PlayerController : SerialController
                 ButtonOne();
             if (Input.GetKeyDown(KeyCode.F))
                 ButtonTwo();
-            if (Input.GetKeyDown(KeyCode.Escape))
-                ButtonThree();
 
             horizontal = Input.GetAxisRaw("Horizontal");
             vertical = Input.GetAxisRaw("Vertical");
@@ -169,7 +209,9 @@ public class PlayerController : SerialController
             if (ReferenceEquals(message, SERIAL_DEVICE_CONNECTED))
                 messageListener.SendMessage("OnConnectionEvent", true);
             else if (ReferenceEquals(message, SERIAL_DEVICE_DISCONNECTED))
+            {
                 messageListener.SendMessage("OnConnectionEvent", false);
+            }
             else
                 messageListener.SendMessage("OnMessageArrived", message);
         }
@@ -204,7 +246,7 @@ public class PlayerController : SerialController
             }
 
             // Checks that player is close pizza oven, player is holding pizza and pizza cookState is not either cooked or burnt.
-            if (player.ClosePizzaOven != null && player.HeldPizza != null && player.HeldPizza.cookState != HeldPizzaSO.CookState.Cooked && player.HeldPizza.cookState != HeldPizzaSO.CookState.Burnt)
+            if (player.ClosePizzaOven != null && !player.ClosePizzaOven.PizzaInOven && player.HeldPizza != null && player.HeldPizza.cookState != HeldPizzaSO.CookState.Cooked && player.HeldPizza.cookState != HeldPizzaSO.CookState.Burnt)
             {
                 player.ClosePizzaOven.AddPizzaToOven(player.HeldPizza, player);
                 return;
@@ -239,6 +281,9 @@ public class PlayerController : SerialController
 
     private void ButtonTwo()
     {
+        if (!GameManager.Instance.GameOver && !GameManager.Instance.IsPaused && dashCooldown >= DefaultValues.dashCooldownLength)
+            StartCoroutine("Dash");
+
         if (GameManager.Instance.GameOver)
             GameManager.Instance.Restart();
     }
@@ -250,5 +295,34 @@ public class PlayerController : SerialController
             GameManager.Instance.Pause();
         else
             GameManager.Instance.Unpause();
+    }
+
+    private IEnumerator Dash()
+    {
+        cooldown = false;
+        float timer = 2;
+        float maxTime = timer;
+
+        Quaternion rotation = new Quaternion(-90, 0, 0, 0);
+        GameObject go = Instantiate(dashEffect);
+        go.transform.position = transform.position;
+        ParticleSystem particle = go.GetComponent<ParticleSystem>();
+        particle.Play();
+        // Cooldown counts from 0 to value of DefaultValues.dashCooldownLength.
+        dashCooldown = 0;
+        movementSpeed += 2;
+
+        while (timer > 0)
+        {
+            timer -= Time.deltaTime;
+            float percent = timer / maxTime;
+            dashProgressBar.fillAmount = Mathf.Lerp(0, 1, percent);
+            yield return new WaitForEndOfFrame();
+        }
+
+        cooldown = true;
+        particle.Stop();
+        Destroy(go);
+        movementSpeed = DefaultValues.defaultMovementSpeed;
     }
 }

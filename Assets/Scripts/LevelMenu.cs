@@ -28,4 +28,7 @@ public class LevelMenu : MonoBehaviour
             sceneIndex++;
         }
     }
+
+    public void LoadLevel(int levelIndex) => LevelChanger.Instance.FadeToLevel(levelIndex);
+
 }

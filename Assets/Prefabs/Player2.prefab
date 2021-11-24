@@ -43,12 +43,12 @@ GameObject:
   - component: {fileID: 99538270193746366}
   - component: {fileID: 99538270193746367}
   m_Layer: 0
-  m_Name: PlayerNumberIcon
+  m_Name: Player2NumberIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &99538270193746364
 RectTransform:
   m_ObjectHideFlags: 0
@@ -96,7 +96,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0dc7d93d03a4db24d9de2c02c2b93a89, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 86ad21e910503014893de755c6e44f8f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1126,8 +1126,8 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4858541248500577030}
-  m_LocalRotation: {x: 0.49999997, y: -0, z: -0, w: 0.86602545}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.5735764, y: 0, z: 0, w: 0.8191521}
+  m_LocalPosition: {x: 0, y: 0, z: 0.15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 99538270193746364}
@@ -1135,7 +1135,7 @@ RectTransform:
   - {fileID: 4858541248178947245}
   m_Father: {fileID: 4965140503599025354}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 60, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 70, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 2.68}
@@ -1507,9 +1507,10 @@ MonoBehaviour:
   messageListener: {fileID: 0}
   reconnectionDelay: 1000
   maxUnreadMessages: 2
+  dashEffect: {fileID: 6986833356639852630, guid: b1817f6f06485b54b8159e290e47896a, type: 3}
   keyboardMovement: 0
   rotationSpeed: 10
-  movementSpeed: 6
+  movementSpeed: 4
   gravity: 150
 --- !u!114 &5741078351391282801
 MonoBehaviour:
@@ -1525,11 +1526,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerNumber: 1
   heldIngredient: {fileID: 0}
-  heldPizzaSO: {fileID: 11400000, guid: 0bdf0595125eedd4584f16ae38322a49, type: 2}
+  heldPizzaSO: {fileID: 11400000, guid: 45a8687d33c695f44909951ae8f8e7be, type: 2}
   detectionRange: 1.5
   ingredientIcon: {fileID: 4858541249263867323}
   activeIcons: []
   pizzaBoxContainer: {fileID: 4900942867720937298}
+  playerNumberIcon: {fileID: 99538270193746365}
 --- !u!1 &5906594888922864844
 GameObject:
   m_ObjectHideFlags: 0

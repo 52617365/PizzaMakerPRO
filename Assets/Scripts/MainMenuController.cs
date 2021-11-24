@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
-using UnityEngine.SceneManagement;
 
 public class MainMenuController : SerialController
 {
@@ -16,7 +15,11 @@ public class MainMenuController : SerialController
     [SerializeField]
     private GameObject optionsMenu;
     [SerializeField]
+    private GameObject playerCountMenu;
+    [SerializeField]
     private GameObject levelMenu;
+    [SerializeField]
+    private GameObject helpMenu;
 
     private AudioSource audioSource;
     [Space(10)]
@@ -29,6 +32,10 @@ public class MainMenuController : SerialController
     private List<GameObject> mainMenuButtons;
     [SerializeField]
     private List<GameObject> optionsMenuButtons;
+    [SerializeField]
+    private List<GameObject> helpMenuButtons;
+    [SerializeField]
+    private List<GameObject> playerCountButtons;
     [SerializeField]
     private List<GameObject> levelMenuButtons;
     [SerializeField]
@@ -45,8 +52,6 @@ public class MainMenuController : SerialController
 
     private int menuIndex = 0;
     private float buttonCooldown;
-
-    private bool dropDownShown = false;
 
     private void Awake()
     {
@@ -114,11 +119,15 @@ public class MainMenuController : SerialController
         if (ReferenceEquals(message, SERIAL_DEVICE_CONNECTED))
             messageListener.SendMessage("OnConnectionEvent", true);
         else if (ReferenceEquals(message, SERIAL_DEVICE_DISCONNECTED))
+        {
             messageListener.SendMessage("OnConnectionEvent", false);
+            
+        }
         else
             messageListener.SendMessage("OnMessageArrived", message);
     }
 
+    #region Joystick navigation
     private void SelectButton(bool downwards)
     {
         buttonCooldown = 0.25f;
@@ -146,6 +155,18 @@ public class MainMenuController : SerialController
                     menuIndex = 3;
             }
             EventSystem.current.SetSelectedGameObject(optionsMenuButtons[menuIndex]);
+            EventSystem.current.currentSelectedGameObject.transform.localScale = DefaultValues.selectedButtonScale;
+            return;
+        }
+
+        if (playerCountMenu.activeSelf == true)
+        {
+            if (menuIndex == playerCountButtons.Count - 1)
+                menuIndex--;
+            else
+                menuIndex++;
+
+            EventSystem.current.SetSelectedGameObject(playerCountButtons[menuIndex]);
             EventSystem.current.currentSelectedGameObject.transform.localScale = DefaultValues.selectedButtonScale;
             return;
         }
@@ -212,6 +233,13 @@ public class MainMenuController : SerialController
             }
             
             EventSystem.current.SetSelectedGameObject(levelMenuButtons[menuIndex]);
+            EventSystem.current.currentSelectedGameObject.transform.localScale = DefaultValues.selectedButtonScale;
+            return;
+        }
+
+        if (helpMenu.activeSelf == true)
+        {
+            EventSystem.current.SetSelectedGameObject(helpMenuButtons[0]);
             EventSystem.current.currentSelectedGameObject.transform.localScale = DefaultValues.selectedButtonScale;
             return;
         }
@@ -337,6 +365,7 @@ public class MainMenuController : SerialController
             return;
         }
     }
+    #endregion
 
     private void Click()
     {
@@ -356,6 +385,9 @@ public class MainMenuController : SerialController
             return;
         }
     }
+
+        
+
 
     #region Sound settings & Vertical sync
     public void DecreaseMusicVolume()
@@ -383,7 +415,7 @@ public class MainMenuController : SerialController
     public void DecreaseSoundVolume()
     {
         if (soundValue > 0)
-            soundValue -= .05f;
+            soundValue -= .1f;
         if (soundValue <= 0)
             soundValue = 0.0001f;
         AudioManager.Instance.SetSoundValues(Mathf.Log10(soundValue) * 20);
@@ -393,7 +425,7 @@ public class MainMenuController : SerialController
     public void IncreaseSoundVolume()
     {
         if (soundValue < 1)
-            soundValue += .05f;
+            soundValue += .1f;
         if (soundValue > 1)
             soundValue = 1;
         AudioManager.Instance.SetSoundValues(Mathf.Log10(soundValue) * 20);
@@ -443,10 +475,7 @@ public class MainMenuController : SerialController
 
     #endregion
 
-    public void LoadLevel(int levelIndex)
-    {
-        SceneManager.LoadScene(levelIndex);
-    }
+    public void SetPlayerCount(int count) => LevelChanger.Instance.PlayerCount = count;
 
     public void SetButtonScale() => EventSystem.current.currentSelectedGameObject.transform.localScale = DefaultValues.selectedButtonScale;
 

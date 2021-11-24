@@ -12,8 +12,12 @@ public class Pizza : MonoBehaviour
     #endregion
 
     #region Private attributes
-    [HideInInspector]
-    public Outline outline;
+    /// <summary>
+    /// Default colors of highlight material.
+    /// </summary>
+    [SerializeField]
+    private Color[] defaultColors;
+
     /// <summary>
     /// List of ingredients that are on pizza.
     /// </summary>
@@ -40,6 +44,10 @@ public class Pizza : MonoBehaviour
     #endregion
 
     #region Getters and setters
+    public Material highlightMaterial { get; private set; }
+
+    public Color[] TopMaterialColor { get { return defaultColors; } }
+
     public List<IngredientSO> Ingredients
     {
         get { return ingredients; }
@@ -61,7 +69,15 @@ public class Pizza : MonoBehaviour
 
     private void Awake()
     {
-        outline = GetComponent<Outline>();
+        Renderer renderer = GetComponent<Renderer>();
+        foreach (var material in renderer.materials)
+        {
+            if (material.name == "highlight (Instance)")
+            {
+                highlightMaterial = material;
+                break;
+            }
+        }
     }
 
     #region Public methods

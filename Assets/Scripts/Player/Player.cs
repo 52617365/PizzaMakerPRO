@@ -73,6 +73,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject pizzaBoxContainer;
     public GameObject instantiatedGameObject { get; set; }
+
+    [SerializeField]
+    private GameObject playerNumberIcon;
     #endregion
 
     #region Getters and setters
@@ -134,6 +137,8 @@ public class Player : MonoBehaviour
         get { return closeDonationBox; }
     }
     public GameObject PizzaBoxContainer { get { return pizzaBoxContainer; } }
+
+    public int PlayerScore { get; private set; }
     #endregion
 
     private void Awake()
@@ -147,6 +152,7 @@ public class Player : MonoBehaviour
 
         // Loops CheckForInteractables method every 0.15 seconds.
         InvokeRepeating("CheckForInteractables", 0, 0.15f);
+        StartCoroutine(DisplayPlayerNumber());
     }
 
     private void Update()
@@ -185,10 +191,10 @@ public class Player : MonoBehaviour
                         Pizza detectedPizza = hit.transform.GetComponent<Pizza>();
                         if (closePizza != detectedPizza)
                         {
-                            if (closePizza != null && closePizza.outline.enabled)
-                                closePizza.outline.enabled = false;
+                            if (closePizza != null && closePizza.highlightMaterial.GetColor("_Color") != closePizza.TopMaterialColor[0])
+                                closePizza.highlightMaterial.SetColor("_Color", closePizza.TopMaterialColor[0]);
                             closePizza = detectedPizza;
-                            closePizza.outline.enabled = true;
+                            closePizza.highlightMaterial.SetColor("_Color", closePizza.TopMaterialColor[1]);
                         }
                         break;
                     case "Ingredient":
@@ -220,15 +226,19 @@ public class Player : MonoBehaviour
                             closeDeliveryPoint = detectedDeliveryPoint;
                             closeDeliveryPoint.highlightMaterial.SetColor("_Color", closeDeliveryPoint.TopMaterialColor[1]);
                         }
+                        if (heldPizza != null)
+                        {
+                            if (heldPizza.cookState == HeldPizzaSO.CookState.Burnt)
+                                detectedDeliveryPoint.ShowBurntPizzaError();
+                            if (heldPizza.cookState == HeldPizzaSO.CookState.Uncooked)
+                                detectedDeliveryPoint.ShowNotCookedError();
+                        }
                         break;
                     case "DonationBox":
                         GameObject detectedDonationBox = hit.transform.gameObject;
                         if (closeDonationBox != detectedDonationBox)
                         {
-                            if (closeDonationBox != null && closeDonationBox.GetComponent<Outline>().enabled)
-                                closeDonationBox.GetComponent<Outline>().enabled = false;
                             closeDonationBox = detectedDonationBox;
-                            closeDonationBox.GetComponent<Outline>().enabled = true;
                         }
                         break;
                     default:
@@ -248,7 +258,7 @@ public class Player : MonoBehaviour
 
                 if (closePizza != null)
                 {
-                    closePizza.outline.enabled = false;
+                    closePizza.highlightMaterial.SetColor("_Color", closePizza.TopMaterialColor[0]);
                     closePizza = null;
                 }
 
@@ -353,6 +363,24 @@ public class Player : MonoBehaviour
             Destroy(icon.gameObject);
         }
         activeIcons.Clear();
+    }
+
+    // Updates player's personal score.
+    public void UpdateScore(float timeLeftPercentage)
+    {
+        float amount = DefaultValues.pizzaPointValue * timeLeftPercentage;
+        if (timeLeftPercentage >= DefaultValues.fastDeliveryThreshold)
+            amount += DefaultValues.fastDeliveryBonus;
+
+        PlayerScore += (int)amount;
+        GameManager.Instance.UpdatePlayerScoreText((int)playerNumber, PlayerScore);
+    }
+
+    public IEnumerator DisplayPlayerNumber()
+    {
+        playerNumberIcon.SetActive(true);
+        yield return new WaitForSeconds(5f);
+        playerNumberIcon.SetActive(false);
     }
 
     // ActiveIcons getter and setter wouldn't work correctly when adding icons in PizzaOven class,
