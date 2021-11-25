@@ -6,9 +6,8 @@
  * https://creativecommons.org/licenses/by/2.0/
  */
 
-using UnityEngine;
-using System.Collections;
 using System.Text;
+using UnityEngine;
 
 /**
  * Sample for reading using polling by yourself, and writing too.
@@ -18,7 +17,7 @@ public class SampleCustomDelimiter : MonoBehaviour
     public SerialControllerCustomDelimiter serialController;
 
     // Initialization
-    void Start()
+    private void Start()
     {
         serialController = GameObject.Find("SerialController").GetComponent<SerialControllerCustomDelimiter>();
 
@@ -26,7 +25,7 @@ public class SampleCustomDelimiter : MonoBehaviour
     }
 
     // Executed each frame
-    void Update()
+    private void Update()
     {
         //---------------------------------------------------------------------
         // Send data
@@ -39,7 +38,7 @@ public class SampleCustomDelimiter : MonoBehaviour
             Debug.Log("Sending some action");
             // Sends a 65 (ascii for 'A') followed by an space (ascii 32, which 
             // is configured in the controller of our scene as the separator).
-            serialController.SendSerialMessage(new byte[] { 65, 32 });
+            serialController.SendSerialMessage(new byte[] {65, 32});
         }
 
 
@@ -47,14 +46,19 @@ public class SampleCustomDelimiter : MonoBehaviour
         // Receive data
         //---------------------------------------------------------------------
 
-        byte[] message = serialController.ReadSerialMessage();
+        var message = serialController.ReadSerialMessage();
 
         if (message == null)
+        {
             return;
+        }
 
-        StringBuilder sb = new StringBuilder();
-        foreach (byte b in message)
-            sb.AppendFormat("(#{0}={1})    ", b, (char)b);
+        var sb = new StringBuilder();
+        foreach (var b in message)
+        {
+            sb.AppendFormat("(#{0}={1})    ", b, (char) b);
+        }
+
         Debug.Log("Received some bytes, printing their ascii codes: " + sb);
     }
 }

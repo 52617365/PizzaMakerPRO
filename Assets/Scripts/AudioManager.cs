@@ -1,29 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
-    private static AudioManager _instance;
-    public static AudioManager Instance { get { return _instance; } }
-
-    [SerializeField]
-    private AudioMixer mixer;
+    [SerializeField] private AudioMixer mixer;
+    private static AudioManager Instance { get; set; }
 
     private void Awake()
     {
         // Singleton pattern to only have single instance
         // of AudioManager on scene.
-        if (_instance != null && _instance != this)
-            Destroy(this.gameObject);
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+        }
         else
-            _instance = this;
+        {
+            Instance = this;
+        }
 
         Invoke("LoadValues", 0);
     }
 
-    public void SaveAudioSettings(float musicValue, float soundValue)
+    public static void SaveAudioSettings(float musicValue, float soundValue)
     {
         PlayerPrefs.SetFloat("MusicVolume", musicValue);
         PlayerPrefs.SetFloat("SoundVolume", soundValue);
@@ -35,25 +34,34 @@ public class AudioManager : MonoBehaviour
         float soundValue;
 
         if (PlayerPrefs.HasKey("MusicVolume"))
+        {
             musicValue = PlayerPrefs.GetFloat("MusicVolume");
+        }
         else
+        {
             musicValue = 1;
+        }
+
         if (PlayerPrefs.HasKey("SoundVolume"))
+        {
             soundValue = PlayerPrefs.GetFloat("SoundVolume");
+        }
         else
+        {
             soundValue = 1;
+        }
 
-        _instance.mixer.SetFloat("MusicVolume", Mathf.Log10(musicValue) * 20);
-        _instance.mixer.SetFloat("SoundVolume", Mathf.Log10(soundValue) * 20);
+        Instance.mixer.SetFloat("MusicVolume", Mathf.Log10(musicValue) * 20);
+        Instance.mixer.SetFloat("SoundVolume", Mathf.Log10(soundValue) * 20);
     }
 
-    public void SetMusicValues(float musicValue)
+    public static void SetMusicValues(float musicValue)
     {
-        _instance.mixer.SetFloat("MusicVolume", musicValue);
+        Instance.mixer.SetFloat("MusicVolume", musicValue);
     }
 
-    public void SetSoundValues(float soundValue)
+    public static void SetSoundValues(float soundValue)
     {
-        _instance.mixer.SetFloat("SoundVolume", soundValue);
+        Instance.mixer.SetFloat("SoundVolume", soundValue);
     }
 }

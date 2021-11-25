@@ -1,64 +1,70 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// 
 /// </summary>
 public class Ingredient : MonoBehaviour
 {
-    [SerializeField]
-    private Texture defaultTexture;
-    [SerializeField]
-    private Texture highlightTexture;
-    private Material highlightMaterial;
-    /// <summary>
-    /// Ingredient scriptable object
-    /// </summary>
-    [SerializeField]
-    private IngredientSO ingredientScriptableObject;
+    [SerializeField] private Texture defaultTexture;
+    [SerializeField] private Texture highlightTexture;
 
     /// <summary>
-    /// 
+    ///     Ingredient scriptable object
     /// </summary>
-    [SerializeField]
-    private Image icon;
+    [SerializeField] private IngredientSO ingredientScriptableObject;
 
-    public Texture HighLightTexture { get { return highlightTexture; } }
-    public Texture DefaultTexture { get { return defaultTexture; } }
-    public Material HighLightMaterial { get { return highlightMaterial; } }
-    public IngredientSO IngredientScriptableObject
+    /// <summary>
+    /// </summary>
+    [SerializeField] private Image icon;
+
+    public string[] materialNames =
     {
-        get { return ingredientScriptableObject; }
-    }
+        "CheeseMaterial (Instance)",
+        "HamMaterial (Instance)",
+        "KebabMaterial (Instance)",
+        "PepperoniMaterial (Instance)",
+        "PineappleMaterial (Instance)",
+        "SalamiMaterial (Instance)",
+        "ShrimpMaterial (Instance)",
+        "TomatoMaterial (Instance)",
+        "TunaMaterial (Instance)",
+        "Blue-CheeseMaterial (Instance)"
+    };
+
+    public Texture HighLightTexture => highlightTexture;
+    public Texture DefaultTexture => defaultTexture;
+    public Material HighLightMaterial { get; private set; }
+
+    public IngredientSO IngredientScriptableObject => ingredientScriptableObject;
 
     private void Awake()
     {
-        Renderer renderer = GetComponent<Renderer>();
+        var rendererComponent = GetComponent<Renderer>();
 
-        foreach (var material in renderer.materials)
+        foreach (var material in rendererComponent.materials)
+            // Checking if materialNames array contains the material.name in iteration.
         {
-            if (material.name == "CheeseMaterial (Instance)" || material.name == "HamMaterial (Instance)"
-                || material.name == "KebabMaterial (Instance)" || material.name == "PepperoniMaterial (Instance)"
-                || material.name == "PineappleMaterial (Instance)" || material.name == "SalamiMaterial (Instance)"
-                || material.name == "ShrimpMaterial (Instance)" || material.name == "TomatoMaterial (Instance)" 
-                || material.name == "TunaMaterial (Instance)" || material.name == "Blue-CheeseMaterial (Instance)")
-                highlightMaterial = material;
+            if (Array.Exists(materialNames, x => x == material.name))
+            {
+                HighLightMaterial = material;
+            }
         }
+
         // Sets the icon to be the icon that is specified
         // in ingredientScriptableObject.
-        if(icon != null && ingredientScriptableObject.icon != null)
+        if (icon != null && ingredientScriptableObject.icon != null)
+        {
             icon.sprite = ingredientScriptableObject.icon;
+        }
     }
 
     /// <summary>
-    /// Handles the ingredient pick up system
+    ///     Handles the ingredient pick up system
     /// </summary>
-    public void TakeIngredient(IngredientSO ingredientSO, Player player)
+    public static void TakeIngredient(IngredientSO ingredientSO, Player player)
     {
         player.HeldIngredient = ingredientSO;
         player.IngredientIcon.sprite = ingredientSO.icon;
     }
-
 }

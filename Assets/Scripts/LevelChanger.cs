@@ -1,41 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class LevelChanger : MonoBehaviour
 {
-    private static LevelChanger _instance;
-    public static LevelChanger Instance { get { return _instance; } }
-
     // Animator reference
-    [SerializeField]
-    private Animator animator;
+    [SerializeField] private Animator animator;
 
     private int levelToLoad;
+    public static LevelChanger Instance { get; private set; }
 
-    private int playerCount;
-
-    public int PlayerCount
-    {
-        get { return playerCount; }
-        set { playerCount = value; }
-    }
+    public int PlayerCount { get; set; }
 
     private void Awake()
     {
         // Singleton pattern to only have single instance
         // of LevelChanger on scene.
-        if (_instance != null && _instance != this)
-            Destroy(this.gameObject);
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+        }
         else
         {
-            _instance = this;
-            DontDestroyOnLoad(this.gameObject);
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
     }
 
-    public void FadeToLevel (int levelIndex)
+    public void FadeToLevel(int levelIndex)
     {
         levelToLoad = levelIndex;
 

@@ -6,8 +6,8 @@
  * https://creativecommons.org/licenses/by/2.0/
  */
 
-using UnityEngine;
 using System.Threading;
+using UnityEngine;
 
 /**
  * While 'SerialController' only allows reading/sending text data that is
@@ -17,6 +17,12 @@ using System.Threading;
  */
 public class SerialControllerCustomDelimiter : MonoBehaviour
 {
+    // ------------------------------------------------------------------------
+    // Executes a user-defined function before Unity closes the COM port, so
+    // the user can send some tear-down message to the hardware reliably.
+    // ------------------------------------------------------------------------
+    public delegate void TearDownFunction();
+
     [Tooltip("Port name with which the SerialPort object will be created.")]
     public string portName = "COM3";
 
@@ -39,9 +45,37 @@ public class SerialControllerCustomDelimiter : MonoBehaviour
              "New messages will be discarded.")]
     public byte separator = 90;
 
+    protected SerialThreadBinaryDelimited serialThread;
+
     // Internal reference to the Thread and the object that runs in it.
     protected Thread thread;
-    protected SerialThreadBinaryDelimited serialThread;
+    private TearDownFunction userDefinedTearDownFunction;
+
+    // ------------------------------------------------------------------------
+    // Polls messages from the queue that the SerialThread object keeps. Once a
+    // message has been polled it is removed from the queue. There are some
+    // special messages that mark the start/end of the communication with the
+    // device.
+    // ------------------------------------------------------------------------
+    private void Update()
+    {
+        // If the user prefers to poll the messages instead of receiving them
+        // via SendMessage, then the message listener should be null.
+        if (messageListener == null)
+        {
+            return;
+        }
+
+        // Read the next message from the queue
+        var message = ReadSerialMessage();
+        if (message == null)
+        {
+            return;
+        }
+
+        // Check if the message is plain data or a connect/disconnect event.
+        messageListener.SendMessage("OnMessageArrived", message);
+    }
 
 
     // ------------------------------------------------------------------------
@@ -49,14 +83,14 @@ public class SerialControllerCustomDelimiter : MonoBehaviour
     // It creates a new thread that tries to connect to the serial device
     // and start reading from it.
     // ------------------------------------------------------------------------
-    void OnEnable()
+    private void OnEnable()
     {
         serialThread = new SerialThreadBinaryDelimited(portName,
-                                                       baudRate,
-                                                       reconnectionDelay,
-                                                       maxUnreadMessages,
-                                                       separator);
-        thread = new Thread(new ThreadStart(serialThread.RunForever));
+            baudRate,
+            reconnectionDelay,
+            maxUnreadMessages,
+            separator);
+        thread = new Thread(serialThread.RunForever);
         thread.Start();
     }
 
@@ -64,12 +98,14 @@ public class SerialControllerCustomDelimiter : MonoBehaviour
     // Invoked whenever the SerialController gameobject is deactivated.
     // It stops and destroys the thread that was reading from the serial device.
     // ------------------------------------------------------------------------
-    void OnDisable()
+    private void OnDisable()
     {
         // If there is a user-defined tear-down function, execute it before
         // closing the underlying COM port.
         if (userDefinedTearDownFunction != null)
+        {
             userDefinedTearDownFunction();
+        }
 
         // The serialThread reference should never be null at this point,
         // unless an Exception happened in the OnEnable(), in which case I've
@@ -89,35 +125,13 @@ public class SerialControllerCustomDelimiter : MonoBehaviour
     }
 
     // ------------------------------------------------------------------------
-    // Polls messages from the queue that the SerialThread object keeps. Once a
-    // message has been polled it is removed from the queue. There are some
-    // special messages that mark the start/end of the communication with the
-    // device.
-    // ------------------------------------------------------------------------
-    void Update()
-    {
-        // If the user prefers to poll the messages instead of receiving them
-        // via SendMessage, then the message listener should be null.
-        if (messageListener == null)
-            return;
-
-        // Read the next message from the queue
-        byte[] message = ReadSerialMessage();
-        if (message == null)
-            return;
-
-        // Check if the message is plain data or a connect/disconnect event.
-        messageListener.SendMessage("OnMessageArrived", message);
-    }
-
-    // ------------------------------------------------------------------------
     // Returns a new unread message from the serial device. You only need to
     // call this if you don't provide a message listener.
     // ------------------------------------------------------------------------
     public byte[] ReadSerialMessage()
     {
         // Read the next message from the queue
-        byte[] message = (byte[])serialThread.ReadMessage();
+        var message = (byte[]) serialThread.ReadMessage();
         return message;
     }
 
@@ -130,15 +144,8 @@ public class SerialControllerCustomDelimiter : MonoBehaviour
         serialThread.SendMessage(message);
     }
 
-    // ------------------------------------------------------------------------
-    // Executes a user-defined function before Unity closes the COM port, so
-    // the user can send some tear-down message to the hardware reliably.
-    // ------------------------------------------------------------------------
-    public delegate void TearDownFunction();
-    private TearDownFunction userDefinedTearDownFunction;
     public void SetTearDownFunction(TearDownFunction userFunction)
     {
-        this.userDefinedTearDownFunction = userFunction;
+        userDefinedTearDownFunction = userFunction;
     }
-
 }

@@ -1,34 +1,37 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
-    private static PauseMenu _instance;
-    public static PauseMenu Instance { get { return _instance; } }
+    [SerializeField] private List<GameObject> pauseMenuButtons;
 
-    [SerializeField]
-    private List<GameObject> pauseMenuButtons;
+    private float buttonCooldown;
 
     private int buttonIndex;
-    private float buttonCooldown;
+    public static PauseMenu Instance { get; private set; }
 
     private void Awake()
     {
         // Singleton pattern to only have single instance
         // of PauseMenu on scene.
-        if (_instance != null && _instance != this)
-            Destroy(this.gameObject);
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+        }
         else
-            _instance = this;
+        {
+            Instance = this;
+        }
     }
 
     private void Update()
     {
         if (buttonCooldown > 0f)
+        {
             buttonCooldown -= 0.005f;
+        }
     }
 
     public void Show()
@@ -40,32 +43,26 @@ public class PauseMenu : MonoBehaviour
 
     public void SelectButton()
     {
-        if (buttonCooldown <= 0)
+        if (!(buttonCooldown <= 0))
         {
-            buttonCooldown = 0.25f;
-            switch (buttonIndex)
-            {
-                case 1:
-                    buttonIndex = 0;
-                    break;
-                case 0:
-                    buttonIndex = 1;
-                    break;
-                default:
-                    break;
-            }
-
-            EventSystem.current.currentSelectedGameObject.transform.localScale = DefaultValues.defaultButtonScale;
-            EventSystem.current.SetSelectedGameObject(pauseMenuButtons[buttonIndex]);
-            EventSystem.current.currentSelectedGameObject.transform.localScale = DefaultValues.selectedButtonScale;
-        }
-        else
             return;
+        }
+
+        buttonCooldown = 0.25f;
+        buttonIndex = buttonIndex switch
+        {
+            1 => 0,
+            0 => 1,
+            _ => buttonIndex
+        };
+
+        EventSystem.current.currentSelectedGameObject.transform.localScale = DefaultValues.defaultButtonScale;
+        EventSystem.current.SetSelectedGameObject(pauseMenuButtons[buttonIndex]);
+        EventSystem.current.currentSelectedGameObject.transform.localScale = DefaultValues.selectedButtonScale;
     }
 
-    public void Click()
+    public static void Click()
     {
         EventSystem.current.currentSelectedGameObject.GetComponent<Button>().onClick.Invoke();
-        return;
     }
 }

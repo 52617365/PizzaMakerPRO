@@ -3,47 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="394bd58c-7a6b-4189-8e06-42932630e89a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$" beforeDir="false" afterPath="$PROJECT_DIR$" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Ardity/Scripts/Samples/SampleCustomDelimiter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Ardity/Scripts/Samples/SampleCustomDelimiter.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Ardity/Scripts/Samples/SampleMessageListener.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Ardity/Scripts/Samples/SampleMessageListener.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Ardity/Scripts/Samples/SampleTearDown.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Ardity/Scripts/Samples/SampleTearDown.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Ardity/Scripts/Samples/SampleUserPolling_JustRead.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Ardity/Scripts/Samples/SampleUserPolling_JustRead.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Ardity/Scripts/Samples/SampleUserPolling_ReadWrite.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Ardity/Scripts/Samples/SampleUserPolling_ReadWrite.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Ardity/Scripts/SerialController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Ardity/Scripts/SerialController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Ardity/Scripts/SerialControllerCustomDelimiter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Ardity/Scripts/SerialControllerCustomDelimiter.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Ardity/Scripts/Threads/AbstractSerialThread.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Ardity/Scripts/Threads/AbstractSerialThread.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Ardity/Scripts/Threads/SerialThread.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Ardity/Scripts/Threads/SerialThread.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Ardity/Scripts/Threads/SerialThreadCustomDelimiter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Ardity/Scripts/Threads/SerialThreadCustomDelimiter.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Ardity/Scripts/Threads/SerialThreadLines.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Ardity/Scripts/Threads/SerialThreadLines.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/QuickOutline/Scripts/Outline.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/QuickOutline/Scripts/Outline.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/AudioManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/AudioManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/DefaultValues.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/DefaultValues.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/DeliveryPoint.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/DeliveryPoint.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FlickerControl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FlickerControl.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Ingredient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Ingredient.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Ingredients/IngredientSO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Ingredients/IngredientSO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/LevelMenu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/LevelMenu.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MainMenuController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MainMenuController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Orders/OrderSO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Orders/OrderSO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PauseMenu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PauseMenu.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Pizza/Pizza.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Pizza/Pizza.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Pizza/PizzaDatabase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Pizza/PizzaDatabase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Pizza/PizzaOven.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Pizza/PizzaOven.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Pizza/PizzaSO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Pizza/PizzaSO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Pizza/PizzaUI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Pizza/PizzaUI.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/HeldPizzaSO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/HeldPizzaSO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/Player.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/Player.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Shaders/TMPro.cginc" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Shaders/TMPro.cginc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Shaders/TMPro_Mobile.cginc" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Shaders/TMPro_Mobile.cginc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Shaders/TMPro_Properties.cginc" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Shaders/TMPro_Properties.cginc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Shaders/TMPro_Surface.cginc" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Shaders/TMPro_Surface.cginc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logs/shadercompiler-UnityShaderCompiler.exe0.log" beforeDir="false" afterPath="$PROJECT_DIR$/Logs/shadercompiler-UnityShaderCompiler.exe0.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logs/shadercompiler-UnityShaderCompiler.exe1.log" beforeDir="false" afterPath="$PROJECT_DIR$/Logs/shadercompiler-UnityShaderCompiler.exe1.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logs/shadercompiler-UnityShaderCompiler.exe2.log" beforeDir="false" afterPath="$PROJECT_DIR$/Logs/shadercompiler-UnityShaderCompiler.exe2.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logs/shadercompiler-UnityShaderCompiler.exe3.log" beforeDir="false" afterPath="$PROJECT_DIR$/Logs/shadercompiler-UnityShaderCompiler.exe3.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logs/shadercompiler-UnityShaderCompiler.exe4.log" beforeDir="false" afterPath="$PROJECT_DIR$/Logs/shadercompiler-UnityShaderCompiler.exe4.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logs/shadercompiler-UnityShaderCompiler.exe5.log" beforeDir="false" afterPath="$PROJECT_DIR$/Logs/shadercompiler-UnityShaderCompiler.exe5.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,7 +11,8 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
   </component>
   <component name="GitSEFilterConfiguration">
     <file-type-list>
@@ -60,10 +21,6 @@
       <filtered-out-file-type name="TAG" />
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
-  </component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="ProjectId" id="21N6j27MK2GitihgxSN2e4K3W9b" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -76,10 +33,10 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="settings.editor.selected.configurable" value="CodeCleanupOptionsPage" />
+    <property name="settings.editor.selected.configurable" value="preferences.build.unityPlugin" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
-  <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
+  <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor &amp; Play">
     <configuration name="Standalone Player" type="RunUnityExe" factoryName="Unity Executable">
       <option name="EXE_PATH" value="$PROJECT_DIR$/Builds/v12/Pizza Maker Pro.exe" />
       <option name="PROGRAM_PARAMETERS" value="" />
@@ -120,7 +77,10 @@
       <workItem from="1637769346663" duration="1077000" />
       <workItem from="1637770461196" duration="6418000" />
       <workItem from="1637776975844" duration="170000" />
-      <workItem from="1637777492828" duration="929000" />
+      <workItem from="1637777492828" duration="1210000" />
+      <workItem from="1637778788031" duration="44000" />
+      <workItem from="1637779019161" duration="3065000" />
+      <workItem from="1637822556530" duration="1314000" />
     </task>
     <servers />
   </component>
@@ -130,6 +90,18 @@
   <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
   <component name="UnityProjectConfiguration" hasMinimizedUI="true" />
   <component name="UnityUnitTestConfiguration" currentTestLauncher="EditMode" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
