@@ -1,26 +1,26 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class FlickerControl : MonoBehaviour
 {
-    [SerializeField]
-    private bool isFlickering = false;
-    [SerializeField]
-    private float timeDelay;
+    [SerializeField] private bool isFlickering;
+
+    [SerializeField] private float timeDelay;
 
 
     private void Update()
     {
         if (isFlickering == false)
+        {
             StartCoroutine(FlickeringLight());
+        }
     }
 
     private IEnumerator FlickeringLight()
     {
         isFlickering = true;
-        Color color = Color.white * 4;
-        Material material = GetComponent<Renderer>().materials[0];
+        var color = Color.white * 4;
+        var material = GetComponent<Renderer>().materials[0];
         while (isFlickering)
         {
             material.SetColor("_EmissionColor", Color.black);

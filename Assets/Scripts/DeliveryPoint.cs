@@ -1,35 +1,34 @@
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 /// <summary>
-/// Handles player deliveries.
+///     Handles player deliveries.
 /// </summary>
 public class DeliveryPoint : MonoBehaviour
 {
-    [SerializeField]
-    private Color[] defaultColors;
-
-    private bool pizzaDelivered;
+    [SerializeField] private Color[] defaultColors;
 
     public GameObject errorIcon;
     public GameObject[] errorMessages; // 0 = Burnt pizza, 1 = Pizza not cooked, 2 = Ingredient mismatch.
 
-    public Material highlightMaterial { get; private set; }
-
-    public Color[] TopMaterialColor { get { return defaultColors; } }
-
     private Coroutine errorCoroutine;
+
+    private bool pizzaDelivered;
+
+    public Material HighlightMaterial { get; private set; }
+
+    public Color[] TopMaterialColor => defaultColors;
 
     private void Awake()
     {
-        Renderer renderer = GetComponent<Renderer>();
-        foreach (var material in renderer.materials)
+        var rendererComponent = GetComponent<Renderer>();
+
+        foreach (var material in rendererComponent.materials)
         {
             if (material.name == "highlight (Instance)")
             {
-                highlightMaterial = material;
+                HighlightMaterial = material;
                 break;
             }
         }
@@ -37,47 +36,46 @@ public class DeliveryPoint : MonoBehaviour
 
     public void DeliverPizza(HeldPizzaSO pizza, Player player)
     {
-        int correctCount;
         float pointPercentage = 0;
 
         // Loops through all CurrentOrders.
         foreach (var order in GameManager.Instance.CurrentOrders)
         {
             // Int value that tracks amount of correct ingredients.
-            correctCount = 0;
+            var correctCount = 0;
 
             // Loops through all ingredients of order.
-            for (int i = 0; i < order.UIElement.Ingredients.Count; i++)
+            foreach (var t in order.UIElement.Ingredients)
             {
                 // Loops through ingredients of pizza that player is trying to deliver.
-                for (int x = 0; x < pizza.ingredients.Count; x++)
-                {
-                    // Checks if ingredient equals to ingredient in order.
-                    if (pizza.ingredients[x] == order.UIElement.Ingredients[i])
-                        correctCount++;
-                }
+                correctCount += pizza.ingredients.Count(t1 => t1 == t);
+
                 // If all ingredients in delivered pizza matches to any of CurrentOrders this will then finish delivery.
                 if (correctCount == pizza.ingredients.Count && correctCount == order.UIElement.Ingredients.Count)
                 {
                     pointPercentage = order.UIElement.RemainingTime / order.UIElement.MaxTime;
                     GameManager.Instance.CurrentOrders.Remove(order);
 
-                    GameManager.Instance.ClearOrder(order);
+                    GameManager.ClearOrder(order);
 
                     player.ClearActiveIcons();
                     player.HeldPizza.ingredients.Clear();
                     player.HeldPizza.cookState = HeldPizzaSO.CookState.Uncooked;
                     player.HeldPizza = null;
-                    Destroy(player.instantiatedGameObject);
-                    player.instantiatedGameObject = null;
+                    Destroy(player.InstantiatedGameObject);
+                    player.InstantiatedGameObject = null;
                     player.GetComponent<Animator>().SetFloat("Holding", 0);
                     pizzaDelivered = true;
                     break;
                 }
             }
+
             if (pizzaDelivered)
+            {
                 break;
+            }
         }
+
         if (!pizzaDelivered)
         {
             if (errorCoroutine != null)
@@ -85,11 +83,15 @@ public class DeliveryPoint : MonoBehaviour
                 StopCoroutine(errorCoroutine);
                 foreach (var go in errorMessages)
                 {
-                    if (go.activeSelf == true)
+                    if (go.activeSelf)
+                    {
                         go.SetActive(false);
+                    }
                 }
+
                 errorIcon.SetActive(false);
             }
+
             errorCoroutine = StartCoroutine(ShowDeliveryError(2));
             return;
         }
@@ -108,11 +110,15 @@ public class DeliveryPoint : MonoBehaviour
             StopCoroutine(errorCoroutine);
             foreach (var go in errorMessages)
             {
-                if (go.activeSelf == true)
+                if (go.activeSelf)
+                {
                     go.SetActive(false);
+                }
             }
+
             errorIcon.SetActive(false);
         }
+
         errorCoroutine = StartCoroutine(ShowDeliveryError(0));
     }
 
@@ -123,11 +129,15 @@ public class DeliveryPoint : MonoBehaviour
             StopCoroutine(errorCoroutine);
             foreach (var go in errorMessages)
             {
-                if (go.activeSelf == true)
+                if (go.activeSelf)
+                {
                     go.SetActive(false);
+                }
             }
+
             errorIcon.SetActive(false);
         }
+
         errorCoroutine = StartCoroutine(ShowDeliveryError(1));
     }
 
@@ -140,5 +150,4 @@ public class DeliveryPoint : MonoBehaviour
         errorIcon.SetActive(false);
         errorCoroutine = null;
     }
-
 }

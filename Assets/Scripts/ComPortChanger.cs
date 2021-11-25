@@ -1,33 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+using System;
 using TMPro;
+using UnityEngine;
 
 public class ComPortChanger : MonoBehaviour
 {
-    [SerializeField]
-    private bool isInMainMenu;
+    [SerializeField] private bool isInMainMenu;
+
+    [SerializeField] private GameObject player1Prefab;
+
+    [SerializeField] private GameObject player2Prefab;
+
+    // Dropdown menus for player 1 & player 2
+    // COM ports.
+    [SerializeField] private TMP_Dropdown player1Ports;
+
+    [SerializeField] private TMP_Dropdown player2Ports;
+
+    [SerializeField] private GameObject comPortContainer;
+
+    // MainMenuController reference.
+    private GameObject mainMenuController;
 
     // Player 1 & Player 2 references.
     private GameObject player1;
     private GameObject player2;
-    [SerializeField]
-    private GameObject player1Prefab;
-    [SerializeField]
-    private GameObject player2Prefab;
-    // MainMenuController reference.
-    private GameObject mainMenuController;
-
-    // Dropdown menus for player 1 & player 2
-    // COM ports.
-    [SerializeField]
-    private TMP_Dropdown player1Ports;
-    [SerializeField]
-    private TMP_Dropdown player2Ports;
-
-    [SerializeField]
-    private GameObject comPortContainer;
 
     /*
      *  COM PORT NUMBERS AS DROPDOWN VALUES
@@ -55,7 +51,8 @@ public class ComPortChanger : MonoBehaviour
             try
             {
                 mainMenuController = GameObject.Find("MainMenuController");
-                mainMenuController.GetComponent<MainMenuController>().portName = player1Prefab.GetComponent<PlayerController>().portName;
+                mainMenuController.GetComponent<MainMenuController>().portName =
+                    player1Prefab.GetComponent<PlayerController>().portName;
                 switch (mainMenuController.GetComponent<MainMenuController>().portName)
                 {
                     case "COM12":
@@ -94,11 +91,9 @@ public class ComPortChanger : MonoBehaviour
                     case "COM1":
                         player1Ports.value = 0;
                         break;
-                    default:
-                        break;
                 }
             }
-            catch (System.Exception)
+            catch (Exception)
             {
                 player1Ports.interactable = false;
             }
@@ -149,11 +144,9 @@ public class ComPortChanger : MonoBehaviour
                     case "COM1":
                         player1Ports.value = 0;
                         break;
-                    default:
-                        break;
                 }
             }
-            catch (System.Exception)
+            catch (Exception)
             {
                 player1Ports.interactable = false;
             }
@@ -199,53 +192,61 @@ public class ComPortChanger : MonoBehaviour
                     case "COM1":
                         player2Ports.value = 0;
                         break;
-                    default:
-                        break;
                 }
             }
-            catch (System.Exception)
+            catch (Exception)
             {
                 player2Ports.interactable = false;
             }
         }
-
     }
 
-    void Update()
+    private void Update()
     {
         if (!isInMainMenu)
         {
-            if (comPortContainer.activeSelf == true && !GameManager.Instance.IsPaused)
+            if (comPortContainer.activeSelf && !GameManager.Instance.IsPaused)
+            {
                 comPortContainer.SetActive(false);
+            }
 
             if (GameManager.Instance.IsPaused)
             {
                 if (Input.GetKeyDown(KeyCode.F1))
+                {
                     ShowUI();
+                }
             }
         }
         else
         {
             if (Input.GetKeyDown(KeyCode.F1))
+            {
                 ShowUI();
+            }
         }
     }
 
     private void ShowUI()
     {
         if (comPortContainer.activeSelf == false)
+        {
             comPortContainer.SetActive(true);
+        }
         else
+        {
             comPortContainer.SetActive(false);
+        }
     }
 
     #region Port changing
+
     public void ChangePlayer1Port()
     {
-        string newPort = "COM" + (player1Ports.value + 1).ToString();
+        var newPort = "COM" + (player1Ports.value + 1);
         if (isInMainMenu)
         {
-            MainMenuController mController = mainMenuController.GetComponent<MainMenuController>();
+            var mController = mainMenuController.GetComponent<MainMenuController>();
 
             if (mController.portName != newPort)
             {
@@ -258,7 +259,7 @@ public class ComPortChanger : MonoBehaviour
         }
         else
         {
-            PlayerController pController = player1.GetComponent<PlayerController>();
+            var pController = player1.GetComponent<PlayerController>();
 
             if (pController.portName != newPort)
             {
@@ -271,15 +272,15 @@ public class ComPortChanger : MonoBehaviour
         }
 
         // Changes port name on prefab to newPort.
-        PlayerController prefabController = player1Prefab.GetComponent<PlayerController>();
+        var prefabController = player1Prefab.GetComponent<PlayerController>();
         prefabController.portName = newPort;
     }
 
     public void ChangePlayer2Port()
     {
-        string newPort = "COM" + (player2Ports.value + 1).ToString();
-        PlayerController pController = player2.GetComponent<PlayerController>();
-        PlayerController prefabController = player1Prefab.GetComponent<PlayerController>();
+        var newPort = "COM" + (player2Ports.value + 1);
+        var pController = player2.GetComponent<PlayerController>();
+        var prefabController = player1Prefab.GetComponent<PlayerController>();
 
         if (pController.portName != newPort)
         {
@@ -290,7 +291,7 @@ public class ComPortChanger : MonoBehaviour
             pController.enabled = false;
             pController.enabled = true;
         }
-            
     }
+
     #endregion
 }

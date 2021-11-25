@@ -6,8 +6,7 @@
  * https://creativecommons.org/licenses/by/2.0/
  */
 
-using UnityEngine;
-
+using System;
 using System.IO.Ports;
 
 /**
@@ -21,17 +20,19 @@ using System.IO.Ports;
  */
 public class SerialThreadBinaryDelimited : AbstractSerialThread
 {
-    // Messages to/from the serial port should be delimited using this separator.
-    private byte separator;
     // Buffer where a single message must fit
-    private byte[] buffer = new byte[1024];
-    private int bufferUsed = 0;
-    
+    private readonly byte[] buffer = new byte[1024];
+
+    private int bufferUsed;
+
+    // Messages to/from the serial port should be delimited using this separator.
+    private readonly byte separator;
+
     public SerialThreadBinaryDelimited(string portName,
-                                       int baudRate,
-                                       int delayBeforeReconnecting,
-                                       int maxUnreadMessages,
-                                       byte separator)
+        int baudRate,
+        int delayBeforeReconnecting,
+        int maxUnreadMessages,
+        byte separator)
         : base(portName, baudRate, delayBeforeReconnecting, maxUnreadMessages, false)
     {
         this.separator = separator;
@@ -43,7 +44,7 @@ public class SerialThreadBinaryDelimited : AbstractSerialThread
     // ------------------------------------------------------------------------
     protected override void SendToWire(object message, SerialPort serialPort)
     {
-        byte[] binaryMessage = (byte[])message;
+        var binaryMessage = (byte[]) message;
         serialPort.Write(binaryMessage, 0, binaryMessage.Length);
     }
 
@@ -53,16 +54,18 @@ public class SerialThreadBinaryDelimited : AbstractSerialThread
         bufferUsed += serialPort.Read(buffer, bufferUsed, buffer.Length - bufferUsed);
 
         // Search for the separator in the buffer
-        int index = System.Array.FindIndex<byte>(buffer, 0, bufferUsed, IsSeparator);
+        var index = Array.FindIndex(buffer, 0, bufferUsed, IsSeparator);
         if (index == -1)
+        {
             return null;
+        }
 
-        byte[] returnBuffer = new byte[index];
-        System.Array.Copy(buffer, returnBuffer, index);
+        var returnBuffer = new byte[index];
+        Array.Copy(buffer, returnBuffer, index);
 
         // Shift the buffer so next time the unused bytes start at 0 (safe even
         // if there is overlap)
-        System.Array.Copy(buffer, index + 1, buffer, 0, bufferUsed - index);
+        Array.Copy(buffer, index + 1, buffer, 0, bufferUsed - index);
         bufferUsed -= index + 1;
 
         return returnBuffer;

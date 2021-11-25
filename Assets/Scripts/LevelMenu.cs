@@ -1,34 +1,40 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class LevelMenu : MonoBehaviour
 {
-    [SerializeField]
-    private List<TextMeshProUGUI> highScores;
+    [SerializeField] private List<TextMeshProUGUI> highScores;
 
     private void Awake()
     {
-        int sceneIndex = 1;
+        var sceneIndex = 1;
         foreach (var text in highScores)
         {
             if (sceneIndex <= SceneManager.sceneCountInBuildSettings - 1)
             {
-                string query = "HighScore Level" + sceneIndex;
+                var query = "HighScore Level" + sceneIndex;
                 if (PlayerPrefs.HasKey(query))
-                    text.text = "Highscore : " + PlayerPrefs.GetInt(query).ToString();
+                {
+                    text.text = "Highscore : " + PlayerPrefs.GetInt(query);
+                }
                 else
+                {
                     text.text = "Highscore : 0";
+                }
             }
             else
+            {
                 text.text = "Highscore : 0";
+            }
+
             sceneIndex++;
         }
     }
 
-    public void LoadLevel(int levelIndex) => LevelChanger.Instance.FadeToLevel(levelIndex);
-
+    public void LoadLevel(int levelIndex)
+    {
+        LevelChanger.Instance.FadeToLevel(levelIndex);
+    }
 }
