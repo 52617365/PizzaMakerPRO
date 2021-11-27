@@ -29,6 +29,11 @@ public class Pizza : MonoBehaviour
     {
         if (!ingredients.Contains(ingredientSO))
         {
+            if (instantiatedObject == null)
+            {
+                InstantiatePrefab(GameManager.Instance.PizzaPrefab);
+            }
+
             ingredients.Add(ingredientSO);
 
             // Instantiates icon prefab that displays icon of what ingredient
@@ -43,12 +48,13 @@ public class Pizza : MonoBehaviour
 
             player.HeldIngredient = null;
         }
-        else
-        {
-            Debug.Log(ingredientSO + " is already on pizza");
-            // TODO: Display on UI that player can't add ingredient on to pizza.
-        }
     }
+
+    /// <summary>
+    /// Instantiates prefab gameObject on table
+    /// </summary>
+    /// <param name="prefab"></param>
+    public void InstantiatePrefab(GameObject prefab) => instantiatedObject = Instantiate(prefab, instantiatePoint.transform.position, prefab.transform.rotation);
 
     #endregion
 
@@ -57,6 +63,20 @@ public class Pizza : MonoBehaviour
     #endregion
 
     #region Private attributes
+
+    /// <summary>
+    /// Prefab of pizza box.
+    /// </summary>
+    [SerializeField] private GameObject pizzaBoxPrefab;
+
+    /// <summary>
+    /// Position where instantiatedObject will be.
+    /// </summary>
+    [SerializeField] private GameObject instantiatePoint;
+    /// <summary>
+    /// Reference to instantiated pizzaPrefab or pizzaBoxPrefab.
+    /// </summary>
+    private GameObject instantiatedObject;
 
     /// <summary>
     ///     Default colors of highlight material.
@@ -92,6 +112,11 @@ public class Pizza : MonoBehaviour
     public List<IngredientSO> Ingredients => ingredients;
 
     public List<GameObject> ActiveIcons => activeIcons;
+
+    public GameObject InstantiatedObject => instantiatedObject;
+
+
+    public GameObject PizzaBoxPrefab => pizzaBoxPrefab;
 
     public bool IsCooked { get; set; }
 

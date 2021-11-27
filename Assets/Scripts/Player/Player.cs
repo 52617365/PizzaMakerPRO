@@ -13,6 +13,8 @@ public class Player : MonoBehaviour
 
     [SerializeField] private PlayerNumber playerNumber;
 
+    public GameObject interactTarget;
+
     private void Awake()
     {
         // Gets PlayerController component if it is not assigned.
@@ -45,7 +47,7 @@ public class Player : MonoBehaviour
 
     /// <summary>
     ///     Checks if there are any GameObjects tagged as "Ingredient", "Pizza",
-    ///     "PizzaOven", "DeliveryPoint" or "TrashBin" and if so then it sets closeIngredient to be that.
+    ///     "PizzaOven", "DeliveryPoint" or "DonationBox" and if so then it sets interactable to be that.
     /// </summary>
     private void CheckForInteractables()
     {
@@ -78,6 +80,7 @@ public class Player : MonoBehaviour
                             }
 
                             ClosePizza = detectedPizza;
+                            interactTarget = detectedPizza.gameObject;
                             ClosePizza.HighlightMaterial.SetColor("_Color", ClosePizza.TopMaterialColor[1]);
                         }
 
@@ -94,6 +97,7 @@ public class Player : MonoBehaviour
                             }
 
                             CloseIngredient = detectedIngredient;
+                            interactTarget = detectedIngredient.gameObject;
                             CloseIngredient.HighLightMaterial.SetTexture("_MainTex", CloseIngredient.HighLightTexture);
                         }
 
@@ -109,6 +113,7 @@ public class Player : MonoBehaviour
                             }
 
                             ClosePizzaOven = detectedPizzaOven;
+                            interactTarget = detectedPizzaOven.gameObject;
                             ClosePizzaOven.HighlightMaterial.SetColor("_Color", ClosePizzaOven.TopMaterialColor[1]);
                         }
 
@@ -125,6 +130,7 @@ public class Player : MonoBehaviour
                             }
 
                             CloseDeliveryPoint = detectedDeliveryPoint;
+                            interactTarget = detectedDeliveryPoint.gameObject;
                             CloseDeliveryPoint.HighlightMaterial.SetColor("_Color",
                                 CloseDeliveryPoint.TopMaterialColor[1]);
                         }
@@ -148,48 +154,55 @@ public class Player : MonoBehaviour
                         if (CloseTrashBin != detectedDonationBox)
                         {
                             CloseTrashBin = detectedDonationBox;
+                            interactTarget = detectedDonationBox.gameObject;
                         }
 
                         break;
                 }
             }
 
+            ClearInteractables();
+
             // If hit distance is greater than detection range
-            // this will then set closeIngredient and closePizza to null;
+            // this will then set interactTarget to null;
             if (hit.distance > detectionRange)
             {
-                if (CloseIngredient != null)
-                {
-                    CloseIngredient.HighLightMaterial.SetTexture("_MainTex", CloseIngredient.DefaultTexture);
-                    CloseIngredient = null;
-                }
-
-                if (ClosePizza != null)
-                {
-                    ClosePizza.HighlightMaterial.SetColor("_Color", ClosePizza.TopMaterialColor[0]);
-                    ClosePizza = null;
-                }
-
-                if (ClosePizzaOven != null)
-                {
-                    ClosePizzaOven.HighlightMaterial.SetColor("_Color", ClosePizzaOven.TopMaterialColor[0]);
-                    ClosePizzaOven = null;
-                }
-
-                if (CloseDeliveryPoint != null)
-                {
-                    CloseDeliveryPoint.HighlightMaterial.SetColor("_Color", CloseDeliveryPoint.TopMaterialColor[0]);
-                    CloseDeliveryPoint = null;
-                }
-
-                if (CloseTrashBin != null)
-                {
-                    CloseTrashBin = null;
-                }
+                interactTarget = null;
             }
         }
     }
 
+    private void ClearInteractables()
+    {
+        if (CloseIngredient != null && CloseIngredient.gameObject != interactTarget)
+        {
+            CloseIngredient.HighLightMaterial.SetTexture("_MainTex", CloseIngredient.DefaultTexture);
+            CloseIngredient = null;
+        }
+
+        if (ClosePizza != null && ClosePizza.gameObject != interactTarget)
+        {
+            ClosePizza.HighlightMaterial.SetColor("_Color", ClosePizza.TopMaterialColor[0]);
+            ClosePizza = null;
+        }
+
+        if (ClosePizzaOven != null && ClosePizzaOven.gameObject != interactTarget)
+        {
+            ClosePizzaOven.HighlightMaterial.SetColor("_Color", ClosePizzaOven.TopMaterialColor[0]);
+            ClosePizzaOven = null;
+        }
+
+        if (CloseDeliveryPoint != null && CloseDeliveryPoint.gameObject != interactTarget)
+        {
+            CloseDeliveryPoint.HighlightMaterial.SetColor("_Color", CloseDeliveryPoint.TopMaterialColor[0]);
+            CloseDeliveryPoint = null;
+        }
+
+        if (CloseTrashBin != null && CloseTrashBin.gameObject != interactTarget)
+        {
+            CloseTrashBin = null;
+        }
+    }
     #endregion
 
     public void PickUpPizza()
@@ -202,6 +215,8 @@ public class Player : MonoBehaviour
         {
             heldPizzaSO.ingredients.Add(ingredient);
         }
+
+        Destroy(ClosePizza.InstantiatedObject);
 
         HeldPizza = heldPizzaSO;
 
@@ -226,10 +241,15 @@ public class Player : MonoBehaviour
         {
             heldPizzaSO.cookState = HeldPizzaSO.CookState.Cooked;
             ClosePizza.IsCooked = false;
+            InstantiatedGameObject = Instantiate(GameManager.Instance.PizzaBoxPrefab, pizzaBoxContainer.transform, false);
+            GetComponent<Animator>().SetFloat("HoldingPizzaBox", 1);
+        }
+        else
+        {
+            InstantiatedGameObject = Instantiate(GameManager.Instance.PizzaPrefab, pizzaBoxContainer.transform, false);
+            GetComponent<Animator>().SetFloat("HoldingPizza", 1);
         }
 
-        InstantiatedGameObject = Instantiate(GameManager.Instance.PizzaBoxPrefab, pizzaBoxContainer.transform, false);
-        GetComponent<Animator>().SetFloat("Holding", 1);
     }
 
     public void PutDownPizza()
@@ -249,6 +269,13 @@ public class Player : MonoBehaviour
         if (heldPizzaSO.cookState == HeldPizzaSO.CookState.Cooked)
         {
             ClosePizza.IsCooked = true;
+            ClosePizza.InstantiatePrefab(ClosePizza.PizzaBoxPrefab);
+            GetComponent<Animator>().SetFloat("HoldingPizzaBox", 0);
+        }
+        else
+        {
+            ClosePizza.InstantiatePrefab(GameManager.Instance.PizzaPrefab);
+            GetComponent<Animator>().SetFloat("HoldingPizza", 0);
         }
 
         heldPizzaSO.cookState = HeldPizzaSO.CookState.Uncooked;
@@ -256,7 +283,6 @@ public class Player : MonoBehaviour
         heldPizzaSO.ingredients.Clear();
         Destroy(InstantiatedGameObject);
         InstantiatedGameObject = null;
-        GetComponent<Animator>().SetFloat("Holding", 0);
         ClearActiveIcons();
     }
 
@@ -264,10 +290,17 @@ public class Player : MonoBehaviour
     {
         HeldPizza = null;
         heldPizzaSO.ingredients.Clear();
+        if (heldPizzaSO.cookState == HeldPizzaSO.CookState.Cooked)
+        {
+            GetComponent<Animator>().SetFloat("HoldingPizzaBox", 0);
+        }
+        else
+        {
+            GetComponent<Animator>().SetFloat("HoldingPizza", 0);
+        }
         heldPizzaSO.cookState = HeldPizzaSO.CookState.Uncooked;
         Destroy(InstantiatedGameObject);
         InstantiatedGameObject = null;
-        GetComponent<Animator>().SetFloat("Holding", 0);
         ClearActiveIcons();
     }
 

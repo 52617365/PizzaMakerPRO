@@ -1864,6 +1864,7 @@ MonoBehaviour:
   orderPrefab: {fileID: 4672543641820766086, guid: df3da2fddc44ff44ea64e9939935dffe, type: 3}
   ingredientIconPrefab: {fileID: 6603845846224022033, guid: 16d3779b18827fd458ead07953556723, type: 3}
   pizzaBoxPrefab: {fileID: 4827473168197867456, guid: d8c16e2d003ed6f41b6170b49e6c07e2, type: 3}
+  pizzaPrefab: {fileID: 4633557851104368975, guid: daa92497ed7a9a142b867d13f30c1707, type: 3}
   playerOnePrefab: {fileID: 5678416602166415021, guid: 39caf36f4022e42489601ed5a3dcaa18, type: 3}
   playerTwoPrefab: {fileID: 5741078351391282800, guid: 2a9c33c1bfb9ec746985494dca658a6d, type: 3}
   scoreText: {fileID: 638459145}
@@ -3133,7 +3134,7 @@ GameObject:
   m_Layer: 0
   m_Name: Player2SpawnPoint
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -10642,7 +10643,7 @@ GameObject:
   m_Layer: 0
   m_Name: Player1SpawnPoint
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1

@@ -160,9 +160,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject ingredientIconPrefab;
 
     /// <summary>
-    ///     Prefab of pizza box
+    ///     Prefab of pizza box.
     /// </summary>
     [SerializeField] private GameObject pizzaBoxPrefab;
+
+    /// <summary>
+    /// Prefab of pizza.
+    /// </summary>
+    [SerializeField] private GameObject pizzaPrefab;
 
     /// <summary>
     ///     Prefab of Player 1.
@@ -213,6 +218,7 @@ public class GameManager : MonoBehaviour
     public Image P2DashProgressBar => p2DashProgressBar;
     public GameObject IngredientIconPrefab => ingredientIconPrefab;
     public GameObject PizzaBoxPrefab => pizzaBoxPrefab;
+    public GameObject PizzaPrefab => pizzaPrefab;
 
     /// <summary>
     ///     Amount of points that player has earned during gameplay.

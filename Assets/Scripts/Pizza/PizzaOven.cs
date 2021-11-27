@@ -136,7 +136,7 @@ public class PizzaOven : MonoBehaviour
         player.ClearActiveIcons();
         Destroy(player.InstantiatedGameObject);
         player.InstantiatedGameObject = null;
-        player.GetComponent<Animator>().SetFloat("Holding", 0);
+        player.GetComponent<Animator>().SetFloat("HoldingPizza", 0);
 
         pizzaInOven = true;
         progressBar.color = progressBarColor[0];
@@ -174,10 +174,16 @@ public class PizzaOven : MonoBehaviour
             }
 
             PizzaIsReady = false;
+            player.InstantiatedGameObject = Instantiate(GameManager.Instance.PizzaBoxPrefab, player.PizzaBoxContainer.transform, false);
+            player.GetComponent<Animator>().SetFloat("HoldingPizzaBox", 1);
+
+        }
+        else
+        {
+            player.InstantiatedGameObject = Instantiate(GameManager.Instance.PizzaPrefab, player.PizzaBoxContainer.transform, false);
+            player.GetComponent<Animator>().SetFloat("HoldingPizza", 1);
         }
 
-        player.InstantiatedGameObject = Instantiate(GameManager.Instance.PizzaBoxPrefab, player.PizzaBoxContainer.transform, false);
-        player.GetComponent<Animator>().SetFloat("Holding", 1);
         ingredients.Clear();
         activeIcons.Clear();
         UI.SetActive(false);

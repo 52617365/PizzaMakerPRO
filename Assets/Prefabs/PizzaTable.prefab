@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5497476721405968596
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 618647390984386970}
+  m_Layer: 0
+  m_Name: InstantiatePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &618647390984386970
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5497476721405968596}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.00000023841858, y: 0.55, z: 0.00000011920929}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6703087987379717895}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6703087987379717892
 GameObject:
   m_ObjectHideFlags: 0
@@ -29,6 +59,7 @@ Transform:
   m_Children:
   - {fileID: 8342478143863263312}
   - {fileID: 6703087988571757741}
+  - {fileID: 618647390984386970}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -311,10 +342,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3c5ddcbd7e38af45b7db6f415d5fcb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pizzaBoxPrefab: {fileID: 4403312957990225335, guid: 9fb13d848a9d4c2489ba5ed61e4dce9f, type: 3}
+  instantiatePoint: {fileID: 5497476721405968596}
   defaultColors:
   - {r: 0.6, g: 0.6, b: 0.6, a: 1}
   - {r: 0.78431374, g: 0.78039217, b: 0.78039217, a: 1}
   ingredients: []
-  ingredientIconPrefab: {fileID: 6603845846224022033, guid: 16d3779b18827fd458ead07953556723, type: 3}
   iconPrefabParent: {fileID: 6703087987743387500}
   activeIcons: []

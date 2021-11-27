@@ -64,7 +64,7 @@ public class DeliveryPoint : MonoBehaviour
                     player.HeldPizza = null;
                     Destroy(player.InstantiatedGameObject);
                     player.InstantiatedGameObject = null;
-                    player.GetComponent<Animator>().SetFloat("Holding", 0);
+                    player.GetComponent<Animator>().SetFloat("HoldingPizzaBox", 0);
                     pizzaDelivered = true;
                     break;
                 }

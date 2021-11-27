@@ -15,6 +15,7 @@ MonoBehaviour:
   pizzas:
   - {fileID: 11400000, guid: a79198c465350f74eaa023a104481e4d, type: 2}
   - {fileID: 11400000, guid: 68ec5d2fa8fe9fe418dd1ca9425cb3fc, type: 2}
+  - {fileID: 11400000, guid: ef35728301d45bb4e8047f53fd73725a, type: 2}
   - {fileID: 11400000, guid: 22c5cb2193a7b444dbb5be5ef6bb0ac4, type: 2}
   - {fileID: 11400000, guid: 2360dac7ca62a8e4ab92375ffa8f5180, type: 2}
   - {fileID: 11400000, guid: de15aca327482e349818148f7891174f, type: 2}

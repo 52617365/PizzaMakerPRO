@@ -253,7 +253,7 @@ public class PlayerController : SerialController
         }
         else
         {
-            if (player.CloseIngredient != null)
+            if (player.CloseIngredient != null && player.HeldPizza == null)
             {
                 Ingredient.TakeIngredient(player.CloseIngredient.IngredientScriptableObject, player);
                 return;
@@ -297,11 +297,23 @@ public class PlayerController : SerialController
                 player.HeldPizza.cookState == HeldPizzaSO.CookState.Cooked)
             {
                 player.CloseDeliveryPoint.DeliverPizza(player.HeldPizza, player);
+                return;
             }
 
-            if (player.CloseTrashBin != null && player.HeldPizza != null)
+            if (player.CloseTrashBin != null)
             {
-                player.DiscardPizza();
+                if (player.HeldPizza != null)
+                {
+                    player.DiscardPizza();
+                    return;
+                }
+
+                if (player.HeldIngredient != null)
+                {
+                    player.HeldIngredient = null;
+                    return;
+                }
+                return;
             }
         }
     }
