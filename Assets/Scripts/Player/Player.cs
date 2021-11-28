@@ -290,7 +290,7 @@ public class Player : MonoBehaviour
     {
         HeldPizza = null;
         heldPizzaSO.ingredients.Clear();
-        if (heldPizzaSO.cookState == HeldPizzaSO.CookState.Cooked)
+        if (heldPizzaSO.cookState == HeldPizzaSO.CookState.Cooked || heldPizzaSO.cookState == HeldPizzaSO.CookState.Burnt)
         {
             GetComponent<Animator>().SetFloat("HoldingPizzaBox", 0);
         }
