@@ -30,7 +30,7 @@ MonoBehaviour:
   instantiatePoint: {fileID: 5497476721405968596}
   defaultColors:
   - {r: 0.63529414, g: 0.33333334, b: 0.14901961, a: 1}
-  - {r: 0.63529414, g: 0.42329994, b: 0.1490196, a: 1}
+  - {r: 0.9254902, g: 0.48235294, b: 0.21176471, a: 1}
   ingredients: []
   iconPrefabParent: {fileID: 6703087987743387500}
   activeIcons: []
@@ -58,7 +58,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5497476721405968596}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.00000023841858, y: 0.55, z: 0.00000011920929}
+  m_LocalPosition: {x: -0.39999998, y: 1.05, z: 0.30000007}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6703087987379717895}
@@ -113,7 +113,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!224 &6703087987743387503
 RectTransform:
@@ -183,7 +183,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!224 &6703087988571757741
 RectTransform:

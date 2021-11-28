@@ -145,6 +145,11 @@ public class PizzaOven : MonoBehaviour
 
     public void TakePizza(Player player)
     {
+        if (player.HeldIngredient != null)
+        {
+            player.HeldIngredient = null;
+        }
+
         pizzaInOven = false;
         LightMaterial.color = defaultColors[2];
         LightMaterial.SetColor("_EmissionColor", Color.green);
