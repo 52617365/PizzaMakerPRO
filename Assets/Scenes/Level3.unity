@@ -2183,7 +2183,9 @@ MonoBehaviour:
   playerTwoDashContainer: {fileID: 995901184}
   p1DashProgressBar: {fileID: 263469178}
   p2DashProgressBar: {fileID: 254720107}
+  playerOnePointsContainer: {fileID: 2079630358}
   playerTwoPointsContainer: {fileID: 267213397}
+  disablePlayerScoring: 0
 --- !u!4 &273208818
 Transform:
   m_ObjectHideFlags: 0
