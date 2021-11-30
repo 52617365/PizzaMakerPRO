@@ -49,12 +49,18 @@ public class PauseMenu : MonoBehaviour
         }
 
         buttonCooldown = 0.25f;
-        buttonIndex = buttonIndex switch
+        switch (buttonIndex)
         {
-            1 => 0,
-            0 => 1,
-            _ => buttonIndex
-        };
+            case 1:
+                buttonIndex = 0;
+                break;
+            case 0:
+                buttonIndex = 1;
+                break;
+            default:
+                buttonIndex = buttonIndex;
+                break;
+        }
 
         EventSystem.current.currentSelectedGameObject.transform.localScale = DefaultValues.defaultButtonScale;
         EventSystem.current.SetSelectedGameObject(pauseMenuButtons[buttonIndex]);

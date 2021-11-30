@@ -22,10 +22,10 @@ public class PlayerController : SerialController
     private Animator animator;
 
     // Used to keep attached canvas to face towards camera all the time.
-    private Quaternion canvasRotation;
+    private Quaternion          canvasRotation;
     private CharacterController controller;
-    private bool cooldown;
-    private float dashCooldown;
+    private bool                cooldown;
+    private float               dashCooldown;
 
     // Used to display dash cooldown and duration on UI.
     private Image dashProgressBar;
@@ -71,12 +71,12 @@ public class PlayerController : SerialController
             {
                 Player.PlayerNumber.Player1 => GameManager.Instance.P1DashProgressBar,
                 Player.PlayerNumber.Player2 => GameManager.Instance.P2DashProgressBar,
-                _ => dashProgressBar
+                _                           => dashProgressBar
             };
         }
 
         canvasRotation = gameObject.transform.Find("Canvas").GetComponent<RectTransform>().rotation;
-        dashCooldown = DefaultValues.dashCooldownLength;
+        dashCooldown   = DefaultValues.dashCooldownLength;
     }
 
     private void Update()
@@ -116,7 +116,7 @@ public class PlayerController : SerialController
             }
 
             horizontal = Input.GetAxisRaw("Horizontal");
-            vertical = Input.GetAxisRaw("Vertical");
+            vertical   = Input.GetAxisRaw("Vertical");
         }
         // Calculates horizontal and vertical inputs from serial messages.
         else
@@ -182,9 +182,9 @@ public class PlayerController : SerialController
         }
 
         var newPos = new Vector3(transform.position.x + horizontal, transform.position.y,
-            transform.position.z + vertical);
+                                 transform.position.z + vertical);
         var direction = new Vector3(horizontal, 0, vertical).normalized;
-        var dir = newPos - transform.position;
+        var dir       = newPos - transform.position;
 
         if (direction.magnitude >= 0.1f)
         {
@@ -204,9 +204,9 @@ public class PlayerController : SerialController
                 animator.SetFloat("MoveSpeed", animator.GetFloat("MoveSpeed") + 0.08f);
             }
 
-            var rotation = Quaternion.LookRotation(dir);
+            var rotation   = Quaternion.LookRotation(dir);
             var canvasRect = gameObject.transform.Find("Canvas").GetComponent<RectTransform>();
-            transform.rotation = Quaternion.Lerp(transform.rotation, rotation, rotationSpeed * Time.deltaTime);
+            transform.rotation  = Quaternion.Lerp(transform.rotation, rotation, rotationSpeed * Time.deltaTime);
             canvasRect.rotation = canvasRotation;
             controller.Move(direction * movementSpeed * Time.deltaTime);
         }
@@ -272,14 +272,14 @@ public class PlayerController : SerialController
             }
 
             if (player.ClosePizza != null && player.ClosePizza.Ingredients.Count.Equals(0) &&
-                player.HeldPizza != null && player.HeldPizza.cookState != HeldPizzaSO.CookState.Burnt)
+                player.HeldPizza  != null && player.HeldPizza.cookState != HeldPizzaSO.CookState.Burnt)
             {
                 player.PutDownPizza();
                 return;
             }
 
             // Checks that player is close pizza oven, player is holding pizza and pizza cookState is not either cooked or burnt.
-            if (player.ClosePizzaOven != null && !player.ClosePizzaOven.PizzaInOven && player.HeldPizza != null &&
+            if (player.ClosePizzaOven      != null && !player.ClosePizzaOven.PizzaInOven && player.HeldPizza != null &&
                 player.HeldPizza.cookState != HeldPizzaSO.CookState.Cooked &&
                 player.HeldPizza.cookState != HeldPizzaSO.CookState.Burnt)
             {
@@ -293,7 +293,7 @@ public class PlayerController : SerialController
                 return;
             }
 
-            if (player.CloseDeliveryPoint != null && player.HeldPizza != null &&
+            if (player.CloseDeliveryPoint  != null && player.HeldPizza != null &&
                 player.HeldPizza.cookState == HeldPizzaSO.CookState.Cooked)
             {
                 player.CloseDeliveryPoint.DeliverPizza(player.HeldPizza, player);
@@ -313,6 +313,7 @@ public class PlayerController : SerialController
                     player.HeldIngredient = null;
                     return;
                 }
+
                 return;
             }
         }
@@ -347,15 +348,15 @@ public class PlayerController : SerialController
     private IEnumerator Dash()
     {
         cooldown = false;
-        float timer = 2;
-        var maxTime = timer;
+        float timer   = 2;
+        var   maxTime = timer;
 
         var go = Instantiate(dashEffect);
         go.transform.position = transform.position;
         var particle = go.GetComponent<ParticleSystem>();
         particle.Play();
         // Cooldown counts from 0 to value of DefaultValues.dashCooldownLength.
-        dashCooldown = 0;
+        dashCooldown  =  0;
         movementSpeed += 2;
 
         while (timer > 0)

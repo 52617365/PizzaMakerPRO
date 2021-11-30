@@ -12,12 +12,12 @@ using UnityEngine;
 /**
  * This class allows a Unity program to continually check for messages from a
  * serial device.
- * 
+ *
  * It creates a Thread that communicates with the serial port and continually
  * polls the messages on the wire.
  * That Thread puts all the messages inside a Queue, and this SerialController
  * class polls that queue by means of invoking SerialThread.GetSerialMessage().
- * 
+ *
  * The serial device must send its messages separated by a newline character.
  * Neither the SerialController nor the SerialThread perform any validation
  * on the integrity of the message. It's up to the one that makes sense of the
@@ -79,7 +79,7 @@ public class SerialController : MonoBehaviour
         }
 
         // Read the next message from the queue
-        var message = ReadSerialMessage();
+        int message = ReadSerialMessage();
         if (message == 0)
         {
             return;

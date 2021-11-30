@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="394bd58c-7a6b-4189-8e06-42932630e89a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$" beforeDir="false" afterPath="$PROJECT_DIR$" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Ingredient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Ingredient.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,6 +20,10 @@
       <filtered-out-file-type name="TAG" />
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$USER_HOME$/AppData/Local/JetBrains/Shared/vAny/DecompilerCache/decompiler/f98083cbc97e4fa0a4ef2f523feff5e113bc00/f1/b018ddd0/GameObject.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/JetBrains/Shared/vAny/DecompilerCache/decompiler/f98083cbc97e4fa0a4ef2f523feff5e113bc00/4d/d14607b6/Component.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="ProjectId" id="21N6j27MK2GitihgxSN2e4K3W9b" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -81,6 +84,9 @@
       <workItem from="1637778788031" duration="44000" />
       <workItem from="1637779019161" duration="3065000" />
       <workItem from="1637822556530" duration="1314000" />
+      <workItem from="1638029637643" duration="2029000" />
+      <workItem from="1638180550179" duration="3509000" />
+      <workItem from="1638260494704" duration="3326000" />
     </task>
     <servers />
   </component>
