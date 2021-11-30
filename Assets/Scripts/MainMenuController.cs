@@ -41,7 +41,7 @@ public class MainMenuController : SerialController
     [SerializeField] private TextMeshProUGUI soundVolumeText;
 
     private AudioSource audioSource;
-    private float buttonCooldown;
+    private float       buttonCooldown;
 
     private int menuIndex;
 
@@ -412,9 +412,9 @@ public class MainMenuController : SerialController
             musicValue = 0.0001f;
         }
 
-        Debug.Log(Mathf.Log10(musicValue) * 20);
+        Debug.Log(Mathf.Log10(musicValue)                   * 20);
         AudioManager.SetMusicValues(Mathf.Log10(musicValue) * 20);
-        musicVolumeText.text = (musicValue * 100).ToString("F0");
+        musicVolumeText.text = (musicValue                  * 100).ToString("F0");
     }
 
     public void IncreaseMusicVolume()
@@ -429,9 +429,9 @@ public class MainMenuController : SerialController
             musicValue = 1;
         }
 
-        Debug.Log(Mathf.Log10(musicValue) * 20);
+        Debug.Log(Mathf.Log10(musicValue)                   * 20);
         AudioManager.SetMusicValues(Mathf.Log10(musicValue) * 20);
-        musicVolumeText.text = (musicValue * 100).ToString("F0");
+        musicVolumeText.text = (musicValue                  * 100).ToString("F0");
     }
 
     public void DecreaseSoundVolume()
@@ -447,7 +447,7 @@ public class MainMenuController : SerialController
         }
 
         AudioManager.SetSoundValues(Mathf.Log10(soundValue) * 20);
-        soundVolumeText.text = (soundValue * 100).ToString("F0");
+        soundVolumeText.text = (soundValue                  * 100).ToString("F0");
     }
 
     public void IncreaseSoundVolume()
@@ -463,7 +463,7 @@ public class MainMenuController : SerialController
         }
 
         AudioManager.SetSoundValues(Mathf.Log10(soundValue) * 20);
-        soundVolumeText.text = (soundValue * 100).ToString("F0");
+        soundVolumeText.text = (soundValue                  * 100).ToString("F0");
     }
 
     #endregion
