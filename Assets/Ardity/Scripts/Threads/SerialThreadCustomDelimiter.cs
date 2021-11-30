@@ -54,7 +54,7 @@ public class SerialThreadBinaryDelimited : AbstractSerialThread
         bufferUsed += serialPort.Read(buffer, bufferUsed, buffer.Length - bufferUsed);
 
         // Search for the separator in the buffer
-        var index = Array.FindIndex(buffer, 0, bufferUsed, IsSeparator);
+        int index = Array.FindIndex(buffer, 0, bufferUsed, IsSeparator);
         if (index == -1)
         {
             return null;

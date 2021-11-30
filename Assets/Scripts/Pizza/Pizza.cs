@@ -7,7 +7,7 @@ public class Pizza : MonoBehaviour
     private void Awake()
     {
         var rendererComponent = GetComponent<Renderer>();
-        foreach (var material in rendererComponent.materials)
+        foreach (Material material in rendererComponent.materials)
         {
             if (material.name == "highlight (Instance)")
             {
@@ -38,7 +38,7 @@ public class Pizza : MonoBehaviour
 
             // Instantiates icon prefab that displays icon of what ingredient
             // was just added on to pizza.
-            var icon = Instantiate(GameManager.Instance.IngredientIconPrefab);
+            GameObject icon = Instantiate(GameManager.Instance.IngredientIconPrefab);
             activeIcons.Add(icon);
             icon.GetComponent<Image>().sprite = ingredientSO.icon;
 

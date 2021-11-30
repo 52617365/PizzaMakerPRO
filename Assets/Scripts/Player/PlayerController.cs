@@ -89,7 +89,7 @@ public class PlayerController : SerialController
         if (dashCooldown < DefaultValues.dashCooldownLength && cooldown)
         {
             dashCooldown += Time.deltaTime;
-            var percent = dashCooldown / DefaultValues.dashCooldownLength;
+            float percent = dashCooldown / DefaultValues.dashCooldownLength;
             dashProgressBar.fillAmount = Mathf.Lerp(0, 1, percent);
         }
 
@@ -183,8 +183,8 @@ public class PlayerController : SerialController
 
         var newPos = new Vector3(transform.position.x + horizontal, transform.position.y,
                                  transform.position.z + vertical);
-        var direction = new Vector3(horizontal, 0, vertical).normalized;
-        var dir       = newPos - transform.position;
+        Vector3 direction = new Vector3(horizontal, 0, vertical).normalized;
+        Vector3 dir       = newPos - transform.position;
 
         if (direction.magnitude >= 0.1f)
         {
@@ -204,7 +204,7 @@ public class PlayerController : SerialController
                 animator.SetFloat("MoveSpeed", animator.GetFloat("MoveSpeed") + 0.08f);
             }
 
-            var rotation   = Quaternion.LookRotation(dir);
+            Quaternion rotation   = Quaternion.LookRotation(dir);
             var canvasRect = gameObject.transform.Find("Canvas").GetComponent<RectTransform>();
             transform.rotation  = Quaternion.Lerp(transform.rotation, rotation, rotationSpeed * Time.deltaTime);
             canvasRect.rotation = canvasRotation;
@@ -349,9 +349,9 @@ public class PlayerController : SerialController
     {
         cooldown = false;
         float timer   = 2;
-        var   maxTime = timer;
+        float   maxTime = timer;
 
-        var go = Instantiate(dashEffect);
+        GameObject go = Instantiate(dashEffect);
         go.transform.position = transform.position;
         var particle = go.GetComponent<ParticleSystem>();
         particle.Play();
@@ -362,7 +362,7 @@ public class PlayerController : SerialController
         while (timer > 0)
         {
             timer -= Time.deltaTime;
-            var percent = timer / maxTime;
+            float percent = timer / maxTime;
             dashProgressBar.fillAmount = Mathf.Lerp(0, 1, percent);
             yield return new WaitForEndOfFrame();
         }

@@ -18,7 +18,7 @@ public class PizzaUI : MonoBehaviour
         }
 
         remainingTime -= Time.deltaTime;
-        var percent = remainingTime / maxTime;
+        float percent = remainingTime / maxTime;
         timerText.text = remainingTime.ToString("F0");
         progressBar.fillAmount = Mathf.Lerp(0, 1, percent);
         if (progressBar.fillAmount < 0.35f && lerpTime < 1)
@@ -36,7 +36,7 @@ public class PizzaUI : MonoBehaviour
             return;
         }
 
-        foreach (var order in GameManager.Instance.CurrentOrders)
+        foreach (OrderSO order in GameManager.Instance.CurrentOrders)
         {
             if (order.UIElement == this)
             {
@@ -62,10 +62,10 @@ public class PizzaUI : MonoBehaviour
         nameText.text = pizza.pizzaName;
         remainingTime = time;
         maxTime = time;
-        foreach (var ingredient in pizza.ingredients)
+        foreach (IngredientSO ingredient in pizza.ingredients)
         {
             ingredients.Add(ingredient);
-            var go = Instantiate(ingredientIconPrefab, ingredientContainer.transform, false);
+            GameObject go = Instantiate(ingredientIconPrefab, ingredientContainer.transform, false);
             go.GetComponent<Image>().sprite = ingredient.icon;
             go.SetActive(true);
         }

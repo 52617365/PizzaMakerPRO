@@ -46,7 +46,7 @@ public class SampleCustomDelimiter : MonoBehaviour
         // Receive data
         //---------------------------------------------------------------------
 
-        var message = serialController.ReadSerialMessage();
+        byte[] message = serialController.ReadSerialMessage();
 
         if (message == null)
         {
@@ -54,7 +54,7 @@ public class SampleCustomDelimiter : MonoBehaviour
         }
 
         var sb = new StringBuilder();
-        foreach (var b in message)
+        foreach (byte b in message)
         {
             sb.AppendFormat("(#{0}={1})    ", b, (char) b);
         }

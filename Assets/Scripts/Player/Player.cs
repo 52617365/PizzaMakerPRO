@@ -150,7 +150,7 @@ public class Player : MonoBehaviour
 
                         break;
                     case "DonationBox":
-                        var detectedDonationBox = hit.transform.gameObject;
+                        GameObject detectedDonationBox = hit.transform.gameObject;
                         if (CloseTrashBin != detectedDonationBox)
                         {
                             CloseTrashBin = detectedDonationBox;
@@ -211,7 +211,7 @@ public class Player : MonoBehaviour
         heldIngredient = null;
 
         heldPizzaSO.ingredients.Clear();
-        foreach (var ingredient in ClosePizza.Ingredients)
+        foreach (IngredientSO ingredient in ClosePizza.Ingredients)
         {
             heldPizzaSO.ingredients.Add(ingredient);
         }
@@ -220,17 +220,17 @@ public class Player : MonoBehaviour
 
         HeldPizza = heldPizzaSO;
 
-        foreach (var ingredient in HeldPizza.ingredients)
+        foreach (IngredientSO ingredient in HeldPizza.ingredients)
         {
-            var go = Instantiate(GameManager.Instance.IngredientIconPrefab,
-                gameObject.transform.Find("Canvas").transform.Find("IconContainer"), false);
+            GameObject go = Instantiate(GameManager.Instance.IngredientIconPrefab,
+                                        gameObject.transform.Find("Canvas").transform.Find("IconContainer"), false);
             go.GetComponent<Image>().sprite = ingredient.icon;
             activeIcons.Add(go);
             go.SetActive(true);
         }
 
         // Destroys icon gameobjects on closePizza and then clears ActiveIcons list.
-        foreach (var icon in ClosePizza.ActiveIcons)
+        foreach (GameObject icon in ClosePizza.ActiveIcons)
         {
             Destroy(icon);
         }
@@ -255,11 +255,11 @@ public class Player : MonoBehaviour
     public void PutDownPizza()
     {
         // Loops through all of ingredients in pizza that player is currently holding.
-        foreach (var ingredient in heldPizzaSO.ingredients)
+        foreach (IngredientSO ingredient in heldPizzaSO.ingredients)
         {
             ClosePizza.Ingredients.Add(ingredient);
-            var go = Instantiate(GameManager.Instance.IngredientIconPrefab,
-                ClosePizza.gameObject.transform.parent.Find("Canvas").Find("IconContainer"), false);
+            GameObject go = Instantiate(GameManager.Instance.IngredientIconPrefab,
+                                        ClosePizza.gameObject.transform.parent.Find("Canvas").Find("IconContainer"), false);
 
             ClosePizza.ActiveIcons.Add(go);
             go.GetComponent<Image>().sprite = ingredient.icon;
@@ -307,7 +307,7 @@ public class Player : MonoBehaviour
     public void ClearActiveIcons()
     {
         // Destroys all of the icon gameobjects on activeIcons and clears list after that.
-        foreach (var icon in activeIcons)
+        foreach (GameObject icon in activeIcons)
         {
             Destroy(icon.gameObject);
         }
@@ -318,7 +318,7 @@ public class Player : MonoBehaviour
     // Updates player's personal score.
     public void UpdateScore(float timeLeftPercentage)
     {
-        var amount = DefaultValues.pizzaPointValue * timeLeftPercentage;
+        float amount = DefaultValues.pizzaPointValue * timeLeftPercentage;
         if (timeLeftPercentage >= DefaultValues.fastDeliveryThreshold)
         {
             amount += DefaultValues.fastDeliveryBonus;

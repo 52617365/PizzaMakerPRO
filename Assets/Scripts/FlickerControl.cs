@@ -19,8 +19,8 @@ public class FlickerControl : MonoBehaviour
     private IEnumerator FlickeringLight()
     {
         isFlickering = true;
-        var color = Color.white * 4;
-        var material = GetComponent<Renderer>().materials[0];
+        Color color = Color.white * 4;
+        Material material = GetComponent<Renderer>().materials[0];
         while (isFlickering)
         {
             material.SetColor("_EmissionColor", Color.black);

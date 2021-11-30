@@ -67,7 +67,7 @@ public class SerialControllerCustomDelimiter : MonoBehaviour
         }
 
         // Read the next message from the queue
-        var message = ReadSerialMessage();
+        byte[] message = ReadSerialMessage();
         if (message == null)
         {
             return;

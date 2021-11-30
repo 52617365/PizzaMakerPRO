@@ -31,7 +31,7 @@ public class PizzaOven : MonoBehaviour
     private void Awake()
     {
         var rendererComponent = GetComponent<Renderer>();
-        foreach (var material in rendererComponent.materials)
+        foreach (Material material in rendererComponent.materials)
         {
             switch (material.name)
             {
@@ -65,7 +65,7 @@ public class PizzaOven : MonoBehaviour
         if (!PizzaIsReady)
         {
             remainingTime -= Time.deltaTime;
-            var percent = remainingTime / maxTime;
+            float percent = remainingTime / maxTime;
             progressBar.fillAmount = Mathf.Lerp(0, 1, percent);
             if (remainingTime <= 0)
             {
@@ -84,7 +84,7 @@ public class PizzaOven : MonoBehaviour
 
 
             remainingTime += Time.deltaTime;
-            var percent = remainingTime / maxTime;
+            float percent = remainingTime / maxTime;
             progressBar.fillAmount = Mathf.Lerp(0, 1, percent);
         }
 
@@ -115,16 +115,16 @@ public class PizzaOven : MonoBehaviour
         remainingTime = maxTime;
         progressBar.fillAmount = 0;
 
-        foreach (var ingredient in pizza.ingredients)
+        foreach (IngredientSO ingredient in pizza.ingredients)
         {
             ingredients.Add(ingredient);
         }
 
         // Instantiates IngredientIconPrefabs to display what type of
         // pizza is currently in oven.
-        foreach (var ingredient in ingredients) //pizzaSO.ingredients)
+        foreach (IngredientSO ingredient in ingredients) //pizzaSO.ingredients)
         {
-            var go = Instantiate(GameManager.Instance.IngredientIconPrefab, gameObject.transform.Find("Canvas").Find("Container").Find("IconContainer"), false);
+            GameObject go = Instantiate(GameManager.Instance.IngredientIconPrefab, gameObject.transform.Find("Canvas").Find("Container").Find("IconContainer"), false);
             activeIcons.Add(go);
             go.GetComponent<Image>().sprite = ingredient.icon;
             go.SetActive(true);
@@ -153,14 +153,14 @@ public class PizzaOven : MonoBehaviour
         pizzaInOven = false;
         LightMaterial.color = defaultColors[2];
         LightMaterial.SetColor("_EmissionColor", Color.green);
-        foreach (var icon in activeIcons)
+        foreach (GameObject icon in activeIcons)
         {
             icon.transform.SetParent(player.transform.Find("Canvas").Find("IconContainer"), false);
             player.AddToActiveIcons(icon);
         }
 
         player.HeldPizza = player.HeldPizzaSO;
-        foreach (var ingredient in ingredients)
+        foreach (IngredientSO ingredient in ingredients)
         {
             player.HeldPizza.ingredients.Add(ingredient);
         }

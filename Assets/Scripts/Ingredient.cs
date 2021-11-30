@@ -42,7 +42,7 @@ public class Ingredient : MonoBehaviour
     {
         var rendererComponent = GetComponent<Renderer>();
 
-        foreach (var material in rendererComponent.materials)
+        foreach (Material material in rendererComponent.materials)
             // Checking if materialNames array contains the material.name in iteration.
         {
             if (Array.Exists(materialNames, x => x == material.name))

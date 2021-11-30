@@ -24,7 +24,7 @@ public class DeliveryPoint : MonoBehaviour
     {
         var rendererComponent = GetComponent<Renderer>();
 
-        foreach (var material in rendererComponent.materials)
+        foreach (Material material in rendererComponent.materials)
         {
             if (material.name == "highlight (Instance)")
             {
@@ -39,13 +39,13 @@ public class DeliveryPoint : MonoBehaviour
         float pointPercentage = 0;
 
         // Loops through all CurrentOrders.
-        foreach (var order in GameManager.Instance.CurrentOrders)
+        foreach (OrderSO order in GameManager.Instance.CurrentOrders)
         {
             // Int value that tracks amount of correct ingredients.
             var correctCount = 0;
 
             // Loops through all ingredients of order.
-            foreach (var t in order.UIElement.Ingredients)
+            foreach (IngredientSO t in order.UIElement.Ingredients)
             {
                 // Loops through ingredients of pizza that player is trying to deliver.
                 correctCount += pizza.ingredients.Count(t1 => t1 == t);
@@ -81,7 +81,7 @@ public class DeliveryPoint : MonoBehaviour
             if (errorCoroutine != null)
             {
                 StopCoroutine(errorCoroutine);
-                foreach (var go in errorMessages)
+                foreach (GameObject go in errorMessages)
                 {
                     if (go.activeSelf)
                     {
@@ -108,7 +108,7 @@ public class DeliveryPoint : MonoBehaviour
         if (errorCoroutine != null)
         {
             StopCoroutine(errorCoroutine);
-            foreach (var go in errorMessages)
+            foreach (GameObject go in errorMessages)
             {
                 if (go.activeSelf)
                 {
@@ -127,7 +127,7 @@ public class DeliveryPoint : MonoBehaviour
         if (errorCoroutine != null)
         {
             StopCoroutine(errorCoroutine);
-            foreach (var go in errorMessages)
+            foreach (GameObject go in errorMessages)
             {
                 if (go.activeSelf)
                 {

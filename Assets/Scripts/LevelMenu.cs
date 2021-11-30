@@ -10,11 +10,11 @@ public class LevelMenu : MonoBehaviour
     private void Awake()
     {
         var sceneIndex = 1;
-        foreach (var text in highScores)
+        foreach (TextMeshProUGUI text in highScores)
         {
             if (sceneIndex <= SceneManager.sceneCountInBuildSettings - 1)
             {
-                var query = "HighScore Level" + sceneIndex;
+                string query = "HighScore Level" + sceneIndex;
                 if (PlayerPrefs.HasKey(query))
                 {
                     text.text = "Highscore : " + PlayerPrefs.GetInt(query);

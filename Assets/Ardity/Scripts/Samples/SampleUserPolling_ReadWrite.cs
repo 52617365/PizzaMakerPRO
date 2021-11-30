@@ -49,7 +49,7 @@ public class SampleUserPolling_ReadWrite : MonoBehaviour
         // Receive data
         //---------------------------------------------------------------------
 
-        var message = serialController.ReadSerialMessage();
+        int message = serialController.ReadSerialMessage();
 
         if (message == 0)
         {

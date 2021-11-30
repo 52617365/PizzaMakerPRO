@@ -26,8 +26,8 @@ public class GameManager : MonoBehaviour
             Instance = this;
         }
 
-        var go = Instantiate(playerOnePrefab, playerOneSpawnPoint.transform.position,
-            playerOnePrefab.transform.rotation);
+        GameObject go = Instantiate(playerOnePrefab, playerOneSpawnPoint.transform.position,
+                                    playerOnePrefab.transform.rotation);
         go.name = "Player1";
         player1ScoreText.text = go.GetComponent<Player>().PlayerScore.ToString("F0");
 
@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour
         }
 
 
-        foreach (var order in orderScriptableObjects)
+        foreach (OrderSO order in orderScriptableObjects)
         {
             order.isInUse = false;
             order.UIElement = null;
@@ -92,7 +92,7 @@ public class GameManager : MonoBehaviour
     private void OnApplicationQuit()
     {
         SaveScore();
-        foreach (var order in orderScriptableObjects)
+        foreach (OrderSO order in orderScriptableObjects)
         {
             order.isInUse = false;
             order.UIElement = null;
@@ -101,7 +101,7 @@ public class GameManager : MonoBehaviour
 
     private void SaveScore()
     {
-        var levelName = "HighScore Level" + SceneManager.GetActiveScene().buildIndex;
+        string levelName = "HighScore Level" + SceneManager.GetActiveScene().buildIndex;
         if (PlayerPrefs.HasKey(levelName))
         {
             if (PlayerPrefs.GetInt(levelName) < PlayerScore)
@@ -242,8 +242,8 @@ public class GameManager : MonoBehaviour
 
     private void AddPlayerTwo()
     {
-        var go = Instantiate(playerTwoPrefab, playerTwoSpawnPoint.transform.position,
-            playerTwoPrefab.transform.rotation);
+        GameObject go = Instantiate(playerTwoPrefab, playerTwoSpawnPoint.transform.position,
+                                    playerTwoPrefab.transform.rotation);
         go.name = "Player2";
         player2ScoreText.text = go.GetComponent<Player>().PlayerScore.ToString("F0");
         playerTwoDashContainer.SetActive(true);
@@ -267,9 +267,9 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        var randomValue = Random.Range(1, 6);
+        int randomValue = Random.Range(1, 6);
 
-        var threshold = CurrentOrders.Count switch
+        int threshold = CurrentOrders.Count switch
         {
             4 => 3,
             3 => 3,
@@ -286,17 +286,17 @@ public class GameManager : MonoBehaviour
         }
 
         GetComponent<AudioSource>().Play();
-        var randomPizza = pizzaDatabase.pizzas[Random.Range(0, pizzaDatabase.pizzas.Count)];
+        PizzaSO randomPizza = pizzaDatabase.pizzas[Random.Range(0, pizzaDatabase.pizzas.Count)];
 
-        var timeToBakePizza = Random.Range(DefaultValues.minTimerValue, DefaultValues.maxTimerValue);
+        float timeToBakePizza = Random.Range(DefaultValues.minTimerValue, DefaultValues.maxTimerValue);
 
 
         // Loops through all orders until it finds one that is not in use
-        foreach (var order in orderScriptableObjects)
+        foreach (OrderSO order in orderScriptableObjects)
         {
             if (!order.isInUse)
             {
-                var go = Instantiate(orderPrefab, container.transform, false);
+                GameObject go = Instantiate(orderPrefab, container.transform, false);
                 go.GetComponent<PizzaUI>().UpdateElements(randomPizza, timeToBakePizza);
                 order.UIElement = go.GetComponent<PizzaUI>();
                 go.SetActive(true);
@@ -312,7 +312,7 @@ public class GameManager : MonoBehaviour
         GameOver = true;
         CancelInvoke();
         gameEndPointsText.text = PlayerScore.ToString();
-        var levelName = "HighScore Level" + SceneManager.GetActiveScene().buildIndex;
+        string levelName = "HighScore Level" + SceneManager.GetActiveScene().buildIndex;
         if (PlayerPrefs.HasKey(levelName))
         {
             if (PlayerPrefs.GetInt(levelName) < PlayerScore)
@@ -333,7 +333,7 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(2);
 
-        foreach (var go in countdownObjects)
+        foreach (GameObject go in countdownObjects)
         {
             go.SetActive(true);
             go.GetComponent<AudioSource>().Play();
@@ -373,7 +373,7 @@ public class GameManager : MonoBehaviour
     /// <param name="amount"></param>
     public static void UpdateScore(float timeLeftPercentage)
     {
-        var amount = DefaultValues.pizzaPointValue * timeLeftPercentage;
+        float amount = DefaultValues.pizzaPointValue * timeLeftPercentage;
         if (timeLeftPercentage >= DefaultValues.fastDeliveryThreshold)
         {
             amount += DefaultValues.fastDeliveryBonus;

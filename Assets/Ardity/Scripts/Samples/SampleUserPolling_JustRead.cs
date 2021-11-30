@@ -24,7 +24,7 @@ public class SampleUserPolling_JustRead : MonoBehaviour
     // Executed each frame
     private void Update()
     {
-        var message = serialController.ReadSerialMessage();
+        int message = serialController.ReadSerialMessage();
 
         if (message == 0)
         {

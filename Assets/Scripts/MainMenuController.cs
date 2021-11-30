@@ -501,7 +501,7 @@ public class MainMenuController : SerialController
             return;
         }
 
-        var vsyncValue = PlayerPrefs.GetInt("VerticalSync");
+        int vsyncValue = PlayerPrefs.GetInt("VerticalSync");
         if (vsyncValue == 0)
         {
             verticalSyncToggle.isOn = false;

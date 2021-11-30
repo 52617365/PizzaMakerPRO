@@ -243,7 +243,7 @@ public class ComPortChanger : MonoBehaviour
 
     public void ChangePlayer1Port()
     {
-        var newPort = "COM" + (player1Ports.value + 1);
+        string newPort = "COM" + (player1Ports.value + 1);
         if (isInMainMenu)
         {
             var mController = mainMenuController.GetComponent<MainMenuController>();
@@ -278,7 +278,7 @@ public class ComPortChanger : MonoBehaviour
 
     public void ChangePlayer2Port()
     {
-        var newPort = "COM" + (player2Ports.value + 1);
+        string newPort = "COM" + (player2Ports.value + 1);
         var pController = player2.GetComponent<PlayerController>();
         var prefabController = player1Prefab.GetComponent<PlayerController>();
 
