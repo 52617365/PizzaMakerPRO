@@ -29,7 +29,11 @@ public class GameManager : MonoBehaviour
         GameObject go = Instantiate(playerOnePrefab, playerOneSpawnPoint.transform.position,
                                     playerOnePrefab.transform.rotation);
         go.name = "Player1";
-        player1ScoreText.text = go.GetComponent<Player>().PlayerScore.ToString("F0");
+        if (!disablePlayerScoring)
+        {
+            playerOnePointsContainer.SetActive(true);
+            player1ScoreText.text = go.GetComponent<Player>().PlayerScore.ToString("F0");
+        }
 
         try
         {
@@ -212,6 +216,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private Image p2DashProgressBar;
 
+    [SerializeField] private GameObject playerOnePointsContainer;
+
     [SerializeField] private GameObject playerTwoPointsContainer;
 
     public Image P1DashProgressBar => p1DashProgressBar;
@@ -230,6 +236,10 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public float GameDurationLeft { get; set; }
 
+    // Used to disable player specific scoring in levels where
+    // it doesn't really make sense to have it.
+    public bool disablePlayerScoring = false;
+
     public bool IsPaused { get; private set; }
     public bool GameOver { get; private set; }
     public bool GameStarted { get; private set; }
@@ -245,9 +255,12 @@ public class GameManager : MonoBehaviour
         GameObject go = Instantiate(playerTwoPrefab, playerTwoSpawnPoint.transform.position,
                                     playerTwoPrefab.transform.rotation);
         go.name = "Player2";
-        player2ScoreText.text = go.GetComponent<Player>().PlayerScore.ToString("F0");
         playerTwoDashContainer.SetActive(true);
-        playerTwoPointsContainer.SetActive(true);
+        if (!disablePlayerScoring)
+        {
+            player2ScoreText.text = go.GetComponent<Player>().PlayerScore.ToString("F0");
+            playerTwoPointsContainer.SetActive(true);
+        }
     }
 
     /// <summary>

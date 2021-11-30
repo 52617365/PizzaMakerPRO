@@ -99,7 +99,10 @@ public class DeliveryPoint : MonoBehaviour
         // TODO: Add score for delivering correct pizza within time limit.
         GetComponent<AudioSource>().Play();
         GameManager.UpdateScore(pointPercentage);
-        player.UpdateScore(pointPercentage);
+        if (!GameManager.Instance.disablePlayerScoring)
+        {
+            player.UpdateScore(pointPercentage);
+        }
         pizzaDelivered = false;
     }
 
