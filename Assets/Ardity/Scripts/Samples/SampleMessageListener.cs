@@ -34,12 +34,10 @@ public class SampleMessageListener : MonoBehaviour
     {
         if (success)
         {
-            SendMessage("Connected");
             Debug.Log("Connection established");
         }
         else
         {
-            SendMessage("Disconnected");
             Debug.Log("Connection attempt failed or disconnection detected");
         }
     }

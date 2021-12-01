@@ -14412,6 +14412,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mixer: {fileID: 24100000, guid: aa3fede03c272d64eabb2fdc5ce421a1, type: 2}
+  music:
+  - {fileID: 8300000, guid: 3e60927f67131f8458f507c72ebfbcae, type: 3}
+  isInMainMenu: 1
 --- !u!4 &1800640849
 Transform:
   m_ObjectHideFlags: 0
@@ -14831,7 +14834,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: v.0.9
+  m_text: v1.0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b41ca2088edf9864bb933f45baaf6ab4, type: 2}
   m_sharedMaterial: {fileID: 21186657490957540, guid: b41ca2088edf9864bb933f45baaf6ab4, type: 2}

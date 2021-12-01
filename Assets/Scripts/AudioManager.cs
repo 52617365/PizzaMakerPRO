@@ -6,6 +6,11 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioMixer mixer;
     private static AudioManager Instance { get; set; }
 
+    [SerializeField] private AudioClip[] music;
+    [SerializeField] private bool isInMainMenu;
+
+    private AudioSource audioSource;
+
     private void Awake()
     {
         // Singleton pattern to only have single instance
@@ -19,7 +24,23 @@ public class AudioManager : MonoBehaviour
             Instance = this;
         }
 
+        audioSource = GetComponent<AudioSource>();
         Invoke("LoadValues", 0);
+    }
+
+    private void Update()
+    {
+        // Executed only if current scene is not main menu.
+        if (!isInMainMenu)
+        {
+            if (!audioSource.isPlaying)
+            {
+                // Gets random music clip from array.
+                audioSource.clip = music[Random.Range(0, music.Length)];
+                // Starts playing music after 1 second.
+                audioSource.PlayDelayed(1);
+            }
+        }
     }
 
     public static void SaveAudioSettings(float musicValue, float soundValue)
