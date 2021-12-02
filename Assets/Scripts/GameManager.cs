@@ -435,6 +435,7 @@ public class GameManager : MonoBehaviour
     public void MainMenu()
     {
         Time.timeScale = 1;
+        SaveScore();
         try
         {
             LevelChanger.Instance.FadeToLevel(0);
