@@ -1,6 +1,7 @@
 #include <OneButton.h>
 #include "BluetoothSerial.h"
 
+
 #if !defined(CONFIG_BT_ENABLED) || !defined(CONFIG_BLUEDROID_ENABLED)
 #error Bluetooth is not enabled! Please run `make menuconfig` to and enable it
 #endif
@@ -14,8 +15,8 @@ BluetoothSerial SerialBT;
 #define BUTTON1 27
 #define BUTTON2 14
 #define BUTTON3 12
-#define LED 5
 
+// Button setup for OneButton library.
 OneButton upButton = OneButton(
   UP_BUTTON,
   true,
@@ -56,7 +57,9 @@ void setup() {
   // put your setup code here, to run once:
   //Serial.begin(9600);
   SerialBT.begin("OHJAIN");
-  
+
+  // Setup for clicks and long presses on buttons that are
+  // handled by OneButton.
   upButton.attachClick(UpButtonClick);
   upButton.attachLongPressStop(UpButtonClick);
   downButton.attachClick(DownButtonClick);
@@ -87,85 +90,75 @@ void setup() {
   pinMode(BUTTON1, INPUT_PULLUP);
   pinMode(BUTTON2, INPUT_PULLUP);
   pinMode(BUTTON3, INPUT_PULLUP);
-  pinMode(LED, OUTPUT);
 }
 
 int leftButtonStatus = 0;
 int rightButtonStatus = 0;
 int upButtonStatus = 0;
 int downButtonStatus = 0;
-bool connected = false;
 
+// Bools for checking if any joystick button is currently being pressed.
+bool upInput = false;
+bool downInput = false;
+bool rightInput = false;
+bool leftInput = false;
 
-// put your main code here, to run repeatedly:
 void loop() {
-
-  // If serial monitor receives a message, check if its a connect or disconnect message.
-  if (Serial.available())
-  {
-      String incomingMessage = Serial.readString();
-      if (incomingMessage == "Disconnected")
-      {
-        connected = false;
-      }
-      else if (incomingMessage == "Connected")
-      {
-        connected = true;
-      }
+  // put your main code here, to run repeatedly:
+  if (Serial.available()) {
+    SerialBT.write(Serial.read());
   }
-      
-    ConnectionStatus(connected);
+  if (SerialBT.available()) {
+    Serial.write(SerialBT.read());
+  }
 
-    // If bluetooth connection has been established.
-    if (connected)
-    {
-      int leftPinValue = digitalRead(LEFT_BUTTON);
-      int rightPinValue = digitalRead(RIGHT_BUTTON);
-      int upPinValue = digitalRead(UP_BUTTON);
-      int downPinValue = digitalRead(DOWN_BUTTON);
-    
-      upButton.tick();
-      downButton.tick();
-      leftButton.tick();
-      rightButton.tick();
-      button1.tick();
-      button2.tick();
-      button3.tick();
-    
-      // Jos aiheutuu lagia serialin lukemisessa niin delaytä voi nostaa suuremmaksi.
-      delay(40);
-    
-      if(digitalRead(LEFT_BUTTON) == LOW)
-      {
-        // Lähetettävän arvon tulisi olla Horizontal -1
-        //Serial.println("1");
-        SerialBT.println("1");
-      }
-    
-    
-      if (digitalRead(RIGHT_BUTTON) == LOW)
-      {
-        // Lähetettävän arvon tulisi olla Horizontal 1
-        //Serial.println("3");
-      }
-    
-    
-      if (digitalRead(UP_BUTTON) == LOW)
-      {
-        // Lähetettävän arvon tulisi olla Vertical 1
-        //Serial.println("-3");
-        SerialBT.println("-3");
-      }
-    
-    
-      if (digitalRead(DOWN_BUTTON) == LOW)
-      {
-        // Lähetettävän arvon tulisi olla Vertical -1
-        //Serial.println("-1");
-        SerialBT.println("-1");
-      }
-      
-    }
+  int leftPinValue = digitalRead(LEFT_BUTTON);
+  int rightPinValue = digitalRead(RIGHT_BUTTON);
+  int upPinValue = digitalRead(UP_BUTTON);
+  int downPinValue = digitalRead(DOWN_BUTTON);
+
+  upButton.tick();
+  downButton.tick();
+  leftButton.tick();
+  rightButton.tick();
+  button1.tick();
+  button2.tick();
+  button3.tick();
+
+  // Jos aiheutuu lagia serialin lukemisessa niin delaytä voi nostaa suuremmaksi.
+  delay(10);
+
+  if(digitalRead(LEFT_BUTTON) == LOW && leftInput == false){
+    // Lähetettävän arvon tulisi olla Horizontal -1
+    //Serial.println("1");
+    SerialBT.println("1");
+    leftInput = true;
+  }
+
+
+  if (digitalRead(RIGHT_BUTTON) == LOW && rightInput == false){
+    // Lähetettävän arvon tulisi olla Horizontal 1
+    //Serial.println("3");
+    SerialBT.println("3");
+    rightInput = true;
+  }
+
+
+  if (digitalRead(UP_BUTTON) == LOW && upInput == false){
+    // Lähetettävän arvon tulisi olla Vertical 1
+    //Serial.println("-3");
+    SerialBT.println("-3");
+    upInput = true;
+  }
+
+
+  if (digitalRead(DOWN_BUTTON) == LOW && downInput == false){
+    // Lähetettävän arvon tulisi olla Vertical -1
+    //Serial.println("-1");
+    SerialBT.println("-1");
+    downInput = true;
+  }
+
 }
 
 // Lopettaa pelaajan liikkumisen siihen suuntaan mitä nappia ei enää pidetä pohjassa.
@@ -173,24 +166,28 @@ static void UpButtonClick(){
   // Lähetettävän arvon tulisi olla Vertical 0
   //Serial.println("-4");
   SerialBT.println("-4");
+  upInput = false;
 }
 
 static void DownButtonClick(){
   // Lähetettävän arvon tulisi olla Vertical 0
   //Serial.println("-2");
   SerialBT.println("-2");
+  downInput = false;
 }
 
 static void LeftButtonClick(){
   // Lähetettävän arvon tulisi olla Horizontal 0
   //Serial.println("2");  
-  SerialBT.println("2");  
+  SerialBT.println("2");
+  leftInput = false;
 }
 
 static void RightButtonClick(){
   // Lähetettävän arvon tulisi olla Horizontal 0
   //Serial.println("4");
   SerialBT.println("4");
+  rightInput = false;
 }
 
 static void ButtonOneClick(){
@@ -206,20 +203,4 @@ static void ButtonTwoClick(){
 static void ButtonThreeClick(){
   //Serial.println("7");
   SerialBT.println("7");
-}
-
-
-static void ConnectionStatus(bool status)
-{
-  if (status)
-  {
-    digitalWrite(LED, HIGH);
-  }
-  else
-  {
-    digitalWrite(LED, LOW);
-    delay(500);
-    digitalWrite(LED, HIGH); 
-    delay(500);
-  }
 }

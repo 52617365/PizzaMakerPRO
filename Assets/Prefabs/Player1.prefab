@@ -1508,7 +1508,7 @@ MonoBehaviour:
   reconnectionDelay: 1000
   maxUnreadMessages: 2
   dashEffect: {fileID: 6986833356639852630, guid: b1817f6f06485b54b8159e290e47896a, type: 3}
-  keyboardMovement: 1
+  keyboardMovement: 0
   rotationSpeed: 10
   movementSpeed: 4
   gravity: 150
@@ -1525,6 +1525,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerNumber: 0
+  interactTarget: {fileID: 0}
   heldIngredient: {fileID: 0}
   heldPizzaSO: {fileID: 11400000, guid: 0bdf0595125eedd4584f16ae38322a49, type: 2}
   detectionRange: 1.5
