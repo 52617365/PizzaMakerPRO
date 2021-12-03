@@ -18,7 +18,7 @@ public static class DefaultValues
     /// <summary>
     ///     Duration of the game.
     /// </summary>
-    public static float gameDuration = 420;
+    public static float gameDuration = 300;
 
     /// <summary>
     ///     Value that lerpTime will be increased each time.
