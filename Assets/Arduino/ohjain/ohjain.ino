@@ -55,7 +55,7 @@ OneButton button3 = OneButton(
 
 void setup() {
   // put your setup code here, to run once:
-  //Serial.begin(9600);
+  Serial.begin(9600);
   SerialBT.begin("OHJAIN");
 
   // Setup for clicks and long presses on buttons that are
@@ -97,6 +97,9 @@ int rightButtonStatus = 0;
 int upButtonStatus = 0;
 int downButtonStatus = 0;
 
+const float maxTimer = 10;
+float timeOutTimer = 0;
+
 // Bools for checking if any joystick button is currently being pressed.
 bool upInput = false;
 bool downInput = false;
@@ -112,11 +115,6 @@ void loop() {
     Serial.write(SerialBT.read());
   }
 
-  int leftPinValue = digitalRead(LEFT_BUTTON);
-  int rightPinValue = digitalRead(RIGHT_BUTTON);
-  int upPinValue = digitalRead(UP_BUTTON);
-  int downPinValue = digitalRead(DOWN_BUTTON);
-
   upButton.tick();
   downButton.tick();
   leftButton.tick();
@@ -125,9 +123,17 @@ void loop() {
   button2.tick();
   button3.tick();
 
+  if (timeOutTimer >= maxTimer){
+    //Serial.println("timeout");
+    SerialBT.println("timeout");
+    timeOutTimer = 0;
+  }
+
+  timeOutTimer += 0.010;
+  
   // Jos aiheutuu lagia serialin lukemisessa niin delaytä voi nostaa suuremmaksi.
   delay(10);
-
+  
   if(digitalRead(LEFT_BUTTON) == LOW && leftInput == false){
     // Lähetettävän arvon tulisi olla Horizontal -1
     //Serial.println("1");
@@ -159,6 +165,9 @@ void loop() {
     downInput = true;
   }
 
+  if (leftInput || rightInput || upInput || downInput){
+    timeOutTimer = 0;
+  }
 }
 
 // Lopettaa pelaajan liikkumisen siihen suuntaan mitä nappia ei enää pidetä pohjassa.
