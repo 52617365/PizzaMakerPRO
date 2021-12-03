@@ -216,6 +216,12 @@ public class ComPortChanger : MonoBehaviour
                 {
                     ShowUI();
                 }
+                // Keybind to quickly restart all SerialThreads if controller
+                // goes into sleep mode which it never should not.
+                if (Input.GetKeyDown(KeyCode.F2))
+                {
+                    RestartSerialThreads();
+                }
             }
         }
         else
@@ -223,6 +229,12 @@ public class ComPortChanger : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.F1))
             {
                 ShowUI();
+            }
+            // Keybind to quickly restart all SerialThreads if controller
+            // goes into sleep mode which it never should not.
+            if (Input.GetKeyDown(KeyCode.F2))
+            {
+                RestartSerialThreads();
             }
         }
     }
@@ -240,6 +252,32 @@ public class ComPortChanger : MonoBehaviour
     }
 
     #region Port changing
+
+    public void RestartSerialThreads()
+    {
+        if (isInMainMenu)
+        {
+            var mController = mainMenuController.GetComponent<MainMenuController>();
+            // Turns the component off and on to destroy current serial thread and then open new one.
+            mController.enabled = false;
+            mController.enabled = true;
+        }
+        else
+        {
+            var p1Controller = player1.GetComponent<PlayerController>();
+            // Turns the component off and on to destroy current serial thread and then open new one.
+            p1Controller.enabled = false;
+            p1Controller.enabled = true;
+
+            if (LevelChanger.Instance.PlayerCount > 1)
+            {
+                var p2Controller = player2.GetComponent<PlayerController>();
+                // Turns the component off and on to destroy current serial thread and then open new one.
+                p2Controller.enabled = false;
+                p2Controller.enabled = true;
+            }
+        }
+    }
 
     public void ChangePlayer1Port()
     {

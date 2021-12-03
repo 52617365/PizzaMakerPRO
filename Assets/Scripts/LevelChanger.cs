@@ -7,7 +7,7 @@ public class LevelChanger : MonoBehaviour
     // Animator reference
     [SerializeField] private Animator animator;
 
-    private       int          levelToLoad;
+    private int levelToLoad;
     public static LevelChanger Instance { get; private set; }
 
     public int PlayerCount { get; set; }
